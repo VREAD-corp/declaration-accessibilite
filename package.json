@@ -1,0 +1,20 @@
+{
+  "name": "declaration-accessibilite",
+  "version": "1.0.0",
+  "description": "Free client-side accessibility statement generator (FR RGAA, DE BFSG, EN EAA Annex V).",
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "test": "node --test \"tests/unit/**/*.test.js\"",
+    "e2e": "playwright test",
+    "templates": "node scripts/templates.mjs",
+    "serve": "node scripts/serve.mjs"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "@playwright/test": "1.64.0",
+    "axe-core": "4.13.0",
+    "jszip": "3.10.2"
+  },
+  "private": true,
+  "type": "module"
+}
