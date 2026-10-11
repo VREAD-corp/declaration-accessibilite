@@ -181,7 +181,7 @@ const CHECK = {
       more: '… et {n} autre(s)',
       learn: 'Explication détaillée (Deque, en anglais)',
       none: 'Aucun problème détecté automatiquement sur cet extrait. Cela ne signifie pas qu’il est accessible : la plupart des critères demandent une vérification humaine.',
-      limits: 'Les tests automatiques ne détectent qu’une partie des problèmes d’accessibilité. Ce résultat ne permet pas de déterminer un état ou un taux de conformité.',
+      limits: 'Les tests automatiques ne détectent qu’une partie des problèmes d’accessibilité. Ce résultat ne permet pas de déterminer un état ou un taux de conformité. Les correspondances RGAA affichées sont indicatives.',
     },
   },
   de: {
@@ -214,7 +214,7 @@ const CHECK = {
       more: '… und {n} weitere',
       learn: 'Ausführliche Erklärung (Deque, Englisch)',
       none: 'Automatisch wurde kein Problem gefunden. Das heißt nicht, dass der Auszug barrierefrei ist: Die meisten Kriterien erfordern eine menschliche Prüfung.',
-      limits: 'Automatische Tests finden nur einen Teil der Barrieren. Dieses Ergebnis sagt nichts über Konformität aus.',
+      limits: 'Automatische Tests finden nur einen Teil der Barrieren. Dieses Ergebnis sagt nichts über Konformität aus. Die RGAA-Zuordnung ist unverbindlich.',
     },
   },
   en: {
@@ -247,7 +247,7 @@ const CHECK = {
       more: '… and {n} more',
       learn: 'Detailed explanation (Deque)',
       none: 'No issue detected automatically in this snippet. That does not mean it is accessible: most criteria need human review.',
-      limits: 'Automated tests only find part of accessibility issues. This result does not tell you a conformance status or rate.',
+      limits: 'Automated tests only find part of accessibility issues. This result does not tell you a conformance status or rate. RGAA mappings are indicative.',
     },
   },
 };

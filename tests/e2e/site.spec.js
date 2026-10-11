@@ -60,12 +60,26 @@ test('all links on all pages resolve', async ({ page, request, baseURL }, testIn
     for (const href of await page.$$eval('a[href], link[rel="stylesheet"], link[rel="icon"], script[src]', (els) => els.map((e) => e.href || e.src)))
       if (/^https?:/.test(href)) links.add(href.split('#')[0]);
   }
+  // Official sites behind bot protection (Légifrance, EUR-Lex) answer 202/403 to scripts:
+  // retry those in a real browser page, and only annotate if still blocked.
+  const PROTECTED = /(^|\.)(legifrance\.gouv\.fr|eur-lex\.europa\.eu|economie\.gouv\.fr)$/;
   const bad = [];
+  const blocked = [];
   for (const l of links) {
     const r = await request.get(l, { maxRedirects: 5, timeout: 30000 }).catch((e) => ({ status: () => String(e.message).slice(0, 80) }));
-    const s = r.status();
-    if (!(s >= 200 && s < 400)) bad.push(`${s} ${l}`);
+    let s = r.status();
+    if (s === 200 || (s >= 300 && s < 400) || (s > 200 && s < 300 && !PROTECTED.test(new URL(l).hostname))) continue;
+    if (PROTECTED.test(new URL(l).hostname)) {
+      const resp = await page.goto(l, { timeout: 45000 }).catch(() => null);
+      s = resp ? resp.status() : 'error';
+      if (s >= 200 && s < 400) continue;
+      blocked.push(`${s} ${l}`);
+      continue;
+    }
+    bad.push(`${s} ${l}`);
   }
+  if (blocked.length) test.info().annotations.push({ type: 'bot-protected (not verified)', description: blocked.join('\n') });
+  console.log(`checked ${links.size} links; bot-protected unverified: ${blocked.length}`);
   expect(bad).toEqual([]);
 });
 

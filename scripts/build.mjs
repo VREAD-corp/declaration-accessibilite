@@ -31,6 +31,7 @@ copy('src/assets/site.css', 'assets/site.css');
 for (const f of readdirSync(join(root, 'src/assets'))) if (f.endsWith('.js')) copy(`src/assets/${f}`, `assets/js/${f}`);
 for (const f of readdirSync(join(root, 'src/lib'))) copy(`src/lib/${f}`, `assets/js/lib/${f}`);
 copy('src/data/rgaa-map.js', 'assets/js/data/rgaa-map.js');
+copy('src/data/axe-rgaa.js', 'assets/js/data/axe-rgaa.js');
 copy('src/assets/favicon.svg', 'favicon.svg');
 // axe-core (MPL-2.0) bundled unmodified, with its licence
 copy('node_modules/axe-core/axe.min.js', 'assets/vendor/axe/axe.min.js');

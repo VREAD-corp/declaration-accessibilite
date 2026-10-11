@@ -4,7 +4,8 @@ import { buildDocument, rgaaStatus, DOCS, verdictBlocks, fmtDate } from '../../s
 import { assessScope } from '../../src/lib/scope.js';
 import { CHECKS, rgaaFor, checklistDoc } from '../../src/lib/checklist.js';
 import { toMarkdown, toHtml, toDocx } from '../../src/lib/render.js';
-import { WCAG_TO_RGAA } from '../../src/data/rgaa-map.js';
+import { WCAG_TO_RGAA, RGAA_TITLES } from '../../src/data/rgaa-map.js';
+import { AXE_TO_RGAA } from '../../src/data/axe-rgaa.js';
 
 const text = (doc) => toMarkdown(doc);
 
@@ -113,4 +114,8 @@ test('documents never contain a compliance percentage unless the user typed one'
       const md = text(buildDocument(lang, d.id, { auditType: 'none', orgName: 'O', siteName: 'S' }));
       assert.doesNotMatch(md, /\d\s?%/, `${lang}/${d.id}`);
     }
+});
+
+test('curated axe -> RGAA map only points to existing RGAA 4.1 criteria', () => {
+  for (const [rule, list] of Object.entries(AXE_TO_RGAA)) for (const c of list) assert.ok(RGAA_TITLES[c], `${rule} -> ${c}`);
 });

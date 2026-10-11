@@ -1,0 +1,32 @@
+// Indicative axe-core rule -> RGAA 4.1 criterion correspondence, curated by us
+// (not an official table) from the RGAA 4.1 criterion titles. Rules not listed
+// fall back to the official WCAG -> RGAA table (rgaa-map.js), which is broader.
+export const AXE_TO_RGAA = {
+  'image-alt': ['1.1'],
+  'input-image-alt': ['1.1'],
+  'area-alt': ['1.1'],
+  'svg-img-alt': ['1.1'],
+  'role-img-alt': ['1.1'],
+  'object-alt': ['1.1'],
+  'frame-title': ['2.1'],
+  'color-contrast': ['3.2'],
+  'link-name': ['6.2'],
+  'button-name': ['11.9'],
+  'label': ['11.1'],
+  'select-name': ['11.1'],
+  'input-button-name': ['11.9'],
+  'aria-input-field-name': ['11.1'],
+  'html-has-lang': ['8.3'],
+  'html-lang-valid': ['8.4'],
+  'document-title': ['8.5'],
+  'duplicate-id-aria': ['8.2'],
+  'list': ['9.3'],
+  'listitem': ['9.3'],
+  'definition-list': ['9.3'],
+  'th-has-data-cells': ['5.6'],
+  'td-headers-attr': ['5.7'],
+  'bypass': ['12.7'],
+  'video-caption': ['4.3'],
+  'scrollable-region-focusable': ['7.3'],
+  'meta-viewport': ['10.4'],
+};

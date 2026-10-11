@@ -5,6 +5,7 @@
 // uploaded anywhere.
 
 import { WCAG_TO_RGAA } from './data/rgaa-map.js';
+import { AXE_TO_RGAA } from './data/axe-rgaa.js';
 
 const TAGS = ['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa'];
 const DOC_LEVEL_RULES = ['html-has-lang', 'html-lang-valid', 'html-xml-lang-mismatch', 'document-title', 'bypass', 'meta-refresh', 'meta-viewport'];
@@ -143,7 +144,7 @@ export function renderResults(container, res, t, lang) {
     container.append(el('h3', {}, title));
     for (const v of list) {
       const sc = scFromTags(v.tags);
-      const rgaa = [...new Set(sc.flatMap((s) => WCAG_TO_RGAA[s] || []))];
+      const rgaa = AXE_TO_RGAA[v.id] || [...new Set(sc.flatMap((s) => WCAG_TO_RGAA[s] || []))];
       const meta = [];
       if (v.impact) meta.push(`${t.impact} : ${t.impacts[v.impact] || v.impact}`);
       if (sc.length) meta.push(`WCAG ${sc.join(', ')}`);
