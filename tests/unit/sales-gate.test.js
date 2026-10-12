@@ -94,7 +94,7 @@ const jsonLd = (html) => [...html.matchAll(/<script type="application\/ld\+json"
   const d = JSON.parse(m[1]);
   return d['@graph'] ?? [d];
 });
-const ORG_ID = 'https://vread-corp.github.io/#org';
+const ORG_ID = 'https://outils.vread.fr/#org';
 
 test('SALES_OPEN=true: audit pages carry parseable Product JSON-LD (149.00 EUR, InStock) and the Organization with its SIREN', () => {
   for (const [path, lang] of [['audit/index.html', 'fr'], ['en/audit/index.html', 'en'], ['de/audit/index.html', 'de']]) {
@@ -104,14 +104,14 @@ test('SALES_OPEN=true: audit pages carry parseable Product JSON-LD (149.00 EUR, 
     assert.ok(product, `${path}: Product`);
     assert.equal(product.sku, 'a11y-audit-auto');
     assert.equal(product.brand.name, 'A11y Kit');
-    assert.equal(product.url, `https://vread-corp.github.io/declaration-accessibilite/${path.replace('index.html', '')}`);
+    assert.equal(product.url, `https://outils.vread.fr/declaration-accessibilite/${path.replace('index.html', '')}`);
     assert.match(product.description, lang === 'de' ? /Keine Konformitätsprüfung/ : lang === 'en' ? /Not a conformance audit/ : /pas un audit de conformité/);
     assert.equal(product.offers['@type'], 'Offer');
     assert.equal(product.offers.price, (repoConfig.amount / 100).toFixed(2));
     assert.equal(product.offers.price, '149.00');
     assert.equal(product.offers.priceCurrency, 'EUR');
     assert.equal(product.offers.availability, 'https://schema.org/InStock');
-    assert.equal(product.offers.url, 'https://vread-corp.github.io/declaration-accessibilite/commander.html');
+    assert.equal(product.offers.url, 'https://outils.vread.fr/declaration-accessibilite/commander.html');
     assert.equal(product.offers.seller['@id'], ORG_ID);
     assert.ok(!('valueAddedTaxIncluded' in product.offers));
     const org = nodes.find((n) => n['@type'] === 'Organization');

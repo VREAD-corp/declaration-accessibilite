@@ -13,9 +13,9 @@ const docFor = (lang, kind) => (kind === 'checklist' ? checklistDoc(lang) : buil
 const render = (doc, ext) => (ext === 'docx' ? toDocx(doc) : ext === 'md' ? toMarkdown(doc) : toHtml(doc));
 
 const README = {
-  fr: 'Modèles gratuits – A11y Kit (READ FRANCE SAS)\n\nRemplacez les passages entre crochets. Générateur en ligne : https://vread-corp.github.io/declaration-accessibilite/\n\nInformation uniquement : ni conseil juridique, ni attestation de conformité. Une déclaration doit refléter un audit réel.\nSources officielles : https://vread-corp.github.io/declaration-accessibilite/sources/\nLicence des modèles : MIT.\n',
-  de: 'Kostenlose Vorlagen – A11y Kit (READ FRANCE SAS)\n\nErsetzen Sie die Angaben in eckigen Klammern. Online-Generator: https://vread-corp.github.io/declaration-accessibilite/de/\n\nNur zur Information: keine Rechtsberatung, keine Konformitätsbescheinigung.\nQuellen: https://vread-corp.github.io/declaration-accessibilite/de/quellen/\nLizenz der Vorlagen: MIT.\n',
-  en: 'Free templates – A11y Kit (READ FRANCE SAS)\n\nReplace the text in square brackets. Online generator: https://vread-corp.github.io/declaration-accessibilite/en/\n\nInformation only: not legal advice, not a certificate of conformity.\nSources: https://vread-corp.github.io/declaration-accessibilite/en/sources/\nTemplate licence: MIT.\n',
+  fr: 'Modèles gratuits – A11y Kit (READ FRANCE SAS)\n\nRemplacez les passages entre crochets. Générateur en ligne : https://outils.vread.fr/declaration-accessibilite/\n\nInformation uniquement : ni conseil juridique, ni attestation de conformité. Une déclaration doit refléter un audit réel.\nSources officielles : https://outils.vread.fr/declaration-accessibilite/sources/\nLicence des modèles : MIT.\n',
+  de: 'Kostenlose Vorlagen – A11y Kit (READ FRANCE SAS)\n\nErsetzen Sie die Angaben in eckigen Klammern. Online-Generator: https://outils.vread.fr/declaration-accessibilite/de/\n\nNur zur Information: keine Rechtsberatung, keine Konformitätsbescheinigung.\nQuellen: https://outils.vread.fr/declaration-accessibilite/de/quellen/\nLizenz der Vorlagen: MIT.\n',
+  en: 'Free templates – A11y Kit (READ FRANCE SAS)\n\nReplace the text in square brackets. Online generator: https://outils.vread.fr/declaration-accessibilite/en/\n\nInformation only: not legal advice, not a certificate of conformity.\nSources: https://outils.vread.fr/declaration-accessibilite/en/sources/\nTemplate licence: MIT.\n',
 };
 
 for (const f of TEMPLATE_FILES) {

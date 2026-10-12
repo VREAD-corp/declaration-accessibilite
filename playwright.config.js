@@ -8,7 +8,7 @@ export default defineConfig({
   retries: 1,
   reporter: [['list']],
   use: {
-    baseURL: process.env.BASE_URL || 'https://vread-corp.github.io/declaration-accessibilite/',
+    baseURL: process.env.BASE_URL || 'https://outils.vread.fr/declaration-accessibilite/',
     acceptDownloads: true,
   },
   projects: [

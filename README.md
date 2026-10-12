@@ -1,6 +1,6 @@
 # A11y Kit – générateur de déclaration d’accessibilité
 
-**Site : https://vread-corp.github.io/declaration-accessibilite/** (FR · [DE](https://vread-corp.github.io/declaration-accessibilite/de/) · [EN](https://vread-corp.github.io/declaration-accessibilite/en/))
+**Site : https://outils.vread.fr/declaration-accessibilite/** (FR · [DE](https://outils.vread.fr/declaration-accessibilite/de/) · [EN](https://outils.vread.fr/declaration-accessibilite/en/))
 
 Outil gratuit, entièrement côté navigateur, pour rédiger :
 

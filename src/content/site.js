@@ -9,7 +9,7 @@ export const PRICE = prices(SALES);
 export const SITE = {
   brand: 'A11y Kit',
   // SITE_ORIGIN / SITE_BASE: a move to a custom domain needs no code change.
-  origin: process.env.SITE_ORIGIN || 'https://vread-corp.github.io',
+  origin: process.env.SITE_ORIGIN || 'https://outils.vread.fr',
   base: process.env.SITE_BASE || '/declaration-accessibilite/',
   repo: 'https://github.com/VREAD-corp/declaration-accessibilite',
   updated: '2026-10-11',

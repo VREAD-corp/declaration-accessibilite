@@ -106,10 +106,10 @@ export const AUDIT_META_OPEN = {
 /** schema.org publisher of the site (same @id on every page that declares it). */
 export const ORG_JSONLD = {
   '@type': 'Organization',
-  '@id': 'https://vread-corp.github.io/#org',
+  '@id': 'https://outils.vread.fr/#org',
   name: 'READ FRANCE SAS',
   legalName: 'READ FRANCE',
-  url: 'https://vread-corp.github.io/',
+  url: 'https://outils.vread.fr/',
   address: { '@type': 'PostalAddress', streetAddress: '11 rue Rouvet', postalCode: '75019', addressLocality: 'Paris', addressCountry: 'FR' },
   identifier: { '@type': 'PropertyValue', propertyID: 'SIREN', value: '988741773' },
 };
