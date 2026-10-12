@@ -464,7 +464,7 @@ PAGES.push({
   noindex: true,
 });
 if (OPEN) {
-  const ORDER_NOTE = 'Aucun cookie ni traceur de notre part. Les données de commande sont transmises à Stripe et à notre service de commande (voir Confidentialité).';
+  const ORDER_NOTE = 'Mesure d’audience anonyme, sans cookie ni donnée personnelle. Les données de commande sont transmises à Stripe et à notre service de commande (voir Confidentialité).';
   PAGES.push({ id: 'order', lang: 'fr', path: ROUTES.order.fr, file: 'commander.html', title: 'Commander l’audit automatisé partiel d’accessibilité – A11y Kit', description: 'Commande de l’audit automatisé partiel (axe-core, jusqu’à 20 pages, rapport PDF sous 24 h ouvrées), réservée aux professionnels.', body: orderBody, bodyScripts: orderScripts, csp: ORDER_CSP, noindex: true, noTracking: ORDER_NOTE });
   PAGES.push({ id: 'order-return', lang: 'fr', path: ROUTES.orderReturn.fr, file: 'commande.html', title: 'Votre commande – A11y Kit', description: 'Confirmation de commande de l’audit automatisé partiel.', body: orderReturnBody, bodyScripts: orderReturnScripts, csp: ORDER_RETURN_CSP, noindex: true, noTracking: ORDER_NOTE });
   PAGES.push({ id: 'cgv-pro', lang: 'fr', path: ROUTES.cgvPro.fr, file: 'cgv-pro.html', title: 'Conditions générales de vente aux professionnels – audit automatisé – A11y Kit', description: 'CGV B2B de l’audit automatisé partiel d’accessibilité (version du 12 octobre 2026).', body: cgvProBody, noindex: true });
