@@ -38,7 +38,7 @@ const HOME = {
     eyebrow: 'Gratuit · sans inscription · vos saisies restent chez vous',
     start: 'Commencer le questionnaire',
     promo: {
-      title: 'Les défauts de vos 20 pages clés, en 24 h',
+      title: 'Les défauts de vos 20 pages clés, en 24 h',
       text: 'Vos 20 pages clés testées sur ordinateur et mobile : rapport PDF sous 24 h ouvrées, problèmes classés par gravité, éléments à corriger.',
       cta: 'Voir l’audit – 149 €',
       fine: '149 € net, TVA non applicable (art. 293 B du CGI). Analyse automatisée : ce n’est pas un audit RGAA complet.',
