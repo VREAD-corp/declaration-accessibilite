@@ -70,7 +70,7 @@ export const CHROME = {
     disclaimer:
       '<strong>Information uniquement.</strong> Cet outil aide à rédiger des documents à partir de vos réponses. Il ne constitue ni un conseil juridique, ni un audit, ni une attestation de conformité.',
     product: 'Un produit de READ FRANCE SAS',
-    noTracking: OPEN ? 'Aucun cookie, aucun traceur. Le générateur et le mini-test n’envoient aucune donnée.' : 'Aucun cookie, aucun traceur, aucune donnée envoyée.',
+    noTracking: OPEN ? 'Aucun cookie, aucun traceur. Le générateur et le mini-test n’envoient rien de ce que vous saisissez ; seule une mesure d’audience anonyme est faite.' : 'Aucun cookie, aucun traceur ; rien de ce que vous saisissez n’est envoyé (seule une mesure d’audience anonyme est faite).',
     footerLinks: [
       { path: ROUTES.legal.fr, label: 'Mentions légales' },
       { path: ROUTES.privacy.fr, label: 'Confidentialité' },
@@ -89,7 +89,7 @@ export const CHROME = {
     disclaimer:
       '<strong>Nur zur Information.</strong> Dieses Werkzeug hilft, Dokumente aus Ihren Angaben zu erstellen. Es ist keine Rechtsberatung, keine Prüfung und keine Konformitätsbescheinigung.',
     product: 'Ein Produkt der READ FRANCE SAS',
-    noTracking: OPEN ? 'Keine Cookies, kein Tracking. Generator und Mini-Prüfung senden keine Daten.' : 'Keine Cookies, kein Tracking, keine Datenübertragung.',
+    noTracking: OPEN ? 'Keine Cookies, kein Tracking. Generator und Mini-Prüfung senden nichts von Ihren Eingaben; nur eine anonyme Reichweitenmessung findet statt.' : 'Keine Cookies, kein Tracking; Ihre Eingaben werden nicht übertragen (nur anonyme Reichweitenmessung).',
     footerLinks: [
       { path: ROUTES.legal.de, label: 'Impressum' },
       { path: ROUTES.privacy.de, label: 'Datenschutz' },
@@ -107,7 +107,7 @@ export const CHROME = {
     disclaimer:
       '<strong>Information only.</strong> This tool helps you draft documents from your own answers. It is not legal advice, not an audit and not a certificate of conformity.',
     product: 'A product of READ FRANCE SAS',
-    noTracking: OPEN ? 'No cookies, no tracking. The generator and the mini-test send no data.' : 'No cookies, no tracking, no data sent anywhere.',
+    noTracking: OPEN ? 'No cookies, no tracking. The generator and the mini-test send nothing you type; only anonymous audience measurement is done.' : 'No cookies, no tracking; nothing you type is sent anywhere (only anonymous audience measurement).',
     footerLinks: [
       { path: ROUTES.legal.en, label: 'Legal notice' },
       { path: ROUTES.privacy.en, label: 'Privacy' },

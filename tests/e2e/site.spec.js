@@ -16,6 +16,11 @@ function trackForeignRequests(page, baseURL) {
   page.on('request', (r) => {
     const u = r.url();
     if (u.startsWith('data:') || u.startsWith('blob:') || u.startsWith('about:')) return;
+    // anonymous audience measurement (mesure.js, live host only): allowed, but must never carry the user's input
+    if (/^https:\/\/script\.google\.com\/macros\/s\/[\w-]+\/exec\?action=track$/.test(u)) {
+      if ((r.postData() || '').includes('<')) foreign.push(u);
+      return;
+    }
     if (!u.startsWith(origin)) foreign.push(u);
   });
   return foreign;

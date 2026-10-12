@@ -36,6 +36,8 @@ for (const f of readdirSync(join(root, 'src/lib'))) copy(`src/lib/${f}`, `assets
 copy('src/data/rgaa-map.js', 'assets/js/data/rgaa-map.js');
 copy('src/data/axe-rgaa.js', 'assets/js/data/axe-rgaa.js');
 copy('src/assets/favicon.svg', 'favicon.svg');
+// anonymous, cookieless audience measurement: verbatim copy of VREAD-corp/octave-checkout gas/web/mesure.js
+copy('src/mesure/mesure.js', 'mesure.js');
 for (const f of readdirSync(join(root, 'src/assets/img'))) copy(`src/assets/img/${f}`, `assets/img/${f}`);
 // sample reports of the paid audit, produced by the real audit runner on the demo page: served as .html
 // (opens in the browser, unlike a GitHub release asset) and as the PDF format actually delivered

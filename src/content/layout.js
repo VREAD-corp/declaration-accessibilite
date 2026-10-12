@@ -79,6 +79,7 @@ ${c.footerLinks.map((l) => `<li><a href="${l.external ? l.path : url(l.path)}"${
 <p>${esc(c.product)} (SIREN 988 741 773, Paris) · ${esc(page.noTracking || c.noTracking)}</p>
 </div>
 </footer>
+<script src="${url('mesure.js')}" defer></script>
 ${page.bodyScripts || ''}${scripts}
 </body>
 </html>

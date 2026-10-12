@@ -20,7 +20,7 @@ const HOME = {
     description: 'Rédigez gratuitement votre déclaration d’accessibilité (modèle RGAA), les informations exigées par l’Acte européen sur l’accessibilité et un schéma pluriannuel. Tout reste dans votre navigateur. Export HTML, Markdown, Word.',
     h1: 'Générateur de déclaration d’accessibilité',
     lead: 'Pour les sites et boutiques en ligne concernés par l’Acte européen sur l’accessibilité (directive (UE) 2019/882, applicable depuis le 28 juin 2025) et par l’article 47 de la loi de 2005. Répondez aux questions, relisez, exportez.',
-    badges: ['Gratuit', 'Aucune donnée envoyée', 'Modèle RGAA + informations EAA', 'HTML · Markdown · Word'],
+    badges: ['Gratuit', 'Saisies jamais envoyées', 'Modèle RGAA + informations EAA', 'HTML · Markdown · Word'],
     warn: '<strong>Cet outil met en forme vos réponses ; il ne vérifie pas votre site et ne garantit aucune conformité.</strong> Une déclaration doit refléter un audit réel. Sans audit, l’état indiqué est « non conforme ».',
     formTitle: 'Questionnaire',
     previewTitle: 'Aperçu du document',
@@ -35,7 +35,7 @@ const HOME = {
     noscript: 'Le générateur nécessite JavaScript. Vous pouvez aussi télécharger les modèles vierges ci-dessous.',
     tplTitle: 'Modèles gratuits à télécharger',
     tplText: 'Versions vierges à compléter :',
-    eyebrow: 'Gratuit · sans inscription · rien n’est envoyé',
+    eyebrow: 'Gratuit · sans inscription · vos saisies restent chez vous',
     start: 'Commencer le questionnaire',
     promo: {
       title: 'Savoir ce qui bloque sur votre site',
@@ -56,7 +56,7 @@ const HOME = {
     description: 'Erstellen Sie kostenlos die Barrierefreiheitsinformationen nach § 14 BFSG und Anlage 3 sowie einen Maßnahmenplan. Alles bleibt in Ihrem Browser. Export als HTML, Markdown, Word.',
     h1: 'Generator für Barrierefreiheitserklärungen',
     lead: 'Für Websites und Online-Shops, die unter den European Accessibility Act (Richtlinie (EU) 2019/882) und das Barrierefreiheitsstärkungsgesetz (BFSG, seit 28. Juni 2025 anwendbar) fallen. Fragen beantworten, prüfen, exportieren.',
-    badges: ['Kostenlos', 'Keine Datenübertragung', 'Nach BFSG Anlage 3', 'HTML · Markdown · Word'],
+    badges: ['Kostenlos', 'Eingaben bleiben lokal', 'Nach BFSG Anlage 3', 'HTML · Markdown · Word'],
     warn: '<strong>Dieses Werkzeug formatiert Ihre Angaben; es prüft Ihre Website nicht und garantiert keine Konformität.</strong> Die Angaben müssen dem tatsächlichen Stand entsprechen.',
     formTitle: 'Fragebogen',
     previewTitle: 'Vorschau',
@@ -71,7 +71,7 @@ const HOME = {
     noscript: 'Der Generator benötigt JavaScript. Sie können auch die leeren Vorlagen unten herunterladen.',
     tplTitle: 'Kostenlose Vorlagen',
     tplText: 'Leere Vorlagen zum Ausfüllen:',
-    eyebrow: 'Kostenlos · ohne Anmeldung · keine Datenübertragung',
+    eyebrow: 'Kostenlos · ohne Anmeldung · Eingaben bleiben lokal',
     start: 'Fragebogen starten',
     promo: {
       title: 'Wissen, was auf Ihrer Website blockiert',
@@ -92,7 +92,7 @@ const HOME = {
     description: 'Draft the accessibility information required by the European Accessibility Act (Annex V of Directive 2019/882) and an action plan for free. Everything stays in your browser. Export to HTML, Markdown, Word.',
     h1: 'Accessibility statement generator',
     lead: 'For websites and online shops covered by the European Accessibility Act (Directive (EU) 2019/882, applicable since 28 June 2025). Answer the questions, review, export. French (RGAA) and German (BFSG) versions are available in those languages.',
-    badges: ['Free', 'No data sent', 'EAA Annex V structure', 'HTML · Markdown · Word'],
+    badges: ['Free', 'Your input stays local', 'EAA Annex V structure', 'HTML · Markdown · Word'],
     warn: '<strong>This tool formats your answers; it does not test your website and guarantees no conformity.</strong> What you publish must reflect your real situation.',
     formTitle: 'Questionnaire',
     previewTitle: 'Document preview',
@@ -107,7 +107,7 @@ const HOME = {
     noscript: 'The generator needs JavaScript. You can also download the blank templates below.',
     tplTitle: 'Free templates',
     tplText: 'Blank templates to fill in:',
-    eyebrow: 'Free · no sign-up · nothing is sent',
+    eyebrow: 'Free · no sign-up · your input stays local',
     start: 'Start the questionnaire',
     promo: {
       title: 'Find out what blocks users on your site',
@@ -180,7 +180,7 @@ ${formHtml(lang)}
 ${docs.map((d, i) => `<div class="choice"><input type="radio" name="doc" id="doc-${d.id}" value="${d.id}"${i === 0 ? ' checked' : ''}><label for="doc-${d.id}">${esc(d.label)}</label></div>`).join('')}
 </div></fieldset>
 <div id="export" role="group" aria-label="${esc(h.export)}" class="btn-row">
-${Object.entries(h.exportBtns).map(([k, v], i) => `<button type="button" class="btn${i > 2 ? ' secondary' : ''}" data-fmt="${k}">${esc(v)}</button>`).join('\n')}
+${Object.entries(h.exportBtns).map(([k, v], i) => `<button type="button" class="btn${i > 2 ? ' secondary' : ''}" data-fmt="${k}" data-mesure="free_download">${esc(v)}</button>`).join('\n')}
 </div>
 <p id="export-status" role="status" class="hint"></p>
 <div class="preview" id="preview" tabindex="0" aria-label="${esc(h.previewTitle)}"></div>
@@ -320,7 +320,7 @@ function checkBody(lang) {
 <section aria-labelledby="list-title">
 <h2 id="list-title">${esc(c.listTitle)}</h2>
 <p>${esc(c.listIntro)}</p>
-${tpl ? `<p><a class="btn secondary" href="${RELEASE_DL}${tpl.name}">${esc(c.dl)}</a></p>` : ''}
+${tpl ? `<p><a class="btn secondary" href="${RELEASE_DL}${tpl.name}" data-mesure="free_download">${esc(c.dl)}</a></p>` : ''}
 <div class="table-scroll" tabindex="0" role="region" aria-labelledby="list-title">
 <table><thead><tr>${c.head.map((h) => `<th scope="col">${esc(h)}</th>`).join('')}</tr></thead><tbody>
 ${CHECKS.map((k, i) => `<tr><td>${i + 1}</td><th scope="row">${esc(k[lang][0])}</th><td>${esc(k[lang][1])}</td><td>${k.wcag.join(', ')}</td><td>${rgaaFor(k.wcag).join(', ')}</td></tr>`).join('\n')}
@@ -333,7 +333,7 @@ ${CHECKS.map((k, i) => `<tr><td>${i + 1}</td><th scope="row">${esc(k[lang][0])}<
 <form id="minicheck" data-axe-src="${url('assets/vendor/axe/axe.min.js')}"${lang !== 'en' ? ` data-axe-locale="${url(`assets/vendor/axe/${lang}.json`)}"` : ''}>
 <div class="field"><label for="snippet">${esc(c.label)}</label>
 <textarea id="snippet" name="snippet" rows="10" spellcheck="false" autocapitalize="off" autocomplete="off"></textarea></div>
-<div class="btn-row"><button class="btn" type="submit">${esc(c.run)}</button>
+<div class="btn-row"><button class="btn" type="submit" data-mesure="free_download">${esc(c.run)}</button>
 <button class="btn secondary" type="button" id="mc-example">${esc(c.example)}</button></div>
 <p id="mc-status" role="status"></p>
 </form>
@@ -371,9 +371,9 @@ function alternates(key, lang) {
 }
 
 const PRIVACY_OPEN_DESC = {
-  fr: 'Le générateur et le mini-test ne collectent aucune donnée ; la commande de l’audit payant traite les données de commande.',
-  de: 'Generator und Mini-Prüfung erheben keine Daten; die Bestellung der kostenpflichtigen Prüfung verarbeitet Bestelldaten.',
-  en: 'The generator and mini-test collect no data; ordering the paid audit processes order data.',
+  fr: 'Le générateur et le mini-test ne collectent rien de ce que vous saisissez ; la commande de l’audit payant traite les données de commande.',
+  de: 'Generator und Mini-Prüfung erheben keine Ihrer Eingaben; die Bestellung der kostenpflichtigen Prüfung verarbeitet Bestelldaten.',
+  en: 'The generator and mini-test collect nothing you type; ordering the paid audit processes order data.',
 };
 
 /** Privacy notice once the paid audit is on sale: the free tools still collect nothing; the order does. */

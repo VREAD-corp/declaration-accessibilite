@@ -80,38 +80,41 @@ export const privacyBodies = {
 <h1>Confidentialité</h1>
 <p><strong>Ce site ne collecte aucune donnée personnelle.</strong></p>
 <ul>
-<li>Aucun compte, aucun formulaire envoyé, aucun cookie, aucun outil de mesure d’audience ni traceur tiers. Aucun bandeau cookies n’est donc nécessaire.</li>
+<li>Aucun compte, aucun formulaire envoyé, aucun cookie, aucun traceur tiers ; seule une mesure d’audience anonyme est faite (voir ci-dessous). Aucun bandeau cookies n’est donc nécessaire.</li>
 <li>Le questionnaire et le mini-test fonctionnent entièrement dans votre navigateur. Vos réponses et le code HTML que vous collez ne sont envoyés à aucun serveur.</li>
 <li>Pour vous éviter de tout ressaisir, vos réponses sont enregistrées dans le stockage local de votre navigateur (localStorage), sur votre appareil uniquement. Le bouton « Effacer mes réponses » les supprime.</li>
 <li>Le mini-test exécute le code collé dans un cadre isolé qui bloque tout chargement externe (images, feuilles de style, scripts distants).</li>
 <li>L’hébergeur GitHub peut enregistrer des données techniques de connexion (adresse IP, par exemple) pour la sécurité du service : voir la <a href="https://docs.github.com/fr/site-policy/privacy-policies/github-general-privacy-statement">déclaration de confidentialité de GitHub</a>.</li>
 <li>Le téléchargement des modèles se fait depuis GitHub (page « Releases ») ; GitHub compte le nombre de téléchargements, sans nous transmettre d’information sur vous.</li>
 </ul>
+<p><strong>Mesure d’audience.</strong> Nous comptons la fréquentation de ce site de façon anonyme : pages vues, clics vers la page de commande et étapes de la commande, totalisés par jour, avec le domaine du site d’origine et les paramètres de campagne (utm) éventuels. Cette mesure ne dépose aucun cookie, n’utilise aucun identifiant et n’enregistre ni adresse IP ni donnée personnelle ; seuls ces totaux journaliers sont conservés, dans un tableur de READ FRANCE hébergé par Google. Elle respecte le réglage « Do Not Track » de votre navigateur. Strictement limitée à la mesure d’audience, anonyme et non recoupée avec d’autres données, elle remplit les critères d’exemption de consentement de la CNIL.</p>
 <p>Pour toute question : <a href="mailto:${CONTACT}">${CONTACT}</a>.</p>
 </div>`,
   de: `<div class="legal-text">
 <h1>Datenschutz</h1>
 <p><strong>Diese Website erhebt keine personenbezogenen Daten.</strong></p>
 <ul>
-<li>Keine Konten, keine übermittelten Formulare, keine Cookies, keine Reichweitenmessung, keine Tracker. Ein Cookie-Banner ist daher nicht nötig.</li>
+<li>Keine Konten, keine übermittelten Formulare, keine Cookies, keine Tracker; nur eine anonyme Reichweitenmessung (siehe unten). Ein Cookie-Banner ist daher nicht nötig.</li>
 <li>Fragebogen und Mini-Prüfung laufen vollständig in Ihrem Browser. Ihre Angaben und eingefügter HTML-Code werden an keinen Server gesendet.</li>
 <li>Damit Sie nicht alles neu eingeben müssen, werden Ihre Angaben im lokalen Speicher Ihres Browsers (localStorage) nur auf Ihrem Gerät gespeichert. Die Schaltfläche „Angaben löschen“ entfernt sie.</li>
 <li>Die Mini-Prüfung führt den eingefügten Code in einem isolierten Rahmen aus, der jedes externe Nachladen blockiert.</li>
 <li>Der Hoster GitHub kann technische Verbindungsdaten (z. B. IP-Adresse) zur Sicherheit verarbeiten: siehe <a href="https://docs.github.com/de/site-policy/privacy-policies/github-general-privacy-statement">GitHub-Datenschutzerklärung</a>.</li>
 <li>Vorlagen werden über GitHub (Releases) heruntergeladen; GitHub zählt die Downloads, ohne uns Daten über Sie zu übermitteln.</li>
 </ul>
+<p><strong>Reichweitenmessung.</strong> Wir zählen die Nutzung dieser Website anonym: Seitenaufrufe, Klicks zur Bestellseite und Bestellschritte, tageweise summiert, mit der Domain der verweisenden Website und gegebenenfalls den Kampagnenparametern (utm). Diese Messung setzt keine Cookies, verwendet keine Kennung und speichert weder IP-Adressen noch personenbezogene Daten; nur diese Tagessummen werden aufbewahrt, in einer Tabelle von READ FRANCE, gehostet bei Google. Sie beachtet die Einstellung „Do Not Track“ Ihres Browsers. Da sie strikt auf die Reichweitenmessung beschränkt, anonym und nicht mit anderen Daten verknüpft ist, erfüllt sie die Kriterien der französischen Datenschutzbehörde CNIL für eine Ausnahme von der Einwilligungspflicht.</p>
 </div>`,
   en: `<div class="legal-text">
 <h1>Privacy</h1>
 <p><strong>This website collects no personal data.</strong></p>
 <ul>
-<li>No accounts, no submitted forms, no cookies, no analytics, no third-party trackers. No cookie banner is therefore needed.</li>
+<li>No accounts, no submitted forms, no cookies, no third-party trackers; only anonymous audience measurement (see below). No cookie banner is therefore needed.</li>
 <li>The questionnaire and the mini-test run entirely in your browser. Your answers and any HTML you paste are not sent to any server.</li>
 <li>To save you retyping, your answers are kept in your browser’s local storage (localStorage), on your device only. The “Erase my answers” button deletes them.</li>
 <li>The mini-test runs pasted code in an isolated frame that blocks every external load.</li>
 <li>The host, GitHub, may process technical connection data (such as IP addresses) for security: see the <a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement">GitHub privacy statement</a>.</li>
 <li>Templates are downloaded from GitHub Releases; GitHub counts downloads without sending us anything about you.</li>
 </ul>
+<p><strong>Audience measurement.</strong> We count visits to this website anonymously: page views, clicks to the order page and order steps, totalled per day, with the referring site’s domain and any campaign (utm) parameters. This measurement sets no cookie, uses no identifier and records neither IP addresses nor personal data; only these daily totals are kept, in a READ FRANCE spreadsheet hosted by Google. It respects your browser’s “Do Not Track” setting. Strictly limited to audience measurement, anonymous and not combined with other data, it meets the criteria of the French data protection authority (CNIL) for exemption from consent.</p>
 </div>`,
 };
 
