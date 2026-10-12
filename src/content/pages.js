@@ -16,10 +16,10 @@ const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replac
 
 const HOME = {
   fr: {
-    title: 'Générateur gratuit de déclaration d’accessibilité (RGAA, EAA)',
-    description: 'Rédigez gratuitement votre déclaration d’accessibilité (modèle RGAA), les informations exigées par l’Acte européen sur l’accessibilité et un schéma pluriannuel. Tout reste dans votre navigateur. Export HTML, Markdown, Word.',
+    title: 'Déclaration d’accessibilité : générateur gratuit RGAA et EAA',
+    description: 'Déclaration d’accessibilité modèle RGAA, informations de l’Acte européen (EAA), schéma pluriannuel. Gratuit, rien n’est envoyé. Export Word, HTML.',
     h1: 'Générateur de déclaration d’accessibilité',
-    lead: 'Pour les sites et boutiques en ligne concernés par l’Acte européen sur l’accessibilité (directive (UE) 2019/882, applicable depuis le 28 juin 2025) et par l’article 47 de la loi de 2005. Répondez aux questions, relisez, exportez.',
+    lead: 'Pour les sites et boutiques en ligne visés par l’Acte européen sur l’accessibilité (directive (UE) 2019/882, applicable depuis le 28 juin 2025) ou par l’article 47 de la loi n° 2005-102. Le questionnaire compte 7 parties ; l’aperçu se met à jour à chaque réponse et s’exporte en Word, HTML ou Markdown.',
     badges: ['Gratuit', 'Saisies jamais envoyées', 'Modèle RGAA + informations EAA', 'HTML · Markdown · Word'],
     warn: '<strong>Cet outil met en forme vos réponses ; il ne vérifie pas votre site et ne garantit aucune conformité.</strong> Une déclaration doit refléter un audit réel. Sans audit, l’état indiqué est « non conforme ».',
     formTitle: 'Questionnaire',
@@ -38,24 +38,24 @@ const HOME = {
     eyebrow: 'Gratuit · sans inscription · vos saisies restent chez vous',
     start: 'Commencer le questionnaire',
     promo: {
-      title: 'Savoir ce qui bloque sur votre site',
+      title: 'Les défauts de vos 20 pages clés, en 24 h',
       text: 'Vos 20 pages clés testées sur ordinateur et mobile : rapport PDF sous 24 h ouvrées, problèmes classés par gravité, éléments à corriger.',
       cta: 'Voir l’audit – 149 €',
       fine: '149 € net, TVA non applicable (art. 293 B du CGI). Analyse automatisée : ce n’est pas un audit RGAA complet.',
       alt: 'Aperçu d’un rapport d’audit : synthèse des problèmes classés par gravité',
     },
-    nextTitle: 'Et ensuite ?',
+    nextTitle: 'Après la déclaration',
     next: [
-      ['Vérifier les bases', `Faites l’<a href="${url(ROUTES.check.fr)}">auto-contrôle en 20 points</a> et le mini-test automatique d’un extrait HTML.`],
-      ['Comprendre vos obligations', `Textes officiels, exemption des microentreprises et autorités de contrôle : <a href="${url(ROUTES.sources.fr)}">sources et champ d’application</a>.`],
+      ['Vérifier les bases', `L’<a href="${url(ROUTES.check.fr)}">auto-contrôle en 20 points</a> se fait à la main sur vos pages clés ; le mini-test passe un extrait HTML au moteur axe-core, dans votre navigateur.`],
+      ['Comprendre vos obligations', `Moins de 10 personnes et 2 M€ de chiffre d’affaires ou de bilan au plus : vous êtes probablement exempté. Les textes et les sanctions sont sur la page <a href="${url(ROUTES.sources.fr)}">obligations et sources</a>.`],
       ['Aller plus loin', OPEN ? `L’<a href="${url(ROUTES.audit.fr)}">audit automatisé</a> teste jusqu’à 20 pages de votre site sur ordinateur et mobile : rapport PDF sous 24 h ouvrées.` : `Un <a href="${url(ROUTES.audit.fr)}">audit automatisé partiel à 149 € net</a> (TVA non applicable, art. 293 B du CGI) est en préparation (pas encore de commande possible).`],
     ],
   },
   de: {
-    title: 'Kostenloser Generator für Barrierefreiheitserklärungen (BFSG, EAA)',
-    description: 'Erstellen Sie kostenlos die Barrierefreiheitsinformationen nach § 14 BFSG und Anlage 3 sowie einen Maßnahmenplan. Alles bleibt in Ihrem Browser. Export als HTML, Markdown, Word.',
+    title: 'Barrierefreiheitserklärung: kostenloser Generator nach BFSG',
+    description: 'Informationen zur Barrierefreiheit nach § 14 BFSG und Anlage 3 kostenlos erstellen, mit Maßnahmenplan. Eingaben bleiben im Browser. Export Word, HTML.',
     h1: 'Generator für Barrierefreiheitserklärungen',
-    lead: 'Für Websites und Online-Shops, die unter den European Accessibility Act (Richtlinie (EU) 2019/882) und das Barrierefreiheitsstärkungsgesetz (BFSG, seit 28. Juni 2025 anwendbar) fallen. Fragen beantworten, prüfen, exportieren.',
+    lead: 'Für Websites und Online-Shops, die unter den European Accessibility Act (Richtlinie (EU) 2019/882) und das Barrierefreiheitsstärkungsgesetz (BFSG, seit 28. Juni 2025 anwendbar) fallen. Der Fragebogen hat 7 Teile; die Vorschau folgt Anlage 3, ändert sich mit jeder Antwort und lässt sich als Word, HTML oder Markdown exportieren.',
     badges: ['Kostenlos', 'Eingaben bleiben lokal', 'Nach BFSG Anlage 3', 'HTML · Markdown · Word'],
     warn: '<strong>Dieses Werkzeug formatiert Ihre Angaben; es prüft Ihre Website nicht und garantiert keine Konformität.</strong> Die Angaben müssen dem tatsächlichen Stand entsprechen.',
     formTitle: 'Fragebogen',
@@ -80,18 +80,18 @@ const HOME = {
       fine: '149 € netto, keine Umsatzsteuer ausgewiesen gemäß Art. 293 B CGI. Automatisierte Prüfung, keine Konformitätsprüfung.',
       alt: 'Vorschau eines Prüfberichts: Übersicht der Probleme nach Schweregrad',
     },
-    nextTitle: 'Wie weiter?',
+    nextTitle: 'Nach der Erklärung',
     next: [
-      ['Grundlagen prüfen', `Machen Sie den <a href="${url(ROUTES.check.de)}">Selbsttest in 20 Punkten</a> und die automatische Mini-Prüfung eines HTML-Auszugs.`],
-      ['Pflichten verstehen', `Gesetzestexte, Ausnahme für Kleinstunternehmen, Marktüberwachung: <a href="${url(ROUTES.sources.de)}">Quellen und Anwendungsbereich</a>.`],
-      ['Weitergehen', OPEN ? `Die <a href="${url(ROUTES.audit.de)}">automatisierte Prüfung</a> testet bis zu 20 Seiten Ihrer Website auf Desktop und Mobil: PDF-Bericht in 24 Arbeitsstunden.` : `Eine <a href="${url(ROUTES.audit.de)}">teilautomatisierte Prüfung für 149 € netto</a> (keine Umsatzsteuer ausgewiesen gemäß Art. 293 B CGI) ist in Vorbereitung (noch keine Bestellung möglich).`],
+      ['Grundlagen prüfen', `Den <a href="${url(ROUTES.check.de)}">Selbsttest in 20 Punkten</a> machen Sie von Hand auf Ihren wichtigsten Seiten; die Mini-Prüfung testet einen HTML-Auszug mit axe-core, direkt im Browser.`],
+      ['Pflichten verstehen', `Weniger als 10 Beschäftigte und höchstens 2 Mio. € Umsatz oder Bilanzsumme: Dann greift wahrscheinlich die Ausnahme nach § 3 Abs. 3 BFSG. Gesetzestexte und Bußgelder stehen unter <a href="${url(ROUTES.sources.de)}">Pflichten und Quellen</a>.`],
+      ['Audit nur für Unternehmen in Frankreich', OPEN ? `Unser <a href="${url(ROUTES.audit.de)}">automatisiertes Audit</a> (149 € netto) verkaufen wir nur an Unternehmen mit Sitz in Frankreich (SIREN). Für Shops in Deutschland und Österreich bleiben Generator, Selbsttest und Mini-Prüfung kostenlos.` : `Eine <a href="${url(ROUTES.audit.de)}">teilautomatisierte Prüfung für 149 € netto</a> (keine Umsatzsteuer ausgewiesen gemäß Art. 293 B CGI) ist in Vorbereitung (noch keine Bestellung möglich).`],
     ],
   },
   en: {
     title: 'Free accessibility statement generator (EAA, Annex V)',
-    description: 'Draft the accessibility information required by the European Accessibility Act (Annex V of Directive 2019/882) and an action plan for free. Everything stays in your browser. Export to HTML, Markdown, Word.',
+    description: 'Draft the accessibility information required by the European Accessibility Act (Annex V, Directive 2019/882). Free, nothing leaves your browser.',
     h1: 'Accessibility statement generator',
-    lead: 'For websites and online shops covered by the European Accessibility Act (Directive (EU) 2019/882, applicable since 28 June 2025). Answer the questions, review, export. French (RGAA) and German (BFSG) versions are available in those languages.',
+    lead: 'For websites and online shops covered by the European Accessibility Act (Directive (EU) 2019/882, applicable since 28 June 2025). The questionnaire has 7 parts; the preview follows Annex V, updates with each answer and exports to Word, HTML or Markdown. The French (RGAA) and German (BFSG) versions are on the FR and DE pages.',
     badges: ['Free', 'Your input stays local', 'EAA Annex V structure', 'HTML · Markdown · Word'],
     warn: '<strong>This tool formats your answers; it does not test your website and guarantees no conformity.</strong> What you publish must reflect your real situation.',
     formTitle: 'Questionnaire',
@@ -116,11 +116,11 @@ const HOME = {
       fine: '€149 net, VAT not applicable (art. 293 B of the French tax code). Automated analysis, not a full conformance audit.',
       alt: 'Preview of an audit report: summary of issues ranked by severity',
     },
-    nextTitle: 'What next?',
+    nextTitle: 'After the statement',
     next: [
-      ['Check the basics', `Run the <a href="${url(ROUTES.check.en)}">20-point self-check</a> and the automated mini-test of an HTML snippet.`],
-      ['Understand your obligations', `Official texts, the microenterprise exemption and enforcement: <a href="${url(ROUTES.sources.en)}">sources and scope</a>.`],
-      ['Go further', OPEN ? `The <a href="${url(ROUTES.audit.en)}">automated audit</a> tests up to 20 pages of your site on desktop and mobile: PDF report within 24 business hours.` : `A <a href="${url(ROUTES.audit.en)}">partial automated audit at €149 net</a> (VAT not applicable, art. 293 B of the French tax code) is in preparation (no orders yet).`],
+      ['Check the basics', `The <a href="${url(ROUTES.check.en)}">20-point self-check</a> is done by hand on your key pages; the mini-test runs an HTML snippet through axe-core, in your browser.`],
+      ['Understand your obligations', `Fewer than 10 staff and at most €2 million in turnover or balance sheet total: the microenterprise exemption probably applies. The texts and fines are on the <a href="${url(ROUTES.sources.en)}">obligations and sources</a> page.`],
+      ['Audit for companies in France only', OPEN ? `We sell our <a href="${url(ROUTES.audit.en)}">automated audit</a> (€149 net) only to companies registered in France (SIREN). Elsewhere, the generator, the self-check and the mini-test stay free.` : `A <a href="${url(ROUTES.audit.en)}">partial automated audit at €149 net</a> (VAT not applicable, art. 293 B of the French tax code) is in preparation (no orders yet).`],
     ],
   },
 };
@@ -134,9 +134,12 @@ function templatesList(lang) {
 function homeBody(lang) {
   const h = HOME[lang];
   const docs = DOCS[lang];
-  const promo = OPEN
+  // The paid audit is sold to companies registered in France only (founder decision 2026-10-13: no sales
+  // in Germany), so the DE and EN generators are free-tool pages: no audit promo in the hero.
+  const showPromo = OPEN && lang === 'fr';
+  const promo = showPromo
     ? `<aside class="audit-promo" id="audit-offer" aria-labelledby="promo-title">
-<div class="promo-thumb"><img src="${url(`assets/img/rapport-${lang}-p1.webp`)}" alt="${esc(h.promo.alt)}" width="760" height="1075" decoding="async"></div>
+<div class="promo-thumb"><img src="${url(`assets/img/rapport-${lang}-p1.webp`)}" srcset="${url(`assets/img/rapport-${lang}-p1-380.webp`)} 380w, ${url(`assets/img/rapport-${lang}-p1.webp`)} 760w" sizes="7rem" alt="${esc(h.promo.alt)}" width="760" height="1075" decoding="async"></div>
 <div>
 <h2 id="promo-title">${esc(h.promo.title)}</h2>
 <p>${esc(h.promo.text)}</p>
@@ -145,7 +148,7 @@ function homeBody(lang) {
 </div>
 </aside>`
     : '';
-  return `<section class="lp-hero gen-hero${OPEN ? '' : ' solo'}">
+  return `<section class="lp-hero gen-hero${showPromo ? '' : ' solo'}">
 <div class="lp-hero-text">
 <p class="eyebrow">${esc(h.eyebrow)}</p>
 <h1>${esc(h.h1)}</h1>
@@ -193,7 +196,7 @@ ${templatesList(lang)}
 </section>
 <section aria-labelledby="next-title">
 <h2 id="next-title">${esc(h.nextTitle)}</h2>
-<div class="cards">${h.next.map(([title, text]) => `<div class="card"><h3>${esc(title)}</h3><p>${text}</p></div>`).join('')}</div>
+<ul class="next-list">${h.next.map(([title, text]) => `<li><h3>${esc(title)}</h3><p>${text}</p></li>`).join('')}</ul>
 </section>`;
 }
 
@@ -302,8 +305,8 @@ const CHECK = {
 /** Lead-in from the free mini-test result to the paid audit (display only, while SALES_OPEN). */
 const UPSELL = {
   fr: { upsell: '{n} point(s) relevé(s) sur cet extrait → l’audit vérifie jusqu’à 20 pages de votre site, sur ordinateur et mobile, pour 149 €.', upsellNone: 'Rien de détecté sur cet extrait ? L’audit vérifie jusqu’à 20 pages de votre site, sur ordinateur et mobile, pour 149 €.', upsellCta: 'Voir l’audit et un exemple de rapport', upsellHref: url(ROUTES.audit.fr) },
-  de: { upsell: '{n} Punkt(e) in diesem Auszug gefunden → die Prüfung testet bis zu 20 Seiten Ihrer Website auf Desktop und Mobil, für 149 €.', upsellNone: 'Nichts gefunden? Die Prüfung testet bis zu 20 Seiten Ihrer Website auf Desktop und Mobil, für 149 €.', upsellCta: 'Prüfung und Beispielbericht ansehen', upsellHref: url(ROUTES.audit.de) },
-  en: { upsell: '{n} item(s) flagged in this snippet → the audit checks up to 20 pages of your site, on desktop and mobile, for €149.', upsellNone: 'Nothing detected in this snippet? The audit checks up to 20 pages of your site, on desktop and mobile, for €149.', upsellCta: 'See the audit and a sample report', upsellHref: url(ROUTES.audit.en) },
+  de: { upsell: '{n} Punkt(e) in diesem Auszug gefunden → das Audit testet bis zu 20 Seiten Ihrer Website auf Desktop und Mobil, für 149 € (nur für Unternehmen in Frankreich).', upsellNone: 'Nichts gefunden? Das Audit testet bis zu 20 Seiten Ihrer Website auf Desktop und Mobil, für 149 € (nur für Unternehmen in Frankreich).', upsellCta: 'Prüfung und Beispielbericht ansehen', upsellHref: url(ROUTES.audit.de) },
+  en: { upsell: '{n} item(s) flagged in this snippet → the audit checks up to 20 pages of your site, on desktop and mobile, for €149 (companies registered in France only).', upsellNone: 'Nothing detected in this snippet? The audit checks up to 20 pages of your site, on desktop and mobile, for €149 (companies registered in France only).', upsellCta: 'See the audit and a sample report', upsellHref: url(ROUTES.audit.en) },
 };
 
 export const EXAMPLE_SNIPPET = `<style>.promo{color:#aaa;background:#fff}</style>
@@ -389,6 +392,39 @@ function privacyOpen(lang) {
   return body.replace(lead[0], lead[1]).slice(0, i + lead[1].length - lead[0].length) + privacyOrderSection[lang] + '\n</div>';
 }
 
+const BREADCRUMB_HOME = { fr: 'Générateur', de: 'Generator', en: 'Generator' };
+const abs = (path) => SITE.origin + SITE.base + path.replace(/^\//, '');
+
+/** Sources pages: Article (legal summary, dated) + BreadcrumbList. Facts checked 2026-10-11, page edited 2026-10-13. */
+function sourcesJsonLd(lang) {
+  const src = sourcesBodies[lang];
+  return {
+    '@context': 'https://schema.org',
+    '@graph': [
+      ORG_JSONLD,
+      {
+        '@type': 'Article',
+        headline: src.h1,
+        description: src.description,
+        inLanguage: lang,
+        url: abs(ROUTES.sources[lang]),
+        mainEntityOfPage: abs(ROUTES.sources[lang]),
+        datePublished: '2026-10-11',
+        dateModified: '2026-10-13',
+        author: { '@id': ORG_JSONLD['@id'] },
+        publisher: { '@id': ORG_JSONLD['@id'] },
+      },
+      {
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          { '@type': 'ListItem', position: 1, name: BREADCRUMB_HOME[lang], item: abs(ROUTES.home[lang]) },
+          { '@type': 'ListItem', position: 2, name: src.h1 },
+        ],
+      },
+    ],
+  };
+}
+
 const LANGS = ['fr', 'de', 'en'];
 export const PAGES = [];
 for (const lang of LANGS) {
@@ -402,7 +438,7 @@ for (const lang of LANGS) {
     alternates: alternates('home', lang),
     body: homeBody(lang),
     scripts: ['assets/js/app.js'],
-    updated: '2026-10-12',
+    updated: '2026-10-13',
     jsonld: {
       '@context': 'https://schema.org',
       '@graph': [
@@ -440,7 +476,7 @@ for (const lang of LANGS) {
     alternates: alternates('audit', lang),
     body: OPEN ? auditSalesBodies[lang] : auditBodies[lang],
     jsonld: OPEN ? auditJsonLd(lang) : undefined,
-    updated: '2026-10-12',
+    updated: '2026-10-13',
   });
   PAGES.push({
     id: 'sources',
@@ -450,6 +486,8 @@ for (const lang of LANGS) {
     description: sourcesBodies[lang].description,
     alternates: alternates('sources', lang),
     body: sourcesBodies[lang].body,
+    updated: '2026-10-13',
+    jsonld: sourcesJsonLd(lang),
   });
   PAGES.push({ id: 'legal', lang, path: ROUTES.legal[lang], title: META.legal[lang][0], description: META.legal[lang][1], alternates: alternates('legal', lang), body: legalBodies[lang] });
   PAGES.push({ id: 'privacy', lang, path: ROUTES.privacy[lang], title: META.privacy[lang][0], description: OPEN ? PRIVACY_OPEN_DESC[lang] : META.privacy[lang][1], alternates: alternates('privacy', lang), body: OPEN ? privacyOpen(lang) : privacyBodies[lang] });

@@ -50,13 +50,13 @@ export const NAV = {
   de: [
     { path: ROUTES.home.de, label: 'Generator' },
     { path: ROUTES.check.de, label: 'Mini-Prüfung' },
-    { path: ROUTES.audit.de, label: OPEN ? 'Prüfung 20 Seiten – 149 €' : 'Audit 149 € (bald)' },
+    { path: ROUTES.audit.de, label: OPEN ? 'Audit (nur Firmen in FR)' : 'Audit 149 € (bald)' },
     { path: ROUTES.sources.de, label: 'Pflichten und Quellen' },
   ],
   en: [
     { path: ROUTES.home.en, label: 'Generator' },
     { path: ROUTES.check.en, label: 'Free mini-test' },
-    { path: ROUTES.audit.en, label: OPEN ? '20-page audit – €149' : 'Audit €149 (coming soon)' },
+    { path: ROUTES.audit.en, label: OPEN ? 'Audit (France only)' : 'Audit €149 (coming soon)' },
     { path: ROUTES.sources.en, label: 'Obligations and sources' },
   ],
 };

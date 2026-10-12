@@ -31,33 +31,35 @@ const FOUNDERS = [
   },
 ];
 const img = (lang, p) => url(`assets/img/rapport-${lang}-p${p}.webp`);
+const srcset = (lang, p) => `${url(`assets/img/rapport-${lang}-p${p}-380.webp`)} 380w, ${img(lang, p)} 760w`;
+const HERO_SIZES = '(min-width: 56rem) 22rem, 17rem';
+const GALLERY_SIZES = '(min-width: 56rem) 22rem, calc(100vw - 4rem)';
 
 const T = {
   fr: {
     eyebrow: 'Audit d’accessibilité automatisé · Acte européen (EAA) · RGAA',
-    h1: `Vos ${MAX_PAGES} pages clés testées sur ordinateur et mobile, avec la liste des corrections par priorité`,
-    lead: 'Un rapport PDF envoyé par e-mail sous 24 h ouvrées : chaque problème détecté, sa gravité, les éléments en cause et le critère WCAG / RGAA correspondant.',
+    h1: `Audit d’accessibilité automatisé de vos ${MAX_PAGES} pages clés, sur ordinateur et mobile`,
+    lead: 'Le rapport PDF arrive par e-mail sous 24 h ouvrées, avec la liste des corrections par priorité : chaque problème détecté, sa gravité, les éléments en cause et le critère WCAG ou RGAA correspondant.',
     cta: 'Commander l’audit – 149 €',
     ctaNote: '',
     second: ['Tester d’abord un extrait gratuitement', ROUTES.check.fr],
     limits: 'Analyse automatisée avec axe-core, sans relecture humaine. Ce n’est pas un audit RGAA complet.',
     visualAlt: 'Première page d’un rapport d’exemple : synthèse des problèmes détectés, classés par gravité',
     visualCaption: 'Rapport réel, généré sur notre page de démonstration',
-    whyTitle: 'Pourquoi maintenant',
+    whyTitle: 'Ce qui s’applique depuis le 28 juin 2025',
     why: [
-      ['Depuis le 28 juin 2025', `L’Acte européen sur l’accessibilité s’applique aux sites marchands et à plusieurs services aux consommateurs. Les entreprises concernées doivent publier des informations sur l’accessibilité de leur service.`],
-      ['Savoir où vous en êtes', 'Avant de rédiger une déclaration ou de commander des corrections, il faut une liste concrète des défauts. Le rapport vous la donne page par page.'],
-      ['Un premier tri rapide', 'Un audit RGAA complet est réalisé à la main par un auditeur, critère par critère (106 critères), et se chiffre sur devis, en jours de travail. L’audit automatisé relève en 24 h ce qu’un robot peut détecter : un point de départ, pas un substitut.'],
+      'L’Acte européen sur l’accessibilité (directive (UE) 2019/882, loi n° 2023-171 en France) vise les sites qui vendent à des particuliers et plusieurs autres services aux consommateurs. Les entreprises concernées doivent publier des informations sur l’accessibilité de leur service ; ne pas les établir ou ne pas les publier relève de l’amende des contraventions de 5e classe (code de la consommation, art. R. 451-4).',
+      'Pour rédiger ces informations ou faire chiffrer des corrections, il faut d’abord la liste des défauts, page par page. Un audit RGAA complet la donne : un auditeur vérifie à la main les 106 critères, sur devis, en jours de travail. Notre audit relève en 24 h ouvrées ce qu’un robot peut détecter, et ne remplace pas cet audit complet.',
     ],
     whyMore: ['Textes officiels et exemptions', ROUTES.sources.fr],
     getTitle: 'Ce que vous recevez',
     get: [
-      `<strong>Jusqu’à ${MAX_PAGES} pages publiques</strong> testées : celles que vous indiquez, ou à défaut celles trouvées en suivant les liens depuis l’adresse du site (même domaine, fichier robots.txt respecté).`,
-      '<strong>Deux tailles d’écran</strong> : ordinateur (1 280 px) et mobile (390 px), avec détection du défilement horizontal sur mobile.',
-      '<strong>Les problèmes classés par gravité</strong> (critique, sérieuse, modérée, mineure) : critère WCAG, correspondance RGAA indicative, nombre de pages et d’éléments touchés.',
-      '<strong>Les éléments en cause</strong> : sélecteur et extrait de code, pour que votre développeur ou votre agence corrige sans chercher.',
-      '<strong>Les 20 vérifications manuelles</strong> que l’automate ne peut pas faire, à réaliser vous-même ou à confier à un auditeur.',
-      '<strong>Un PDF en français, allemand ou anglais</strong> (les intitulés des règles du moteur axe-core restent en anglais), avec captures des pages et la facture acquittée.',
+      `${MAX_PAGES} pages publiques au plus, celles que vous indiquez ou, à défaut, celles trouvées en suivant les liens depuis l’adresse du site (même domaine, fichier robots.txt respecté).`,
+      'Chaque page testée sur ordinateur (1 280 px) et sur mobile (390 px), avec détection du défilement horizontal sur mobile.',
+      'Les problèmes classés par gravité (critique, sérieuse, modérée, mineure), avec le critère WCAG, la correspondance RGAA indicative et le nombre de pages et d’éléments touchés.',
+      'Pour chaque élément en cause, son sélecteur et un extrait de code : votre développeur ou votre agence sait où corriger.',
+      'Les 20 vérifications manuelles que l’automate ne peut pas faire, à réaliser vous-même ou à confier à un auditeur.',
+      'Un PDF en français, allemand ou anglais, avec captures des pages et la facture acquittée. Les intitulés des règles du moteur axe-core restent en anglais.',
     ],
     galleryTitle: 'Un exemple de rapport',
     galleryIntro: 'Rapport produit par la chaîne d’audit réelle sur une page de boutique fictive, volontairement défectueuse (1 page, 2 tailles d’écran, 7 types de problèmes).',
@@ -68,12 +70,13 @@ const T = {
     ],
     openHtml: 'Ouvrir l’exemple dans le navigateur',
     openPdf: 'Télécharger l’exemple en PDF (format livré)',
-    whoTitle: 'Pour qui',
+    whoTitle: 'À qui il sert',
     who: [
-      ['Boutiques et services en ligne', 'Vous vendez à des particuliers en ligne et l’Acte européen sur l’accessibilité vous concerne : vous voulez la liste des défauts à corriger en priorité.'],
-      ['Agences et indépendants du web', 'Vous voulez un état des lieux rapide du site d’un client, avant une refonte ou un devis de corrections (avec son autorisation).'],
-      ['Entreprises qui rédigent leur déclaration', 'Vous préparez votre déclaration d’accessibilité ou les informations exigées par l’EAA et voulez partir de constats réels.'],
+      'Vous vendez en ligne à des particuliers et l’Acte européen vous concerne : le rapport dit quels défauts corriger d’abord.',
+      'Vous êtes une agence ou un indépendant du web et voulez un état des lieux du site d’un client, avec son autorisation, avant une refonte ou un devis de corrections.',
+      'Vous rédigez votre déclaration d’accessibilité ou les informations exigées par l’EAA et voulez partir de constats réels.',
     ],
+    whoNot: 'Il ne vous servira pas si vous avez besoin d’une attestation ou d’un taux de conformité, si votre site vend uniquement à des professionnels (ventes non visées par l’EAA) ou si votre entreprise n’est pas immatriculée en France : la commande demande un numéro SIREN.',
     offerTitle: `Audit automatisé partiel d’accessibilité : ${PRICE.ttc} net`,
     offerVat: 'TVA non applicable, art. 293 B du CGI. Paiement unique par carte (Stripe). Réservé aux entreprises immatriculées en France (SIREN).',
     offerList: [`Jusqu’à ${MAX_PAGES} pages, ordinateur et mobile`, 'Rapport PDF sous 24 h ouvrées après le paiement', 'Problèmes classés par gravité, éléments et code en cause', '20 vérifications manuelles à faire ensuite', 'Facture acquittée envoyée avec le rapport'],
@@ -83,7 +86,7 @@ const T = {
     faqTitle: 'Questions fréquentes',
     faq: [
       ['Mon site est-il concerné ?', `<p>En France, l’Acte européen sur l’accessibilité (directive (UE) 2019/882, transposée par la loi n° 2023-171) s’applique depuis le 28 juin 2025 aux services fournis aux consommateurs, notamment le <strong>commerce en ligne</strong> (vente à des particuliers sur un site ou une application), les services bancaires aux consommateurs, les livres numériques, le transport de voyageurs et les communications électroniques. Les ventes uniquement entre professionnels ne sont pas visées.</p>
-<p>Les <strong>microentreprises qui fournissent des services</strong> en sont dispensées : moins de 10 personnes <em>et</em> chiffre d’affaires annuel ou total du bilan n’excédant pas 2 millions d’euros (code de la consommation, art. L. 412-13). Par ailleurs, l’article 47 de la loi n° 2005-102 impose une déclaration au format RGAA aux organismes publics et aux entreprises dont le chiffre d’affaires en France dépasse 250 millions d’euros.</p>
+<p>Les <strong>microentreprises qui fournissent des services</strong> en sont dispensées : moins de 10 personnes <em>et</em> chiffre d’affaires annuel ou total du bilan n’excédant pas 2 millions d’euros (code de la consommation, art. L. 412-13). L’article 47 de la loi n° 2005-102 impose une déclaration au format RGAA aux organismes publics et aux entreprises dont le chiffre d’affaires en France dépasse 250 millions d’euros.</p>
 <p>Le questionnaire du <a href="${url(ROUTES.home.fr)}">générateur gratuit</a> donne une première indication ; les textes sont sur la page <a href="${url(ROUTES.sources.fr)}">Obligations et sources</a>. Ce n’est pas un conseil juridique.</p>`],
       ['Est-ce un audit RGAA ?', `<p>Non. Ce n’est pas un audit de conformité RGAA (ni WCAG / EN 301 549) : les tests automatiques ne repèrent qu’une partie des défauts, et un audit complet vérifie à la main les 106 critères du RGAA sur un échantillon de pages. Le rapport ne donne donc aucun taux de conformité et ne vaut pas attestation.</p>`],
       ['Que faire du rapport ?', `<ol><li>Transmettez-le à votre développeur ou à votre agence (les CGV l’autorisent) et corrigez d’abord les problèmes « critiques » et « sérieux », en commençant par le parcours d’achat.</li><li>Faites les 20 vérifications manuelles listées, idéalement avec un lecteur d’écran.</li><li>Rédigez votre déclaration d’accessibilité ou les informations exigées par l’EAA avec le <a href="${url(ROUTES.home.fr)}">générateur gratuit</a> : tant qu’aucun audit complet n’a été réalisé, l’état à indiquer reste « non conforme ».</li></ol>`],
@@ -102,30 +105,31 @@ const T = {
     bar: ['Audit 20 pages · 149 €', 'Commander'],
   },
   de: {
-    eyebrow: 'Automatisierte Barrierefreiheitsprüfung · EAA · BFSG',
-    h1: `Ihre ${MAX_PAGES} wichtigsten Seiten auf Desktop und Mobil geprüft, mit priorisierter Korrekturliste`,
-    lead: 'Ein PDF-Bericht per E-Mail innerhalb von 24 Arbeitsstunden: jedes gefundene Problem, seine Schwere, die betroffenen Elemente und das passende WCAG-Kriterium.',
-    cta: 'Prüfung bestellen – 149 €',
-    ctaNote: 'Bestellung auf Französisch, nur für in Frankreich eingetragene Unternehmen (SIREN).',
-    second: ['Erst einen Auszug kostenlos testen', ROUTES.check.de],
+    eyebrow: 'Nur für Unternehmen mit Sitz in Frankreich',
+    h1: `Automatisiertes Barrierefreiheits-Audit von ${MAX_PAGES} Seiten für Unternehmen in Frankreich`,
+    lead: 'Bis zu 20 Seiten, auf Desktop und Mobil getestet. Der PDF-Bericht kommt innerhalb von 24 Arbeitsstunden per E-Mail und nennt jedes gefundene Problem, seine Schwere, die betroffenen Elemente und das WCAG-Kriterium.',
+    cta: 'Als Unternehmen in Frankreich bestellen – 149 €',
+    ctaNote: '',
+    frOnly: 'Wir verkaufen dieses Audit nur an Unternehmen, die in Frankreich eingetragen sind: Die Bestellung verlangt eine SIREN-Nummer, Bestellformular und AGB sind auf Französisch. Für Shops in Deutschland und Österreich sind der Generator für die Barrierefreiheitserklärung, der Selbsttest und die Mini-Prüfung kostenlos.',
+    free: ['Kostenlosen Generator öffnen', ROUTES.home.de],
+    second: ['Mini-Prüfung kostenlos', ROUTES.check.de],
     limits: 'Automatisierte Prüfung mit axe-core, ohne menschliche Durchsicht. Keine vollständige Konformitätsprüfung.',
     visualAlt: 'Erste Seite eines Beispielberichts: Übersicht der gefundenen Probleme nach Schweregrad',
     visualCaption: 'Echter Bericht, erstellt auf unserer Demo-Seite',
-    whyTitle: 'Warum jetzt',
+    whyTitle: 'Was seit dem 28. Juni 2025 gilt',
     why: [
-      ['Seit 28. Juni 2025', 'Der European Accessibility Act und das BFSG gelten für Online-Shops und weitere Dienstleistungen für Verbraucher.'],
-      ['Wissen, wo Sie stehen', 'Vor Erklärung und Korrekturen brauchen Sie eine konkrete Liste der Barrieren, Seite für Seite.'],
-      ['Schneller erster Überblick', 'Eine vollständige Prüfung erfolgt manuell durch Prüfer und wird nach Aufwand angeboten. Die automatisierte Prüfung liefert in 24 Stunden, was ein Automat finden kann: ein Startpunkt, kein Ersatz.'],
+      'Der European Accessibility Act und das BFSG gelten für Online-Shops, die an Verbraucher verkaufen, und für weitere Dienstleistungen für Verbraucher. Wer eine Dienstleistung entgegen § 14 Abs. 1 BFSG anbietet, riskiert ein Bußgeld bis 100.000 € (§ 37).',
+      'Vor der Erklärung und vor Korrekturen brauchen Sie eine Liste der Barrieren, Seite für Seite. Eine vollständige Prüfung macht ein Prüfer von Hand, nach Aufwand. Das automatisierte Audit liefert in 24 Arbeitsstunden, was ein Automat finden kann, und ersetzt diese Prüfung nicht.',
     ],
     whyMore: ['Gesetzestexte und Ausnahmen', ROUTES.sources.de],
     getTitle: 'Was Sie erhalten',
     get: [
-      `<strong>Bis zu ${MAX_PAGES} öffentliche Seiten</strong>: von Ihnen angegeben oder automatisch über Links gefunden (gleiche Domain, robots.txt beachtet).`,
-      '<strong>Desktop (1.280 px) und Mobil (390 px)</strong>, mit Erkennung von horizontalem Scrollen.',
-      '<strong>Probleme nach Schweregrad</strong>, mit WCAG-Kriterium und Anzahl betroffener Seiten und Elemente.',
-      '<strong>Betroffene Elemente</strong>: Selektor und Codeauszug für Ihre Entwickler.',
-      '<strong>20 manuelle Prüfungen</strong>, die ein Automat nicht leisten kann.',
-      '<strong>PDF auf Deutsch, Französisch oder Englisch</strong> (Regeltitel von axe-core auf Englisch), mit Screenshots und quittierter Rechnung.',
+      `Höchstens ${MAX_PAGES} öffentliche Seiten, von Ihnen angegeben oder über Links ab der Startadresse gefunden (gleiche Domain, robots.txt beachtet).`,
+      'Jede Seite auf Desktop (1.280 px) und Mobil (390 px) getestet, mit Erkennung von horizontalem Scrollen.',
+      'Probleme nach Schweregrad, mit WCAG-Kriterium und Anzahl betroffener Seiten und Elemente.',
+      'Selektor und Codeauszug jedes betroffenen Elements, damit Ihre Entwickler wissen, wo sie ansetzen.',
+      '20 manuelle Prüfungen, die ein Automat nicht leisten kann.',
+      'Ein PDF auf Deutsch, Französisch oder Englisch mit Screenshots und quittierter Rechnung. Die Regeltitel von axe-core bleiben englisch.',
     ],
     galleryTitle: 'Beispielbericht',
     galleryIntro: 'Erstellt mit der echten Prüfkette auf einer absichtlich fehlerhaften, fiktiven Shop-Seite (1 Seite, 2 Bildschirmgrößen, 7 Problemarten).',
@@ -138,10 +142,10 @@ const T = {
     openPdf: 'Beispiel als PDF herunterladen (Lieferformat)',
     whoTitle: 'Für wen',
     who: [
-      ['Online-Shops', 'Sie verkaufen online an Verbraucher und möchten wissen, welche Barrieren Sie zuerst beheben.'],
-      ['Agenturen und Freelancer', 'Schneller Überblick über die Website eines Kunden (mit dessen Erlaubnis).'],
-      ['Unternehmen mit Erklärungspflicht', 'Sie erstellen die Barrierefreiheitsinformationen und brauchen echte Befunde.'],
+      'Ihr Unternehmen ist in Frankreich eingetragen, verkauft online an Verbraucher und will wissen, welche Barrieren zuerst zu beheben sind.',
+      'Sie sind eine Agentur in Frankreich und brauchen, mit Erlaubnis des Kunden, einen Überblick über dessen Website.',
     ],
+    whoNot: 'Nicht für Sie, wenn Ihr Unternehmen nicht in Frankreich eingetragen ist, wenn Sie nur an Unternehmen verkaufen oder wenn Sie ein Konformitätszertifikat brauchen.',
     offerTitle: `Automatisierte Teilprüfung der Barrierefreiheit: 149 € netto`,
     offerVat: 'Keine Umsatzsteuer ausgewiesen gemäß Art. 293 B CGI. Einmalzahlung per Karte (Stripe). Nur für in Frankreich eingetragene Unternehmen (SIREN).',
     offerList: [`Bis zu ${MAX_PAGES} Seiten, Desktop und Mobil`, 'PDF-Bericht innerhalb von 24 Arbeitsstunden', 'Probleme nach Schweregrad, betroffene Elemente', '20 manuelle Prüfungen', 'Quittierte Rechnung mit dem Bericht'],
@@ -150,6 +154,7 @@ const T = {
     offerTerms: 'AGB (Französisch)',
     faqTitle: 'Häufige Fragen',
     faq: [
+      ['Kann ich aus Deutschland oder Österreich bestellen?', `<p>Nein. Die Bestellung verlangt eine französische SIREN-Nummer, Bestellformular, Rechnung und AGB sind auf Französisch. Den <a href="${url(ROUTES.home.de)}">Generator</a> und die <a href="${url(ROUTES.check.de)}">Mini-Prüfung</a> können Sie kostenlos nutzen.</p>`],
       ['Betrifft das meine Website?', `<p>Das BFSG (Umsetzung der Richtlinie (EU) 2019/882) gilt seit dem 28. Juni 2025 u. a. für den <strong>elektronischen Geschäftsverkehr</strong> mit Verbrauchern, Bankdienstleistungen, E-Books, Personenbeförderung und Telekommunikation. <strong>Kleinstunternehmen, die Dienstleistungen erbringen</strong> (weniger als 10 Beschäftigte und Jahresumsatz oder Jahresbilanzsumme höchstens 2 Mio. €), sind ausgenommen (BFSG § 3 Abs. 3). Details: <a href="${url(ROUTES.sources.de)}">Pflichten und Quellen</a>. Keine Rechtsberatung.</p>`],
       ['Ist das eine vollständige Prüfung?', '<p>Nein. Automatische Tests finden nur einen Teil der Barrieren; der Bericht nennt keinen Konformitätsgrad und ist keine Bescheinigung.</p>'],
       ['Was mache ich mit dem Bericht?', `<p>Geben Sie ihn an Ihre Entwickler oder Agentur, beheben Sie zuerst „kritische“ und „ernste“ Probleme im Kaufprozess, führen Sie die 20 manuellen Prüfungen durch und erstellen Sie Ihre Erklärung mit dem <a href="${url(ROUTES.home.de)}">kostenlosen Generator</a>.</p>`],
@@ -166,30 +171,31 @@ const T = {
     bar: ['Prüfung 20 Seiten · 149 €', 'Bestellen'],
   },
   en: {
-    eyebrow: 'Automated accessibility audit · European Accessibility Act',
-    h1: `Your ${MAX_PAGES} key pages tested on desktop and mobile, with a prioritised list of fixes`,
-    lead: 'A PDF report e-mailed within 24 business hours: every issue detected, its severity, the elements involved and the matching WCAG criterion.',
-    cta: 'Order the audit – €149',
-    ctaNote: 'Ordering is in French and open to companies registered in France (SIREN).',
-    second: ['Test a snippet for free first', ROUTES.check.en],
+    eyebrow: 'For companies registered in France only',
+    h1: `Automated accessibility audit of ${MAX_PAGES} pages for companies in France`,
+    lead: 'Up to 20 pages, tested on desktop and mobile. The PDF report is e-mailed within 24 business hours and lists every issue detected, its severity, the elements involved and the WCAG criterion.',
+    cta: 'Order as a company in France – €149',
+    ctaNote: '',
+    frOnly: 'We sell this audit only to companies registered in France: the order form asks for a SIREN number, and the form and terms of sale are in French. Outside France, the accessibility statement generator, the self-check and the mini-test are free.',
+    free: ['Open the free generator', ROUTES.home.en],
+    second: ['Free mini-test', ROUTES.check.en],
     limits: 'Automated analysis with axe-core, no human review. Not a full conformance audit.',
     visualAlt: 'First page of a sample report: summary of detected issues by severity',
     visualCaption: 'Real report, generated on our demo page',
-    whyTitle: 'Why now',
+    whyTitle: 'What applies since 28 June 2025',
     why: [
-      ['Since 28 June 2025', 'The European Accessibility Act applies to online shops and other consumer services. Covered businesses must publish accessibility information about their service.'],
-      ['Know where you stand', 'Before writing a statement or ordering fixes, you need a concrete list of issues, page by page.'],
-      ['A fast first pass', 'A full audit is done by hand by an auditor and priced on quote, in days of work. The automated audit gives you in 24 hours what a machine can detect: a starting point, not a substitute.'],
+      'The European Accessibility Act (Directive (EU) 2019/882) covers online shops that sell to consumers and several other consumer services. Covered businesses must publish accessibility information about their service; in France, failing to draw up or publish it is a 5th-class contravention (Code de la consommation, art. R. 451-4).',
+      'Before writing that information or getting fixes quoted, you need a list of issues, page by page. A full audit is done by hand by an auditor, on quote, in days of work. Our automated audit finds in 24 business hours what a machine can detect, and does not replace that full audit.',
     ],
     whyMore: ['Official texts and exemptions', ROUTES.sources.en],
     getTitle: 'What you get',
     get: [
-      `<strong>Up to ${MAX_PAGES} public pages</strong>: the ones you list, or those found by following links from your site address (same domain, robots.txt respected).`,
-      '<strong>Desktop (1,280 px) and mobile (390 px)</strong>, with horizontal-scroll detection on mobile.',
-      '<strong>Issues ranked by severity</strong>, with the WCAG criterion and the number of pages and elements affected.',
-      '<strong>The elements involved</strong>: selector and code excerpt for your developer.',
-      '<strong>20 manual checks</strong> automation cannot do.',
-      '<strong>A PDF in English, French or German</strong>, with page screenshots and the paid invoice.',
+      `At most ${MAX_PAGES} public pages, the ones you list or those found by following links from your site address (same domain, robots.txt respected).`,
+      'Each page tested on desktop (1,280 px) and mobile (390 px), with horizontal-scroll detection on mobile.',
+      'Issues ranked by severity, with the WCAG criterion and the number of pages and elements affected.',
+      'The selector and a code excerpt of each element involved, so your developer knows where to fix.',
+      '20 manual checks that automation cannot do.',
+      'A PDF in English, French or German, with page screenshots and the paid invoice.',
     ],
     galleryTitle: 'A sample report',
     galleryIntro: 'Produced by the real audit pipeline on a deliberately flawed, fictitious shop page (1 page, 2 screen sizes, 7 issue types).',
@@ -202,10 +208,10 @@ const T = {
     openPdf: 'Download the sample PDF (delivered format)',
     whoTitle: 'Who it is for',
     who: [
-      ['Online shops and consumer services', 'You sell to consumers online and want to know which issues to fix first.'],
-      ['Web agencies and freelancers', 'A quick baseline of a client’s site before a redesign or a quote (with their permission).'],
-      ['Businesses writing their statement', 'You are preparing your EAA accessibility information and want real findings to start from.'],
+      'Your company is registered in France, sells to consumers online and wants to know which issues to fix first.',
+      'You run a web agency in France and, with a client’s permission, want a baseline of their site before quoting a redesign.',
     ],
+    whoNot: 'It is not for you if your company is not registered in France, if you only sell to businesses, or if you need a certificate of conformity.',
     offerTitle: 'Partial automated accessibility audit: €149 net',
     offerVat: 'VAT not applicable, art. 293 B of the French tax code. One-off card payment (Stripe). Companies registered in France only (SIREN).',
     offerList: [`Up to ${MAX_PAGES} pages, desktop and mobile`, 'PDF report within 24 business hours', 'Issues by severity, elements and code involved', '20 manual checks to do next', 'Paid invoice sent with the report'],
@@ -214,6 +220,7 @@ const T = {
     offerTerms: 'Terms of sale (French)',
     faqTitle: 'Frequently asked questions',
     faq: [
+      ['Can I order from outside France?', `<p>No. The order form asks for a French SIREN number, and the form, invoice and terms are in French. The <a href="${url(ROUTES.home.en)}">generator</a> and the <a href="${url(ROUTES.check.en)}">mini-test</a> are free to use from anywhere.</p>`],
       ['Is my site concerned?', `<p>Since 28 June 2025 the European Accessibility Act (Directive (EU) 2019/882) applies to consumer services such as <strong>e-commerce</strong>, consumer banking, e-books, passenger transport and electronic communications. <strong>Microenterprises providing services</strong> (fewer than 10 staff and annual turnover or balance sheet total of at most €2 million) are exempt (art. 4(5)). Business-to-business sales only are not covered. Details: <a href="${url(ROUTES.sources.en)}">obligations and sources</a>. Not legal advice.</p>`],
       ['Is this a full audit?', '<p>No. Automated tests only find part of the issues; the report gives no conformance rate and is not a certificate.</p>'],
       ['What do I do with the report?', `<p>Hand it to your developer or agency, fix “critical” and “serious” issues on the purchase path first, do the 20 manual checks, then draft your statement with the <a href="${url(ROUTES.home.en)}">free generator</a>.</p>`],
@@ -237,22 +244,31 @@ function auditPage(lang) {
   const t = T[lang];
   const sample = SAMPLE[lang];
   const orderAttrs = lang === 'fr' ? '' : ' hreflang="fr"';
+  // DE and EN: the audit is sold to companies registered in France only (founder decision 2026-10-13, no
+  // sales in Germany). Those pages lead with the free tools; the order button stays in the offer card.
+  const heroCta = t.frOnly
+    ? `<p class="callout info fr-only">${t.frOnly}</p>
+<div class="cta-row">
+<a class="btn btn-lg" href="${url(t.free[1])}">${t.free[0]}</a>
+<a class="text-link" href="${url(t.second[1])}">${t.second[0]} →</a>
+</div>`
+    : `<div class="cta-row">
+<a class="btn btn-lg" href="${ORDER}"${orderAttrs}>${t.cta}</a>
+<a class="text-link" href="${url(t.second[1])}">${t.second[0]} →</a>
+</div>`;
   return `<section class="lp-hero">
 <div class="lp-hero-text">
 <p class="eyebrow">${t.eyebrow}</p>
 <h1>${t.h1}</h1>
 <p class="lead">${t.lead}</p>
-<div class="cta-row">
-<a class="btn btn-lg" href="${ORDER}"${orderAttrs}>${t.cta}</a>
-<a class="text-link" href="${url(t.second[1])}">${t.second[0]} →</a>
-</div>
+${heroCta}
 ${t.ctaNote ? `<p class="fine">${t.ctaNote}</p>\n` : ''}<p class="fine limits">${t.limits}</p>
 </div>
 <figure class="lp-hero-visual">
 <a class="doc-stack" href="${url(sample.html)}">
-<img class="doc doc-3" src="${img(lang, 5)}" alt="" width="760" height="1075" loading="lazy" decoding="async">
-<img class="doc doc-2" src="${img(lang, 2)}" alt="" width="760" height="1075" loading="lazy" decoding="async">
-<img class="doc doc-1" src="${img(lang, 1)}" alt="${t.visualAlt}" width="760" height="1075" fetchpriority="high">
+<img class="doc doc-3" src="${img(lang, 5)}" srcset="${srcset(lang, 5)}" sizes="${HERO_SIZES}" alt="" width="760" height="1075" loading="lazy" decoding="async">
+<img class="doc doc-2" src="${img(lang, 2)}" srcset="${srcset(lang, 2)}" sizes="${HERO_SIZES}" alt="" width="760" height="1075" loading="lazy" decoding="async">
+<img class="doc doc-1" src="${img(lang, 1)}" srcset="${srcset(lang, 1)}" sizes="${HERO_SIZES}" alt="${t.visualAlt}" width="760" height="1075" fetchpriority="high">
 </a>
 <figcaption>${t.visualCaption}</figcaption>
 </figure>
@@ -260,7 +276,7 @@ ${t.ctaNote ? `<p class="fine">${t.ctaNote}</p>\n` : ''}<p class="fine limits">$
 
 <section class="lp-section" aria-labelledby="why-title">
 <h2 id="why-title">${t.whyTitle}</h2>
-<div class="cards cards-3">${t.why.map(([h, p]) => `<div class="card"><h3>${h}</h3><p>${p}</p></div>`).join('')}</div>
+<div class="prose">${t.why.map((p) => `<p>${p}</p>`).join('\n')}</div>
 <p><a href="${url(t.whyMore[1])}">${t.whyMore[0]} →</a></p>
 </section>
 
@@ -273,7 +289,7 @@ ${t.ctaNote ? `<p class="fine">${t.ctaNote}</p>\n` : ''}<p class="fine limits">$
 <h2 id="gallery-title">${t.galleryTitle}</h2>
 <p>${t.galleryIntro}</p>
 <div class="gallery">
-${t.shots.map(([alt, cap], i) => `<figure><a href="${url(sample.html)}"><img src="${img(lang, [1, 2, 5][i])}" alt="${alt}" width="760" height="1075" loading="lazy" decoding="async"></a><figcaption>${cap}</figcaption></figure>`).join('\n')}
+${t.shots.map(([alt, cap], i) => `<figure><a href="${url(sample.html)}"><img src="${img(lang, [1, 2, 5][i])}" srcset="${srcset(lang, [1, 2, 5][i])}" sizes="${GALLERY_SIZES}" alt="${alt}" width="760" height="1075" loading="lazy" decoding="async"></a><figcaption>${cap}</figcaption></figure>`).join('\n')}
 </div>
 <div class="btn-row">
 <a class="btn secondary" href="${url(sample.html)}">${t.openHtml}</a>
@@ -283,7 +299,8 @@ ${t.shots.map(([alt, cap], i) => `<figure><a href="${url(sample.html)}"><img src
 
 <section class="lp-section" aria-labelledby="who-title">
 <h2 id="who-title">${t.whoTitle}</h2>
-<div class="cards cards-3">${t.who.map(([h, p]) => `<div class="card"><h3>${h}</h3><p>${p}</p></div>`).join('')}</div>
+<ul class="who-list">${t.who.map((p) => `<li>${p}</li>`).join('')}</ul>
+<p class="callout">${t.whoNot}</p>
 </section>
 
 <section class="lp-section" id="offre" aria-labelledby="offer-title">
@@ -328,7 +345,7 @@ ${FOUNDERS.map((f) => `<li class="founder">
 
 <p class="fine sources-line">${t.legal}</p>
 
-<div class="cta-bar"><span>${t.bar[0]}</span><a class="btn" href="${ORDER}"${orderAttrs}>${t.bar[1]} →</a></div>`;
+${t.frOnly ? '' : `<div class="cta-bar"><span>${t.bar[0]}</span><a class="btn" href="${ORDER}"${orderAttrs}>${t.bar[1]} →</a></div>`}`;
 }
 
 export const auditSalesBodies = { fr: auditPage('fr'), de: auditPage('de'), en: auditPage('en') };

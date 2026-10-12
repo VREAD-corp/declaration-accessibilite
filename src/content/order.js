@@ -100,9 +100,9 @@ export const auditOpenBodies = {
 };
 
 export const AUDIT_META_OPEN = {
-  fr: ['Audit accessibilité automatique EAA et RGAA (partiel) – 20 pages', `Analyse axe-core jusqu’à 20 pages (EAA, RGAA), rapport PDF sous 24 h ouvrées. ${PRICE.ttc} net, TVA non applicable, art. 293 B du CGI. Pas un audit de conformité.`],
-  de: ['Automatisierte Barrierefreiheitsprüfung BFSG/EAA – Teilprüfung', 'axe-core-Teilprüfung, bis 20 Seiten, PDF in 24 Arbeitsstunden. 149 € netto, keine Umsatzsteuer ausgewiesen gemäß Art. 293 B CGI. Keine Konformitätsprüfung.'],
-  en: ['Automated accessibility audit for the EAA (partial) – 20 pages', 'Partial axe-core scan of up to 20 pages, PDF in 24 business hours. €149 net, VAT not applicable, art. 293 B of the French tax code. Not a conformance audit.'],
+  fr: ['Audit d’accessibilité automatisé : 20 pages, 149 € (RGAA)', `Audit d’accessibilité automatisé et partiel (RGAA, EAA) de 20 pages, rapport PDF sous 24 h ouvrées. ${PRICE.ttc} net, TVA non applicable, art. 293 B du CGI.`],
+  de: ['Automatisiertes Barrierefreiheits-Audit (nur Firmen in FR)', 'Automatisierte Teilprüfung, bis 20 Seiten, PDF in 24 Arbeitsstunden. 149 € netto, keine USt. ausgewiesen (Art. 293 B CGI). Nur Firmen in Frankreich.'],
+  en: ['Automated accessibility audit for companies in France', 'Partial automated audit of up to 20 pages, PDF in 24 business hours. €149 net, VAT not applicable (art. 293 B CGI). Companies registered in France only.'],
 };
 
 /** schema.org publisher of the site (same @id on every page that declares it). */

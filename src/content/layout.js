@@ -12,7 +12,7 @@ const LANG_NAMES = { fr: 'Français', de: 'Deutsch', en: 'English' };
 export function layout(page) {
   const c = CHROME[page.lang];
   const nav = NAV[page.lang]
-    .map((n) => `<li><a href="${url(n.path)}"${n.path === ROUTES.audit[page.lang] ? ' class="nav-cta"' : ''}${n.path === page.path ? ' aria-current="page"' : ''}>${esc(n.label)}</a></li>`)
+    .map((n) => `<li><a href="${url(n.path)}"${n.path === ROUTES.audit[page.lang] && page.lang === 'fr' ? ' class="nav-cta"' : ''}${n.path === page.path ? ' aria-current="page"' : ''}>${esc(n.label)}</a></li>`)
     .join('');
   const alts = page.alternates || [];
   const langLinks = ['fr', 'de', 'en']

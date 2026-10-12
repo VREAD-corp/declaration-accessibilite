@@ -208,6 +208,15 @@ main { padding-bottom: 3rem; }
 .card { border: 1px solid var(--line); border-radius: var(--radius); padding: 1.1rem 1.2rem; background: var(--card); box-shadow: var(--shadow); }
 .card h3 { margin-top: 0; }
 .card p:last-child { margin-bottom: 0; }
+.prose { max-width: 46rem; }
+.who-list { max-width: 46rem; padding-left: 1.2rem; }
+.who-list li { margin: .5rem 0; }
+.who-list + .callout { max-width: 46rem; }
+.next-list { list-style: none; padding: 0; margin: 1rem 0; display: grid; gap: 1.1rem; max-width: 46rem; }
+.next-list li { border-left: 3px solid var(--accent); padding-left: 1rem; }
+.next-list h3 { margin: 0 0 .25rem; font-size: 1.05rem; }
+.next-list p { margin: 0; }
+.fr-only { max-width: 40rem; }
 
 fieldset { border: 1px solid var(--line); border-radius: var(--radius); padding: 1rem 1rem 1.2rem; margin: 0 0 1.2rem; min-width: 0; background: var(--card); }
 legend { font-weight: 700; font-size: 1.1rem; padding: 0 .4rem; }

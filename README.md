@@ -10,7 +10,7 @@ Outil gratuit, entièrement côté navigateur, pour rédiger :
 - une **grille d’auto-contrôle en 20 points** (WCAG 2.1, correspondances RGAA 4.1) ;
 - un **mini-test automatique** d’un extrait HTML avec axe-core, exécuté dans un cadre isolé sans accès réseau.
 
-Exports Word (.docx), HTML et Markdown. Aucune donnée n’est envoyée : pas de serveur, pas de cookie, pas de mesure d’audience.
+Exports Word (.docx), HTML et Markdown. Rien de ce que vous saisissez n’est envoyé : pas de serveur pour le générateur ni le mini-test, pas de cookie. Une mesure d’audience anonyme (`mesure.js`, sans cookie ni donnée personnelle) compte les pages vues et quelques clics.
 
 Les **modèles vierges** sont publiés dans les [Releases](https://github.com/VREAD-corp/declaration-accessibilite/releases).
 
