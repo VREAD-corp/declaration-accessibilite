@@ -1,5 +1,5 @@
-import { SITE, ROUTES, RELEASE_DL, OPEN } from './site.js';
-import { auditOpenBodies, AUDIT_META_OPEN, orderBody, orderScripts, orderReturnBody, orderReturnScripts, ORDER_CSP, ORDER_RETURN_CSP, cgvProBody, privacyOrderSection, cgvDraftReplaced } from './order.js';
+import { SITE, ROUTES, RELEASE_DL, OPEN, PRICE } from './site.js';
+import { auditOpenBodies, AUDIT_META_OPEN, auditJsonLd, ORG_JSONLD, orderBody, orderScripts, orderReturnBody, orderReturnScripts, ORDER_CSP, ORDER_RETURN_CSP, cgvProBody, privacyOrderSection, cgvDraftReplaced } from './order.js';
 import { url } from './layout.js';
 import { formHtml } from './form.js';
 import { legalBodies, privacyBodies, cgvBody } from './legal.js';
@@ -34,11 +34,12 @@ const HOME = {
     noscript: 'Le générateur nécessite JavaScript. Vous pouvez aussi télécharger les modèles vierges ci-dessous.',
     tplTitle: 'Modèles gratuits à télécharger',
     tplText: 'Versions vierges à compléter, hébergées sur GitHub :',
+    teaser: `<strong>Nouveau :</strong> <a href="${url(ROUTES.audit.fr)}">audit d’accessibilité automatisé partiel, ${PRICE.ttc} net</a> (TVA non applicable, art. 293 B du CGI) : jusqu’à 20 pages analysées avec axe-core, rapport PDF sous 24 h ouvrées. Ce n’est pas un audit de conformité RGAA.`,
     nextTitle: 'Et ensuite ?',
     next: [
       ['Vérifier les bases', `Faites l’<a href="${url(ROUTES.check.fr)}">auto-contrôle en 20 points</a> et le mini-test automatique d’un extrait HTML.`],
       ['Comprendre vos obligations', `Textes officiels, exemption des microentreprises et autorités de contrôle : <a href="${url(ROUTES.sources.fr)}">sources et champ d’application</a>.`],
-      ['Aller plus loin', OPEN ? `Un <a href="${url(ROUTES.audit.fr)}">audit automatisé partiel à 149 € net</a> analyse jusqu’à 20 pages de votre site avec axe-core : rapport PDF sous 24 h ouvrées (ce n’est pas un audit de conformité RGAA).` : `Un <a href="${url(ROUTES.audit.fr)}">audit automatisé partiel à 149 € HT</a> est en préparation (pas encore de commande possible).`],
+      ['Aller plus loin', OPEN ? `Un <a href="${url(ROUTES.audit.fr)}">audit automatisé partiel à ${PRICE.ttc} net</a> (TVA non applicable, art. 293 B du CGI) analyse jusqu’à 20 pages de votre site avec axe-core : rapport PDF sous 24 h ouvrées (ce n’est pas un audit de conformité RGAA).` : `Un <a href="${url(ROUTES.audit.fr)}">audit automatisé partiel à 149 € net</a> (TVA non applicable, art. 293 B du CGI) est en préparation (pas encore de commande possible).`],
     ],
   },
   de: {
@@ -61,11 +62,12 @@ const HOME = {
     noscript: 'Der Generator benötigt JavaScript. Sie können auch die leeren Vorlagen unten herunterladen.',
     tplTitle: 'Kostenlose Vorlagen',
     tplText: 'Leere Vorlagen zum Ausfüllen, gehostet auf GitHub:',
+    teaser: `<strong>Neu:</strong> <a href="${url(ROUTES.audit.de)}">automatisierte Teilprüfung der Barrierefreiheit, 149 € netto</a> (keine Umsatzsteuer ausgewiesen gemäß Art. 293 B CGI): bis zu 20 Seiten mit axe-core, PDF-Bericht innerhalb von 24 Arbeitsstunden, für Unternehmen mit Sitz in Frankreich. Keine Konformitätsprüfung.`,
     nextTitle: 'Wie weiter?',
     next: [
       ['Grundlagen prüfen', `Machen Sie den <a href="${url(ROUTES.check.de)}">Selbsttest in 20 Punkten</a> und die automatische Mini-Prüfung eines HTML-Auszugs.`],
       ['Pflichten verstehen', `Gesetzestexte, Ausnahme für Kleinstunternehmen, Marktüberwachung: <a href="${url(ROUTES.sources.de)}">Quellen und Anwendungsbereich</a>.`],
-      ['Weitergehen', OPEN ? `Eine <a href="${url(ROUTES.audit.de)}">automatisierte Teilprüfung für 149 € netto</a> (bis zu 20 Seiten, PDF-Bericht, für Unternehmen mit Sitz in Frankreich).` : `Eine <a href="${url(ROUTES.audit.de)}">teilautomatisierte Prüfung für 149 € netto</a> ist in Vorbereitung (noch keine Bestellung möglich).`],
+      ['Weitergehen', OPEN ? `Eine <a href="${url(ROUTES.audit.de)}">automatisierte Teilprüfung für 149 € netto</a> (keine Umsatzsteuer ausgewiesen gemäß Art. 293 B CGI; bis zu 20 Seiten, PDF-Bericht, für Unternehmen mit Sitz in Frankreich).` : `Eine <a href="${url(ROUTES.audit.de)}">teilautomatisierte Prüfung für 149 € netto</a> (keine Umsatzsteuer ausgewiesen gemäß Art. 293 B CGI) ist in Vorbereitung (noch keine Bestellung möglich).`],
     ],
   },
   en: {
@@ -88,11 +90,12 @@ const HOME = {
     noscript: 'The generator needs JavaScript. You can also download the blank templates below.',
     tplTitle: 'Free templates',
     tplText: 'Blank templates to fill in, hosted on GitHub:',
+    teaser: `<strong>New:</strong> <a href="${url(ROUTES.audit.en)}">partial automated accessibility audit, €149 net</a> (VAT not applicable, art. 293 B of the French tax code): up to 20 pages scanned with axe-core, PDF report within 24 business hours, companies registered in France. Not a conformance audit.`,
     nextTitle: 'What next?',
     next: [
       ['Check the basics', `Run the <a href="${url(ROUTES.check.en)}">20-point self-check</a> and the automated mini-test of an HTML snippet.`],
       ['Understand your obligations', `Official texts, the microenterprise exemption and enforcement: <a href="${url(ROUTES.sources.en)}">sources and scope</a>.`],
-      ['Go further', OPEN ? `A <a href="${url(ROUTES.audit.en)}">partial automated audit at €149 net</a> (up to 20 pages, PDF report, companies registered in France).` : `A <a href="${url(ROUTES.audit.en)}">partial automated audit at €149</a> is in preparation (no orders yet).`],
+      ['Go further', OPEN ? `A <a href="${url(ROUTES.audit.en)}">partial automated audit at €149 net</a> (VAT not applicable, art. 293 B of the French tax code; up to 20 pages, PDF report, companies registered in France).` : `A <a href="${url(ROUTES.audit.en)}">partial automated audit at €149 net</a> (VAT not applicable, art. 293 B of the French tax code) is in preparation (no orders yet).`],
     ],
   },
 };
@@ -111,7 +114,7 @@ function homeBody(lang) {
 <p class="lead">${esc(h.lead)}</p>
 <ul class="badges">${h.badges.map((b) => `<li>${esc(b)}</li>`).join('')}</ul>
 <div class="callout">${h.warn}</div>
-<noscript><p class="callout">${esc(h.noscript)}</p></noscript>
+${OPEN ? `<p class="callout info" id="audit-offer">${h.teaser}</p>\n` : ''}<noscript><p class="callout">${esc(h.noscript)}</p></noscript>
 </section>
 <div class="grid gen-grid">
 <section aria-labelledby="form-title">
@@ -295,9 +298,9 @@ const NOT_FOUND = `<h1>Page introuvable / Seite nicht gefunden / Page not found<
 
 const META = {
   audit: {
-    fr: ['Audit automatisé partiel d’accessibilité – 149 € HT (bientôt)', 'Description de l’audit automatisé partiel à 149 € HT : 10 pages, 2 tailles d’écran, axe-core, rapport et brouillons de documents. Pas encore de commande possible.'],
-    de: ['Teilautomatisierte Barrierefreiheitsprüfung – 149 € (bald)', 'Was die teilautomatisierte Prüfung für 149 € netto enthalten würde: 10 Seiten, 2 Bildschirmgrößen, axe-core, Bericht und Entwürfe. Noch keine Bestellung möglich.'],
-    en: ['Partial automated accessibility audit – €149 (coming soon)', 'What the €149 partial automated audit would include: 10 pages, 2 screen sizes, axe-core, report and draft documents. No orders yet.'],
+    fr: ['Audit automatisé partiel d’accessibilité – 149 € net (bientôt)', 'Audit automatisé partiel à 149 € net (TVA non applicable, art. 293 B du CGI) : 10 pages, 2 tailles d’écran, axe-core, rapport. Pas encore de commande possible.'],
+    de: ['Teilautomatisierte Barrierefreiheitsprüfung – 149 € (bald)', 'Teilautomatisierte Prüfung für 149 € netto (keine Umsatzsteuer ausgewiesen gemäß Art. 293 B CGI): 10 Seiten, axe-core, Bericht. Noch keine Bestellung möglich.'],
+    en: ['Partial automated accessibility audit – €149 (coming soon)', 'Partial automated audit at €149 net (VAT not applicable, art. 293 B of the French tax code): 10 pages, axe-core, report. No orders yet.'],
   },
   legal: {
     fr: ['Mentions légales – A11y Kit', 'Éditeur, hébergeur, licences et avertissement du générateur de déclaration d’accessibilité A11y Kit.'],
@@ -349,17 +352,23 @@ for (const lang of LANGS) {
     alternates: alternates('home', lang),
     body: homeBody(lang),
     scripts: ['assets/js/app.js'],
+    updated: '2026-10-12',
     jsonld: {
       '@context': 'https://schema.org',
-      '@type': 'WebApplication',
-      name: h.h1,
-      url: SITE.origin + SITE.base + ROUTES.home[lang].replace(/^\//, ''),
-      applicationCategory: 'BusinessApplication',
-      operatingSystem: 'Any (web browser)',
-      inLanguage: lang,
-      isAccessibleForFree: true,
-      offers: { '@type': 'Offer', price: '0', priceCurrency: 'EUR' },
-      publisher: { '@type': 'Organization', name: 'READ FRANCE SAS' },
+      '@graph': [
+        ORG_JSONLD,
+        {
+          '@type': 'WebApplication',
+          name: h.h1,
+          url: SITE.origin + SITE.base + ROUTES.home[lang].replace(/^\//, ''),
+          applicationCategory: 'BusinessApplication',
+          operatingSystem: 'Any (web browser)',
+          inLanguage: lang,
+          isAccessibleForFree: true,
+          offers: { '@type': 'Offer', price: '0', priceCurrency: 'EUR' },
+          publisher: { '@id': ORG_JSONLD['@id'] },
+        },
+      ],
     },
   });
   PAGES.push({
@@ -380,6 +389,8 @@ for (const lang of LANGS) {
     description: (OPEN ? AUDIT_META_OPEN : META.audit)[lang][1],
     alternates: alternates('audit', lang),
     body: OPEN ? auditOpenBodies[lang] : auditBodies[lang],
+    jsonld: OPEN ? auditJsonLd(lang) : undefined,
+    updated: '2026-10-12',
   });
   PAGES.push({
     id: 'sources',

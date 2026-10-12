@@ -90,6 +90,47 @@ test('SALES_OPEN=true: offer page, order page (audit fields, attestation, CSP), 
   assert.doesNotMatch(readFileSync(join(openDir, 'sitemap.xml'), 'utf8'), /commande|commander|cgv-pro/);
 });
 
+const jsonLd = (html) => [...html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)].flatMap((m) => {
+  const d = JSON.parse(m[1]);
+  return d['@graph'] ?? [d];
+});
+const ORG_ID = 'https://vread-corp.github.io/#org';
+
+test('SALES_OPEN=true: audit pages carry parseable Product JSON-LD (149.00 EUR, InStock) and the Organization with its SIREN', () => {
+  for (const [path, lang] of [['audit/index.html', 'fr'], ['en/audit/index.html', 'en'], ['de/audit/index.html', 'de']]) {
+    const html = readFileSync(join(openDir, path), 'utf8');
+    const nodes = jsonLd(html);
+    const product = nodes.find((n) => n['@type'] === 'Product');
+    assert.ok(product, `${path}: Product`);
+    assert.equal(product.sku, 'a11y-audit-auto');
+    assert.equal(product.brand.name, 'A11y Kit');
+    assert.equal(product.url, `https://vread-corp.github.io/declaration-accessibilite/${path.replace('index.html', '')}`);
+    assert.match(product.description, lang === 'de' ? /Keine Konformitätsprüfung/ : lang === 'en' ? /Not a conformance audit/ : /pas un audit de conformité/);
+    assert.equal(product.offers['@type'], 'Offer');
+    assert.equal(product.offers.price, (repoConfig.amount / 100).toFixed(2));
+    assert.equal(product.offers.price, '149.00');
+    assert.equal(product.offers.priceCurrency, 'EUR');
+    assert.equal(product.offers.availability, 'https://schema.org/InStock');
+    assert.equal(product.offers.url, 'https://vread-corp.github.io/declaration-accessibilite/commander.html');
+    assert.equal(product.offers.seller['@id'], ORG_ID);
+    assert.ok(!('valueAddedTaxIncluded' in product.offers));
+    const org = nodes.find((n) => n['@type'] === 'Organization');
+    assert.equal(org['@id'], ORG_ID);
+    assert.equal(org.legalName, 'READ FRANCE');
+    assert.deepEqual(org.identifier, { '@type': 'PropertyValue', propertyID: 'SIREN', value: '988741773' });
+    assert.equal(org.address.postalCode, '75019');
+    assert.match(html, /<meta name="description" content="[^"]*net[^"]*293 B/);
+  }
+  for (const path of ['index.html', 'en/index.html', 'de/index.html']) {
+    const nodes = jsonLd(readFileSync(join(openDir, path), 'utf8'));
+    assert.ok(nodes.some((n) => n['@type'] === 'WebApplication' && n.publisher['@id'] === ORG_ID), path);
+    assert.equal(nodes.find((n) => n['@type'] === 'Organization').identifier.value, '988741773', path);
+  }
+  for (const path of ['audit/index.html', 'en/audit/index.html', 'de/audit/index.html']) {
+    assert.ok(!jsonLd(readFileSync(join(closedDir, path), 'utf8')).some((n) => n['@type'] === 'Product'), `closed ${path}: no Product`);
+  }
+});
+
 test('B2B terms (cgv-pro.html): service clauses, authorisation, 24 h ouvrées, no conformity claim, data retention', () => {
   const html = readFileSync(join(openDir, 'cgv-pro.html'), 'utf8');
   assert.match(html, /<!--[\s\S]*PAS UN CONSEIL JURIDIQUE[\s\S]*-->/);

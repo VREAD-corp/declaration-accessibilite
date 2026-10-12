@@ -6,9 +6,9 @@ export const INTEREST_ISSUE = `${ISSUES}/1`;
 export const auditBodies = {
   fr: `<section class="hero">
 <p><span class="status-pill">Bientôt – aucune commande possible pour l’instant</span></p>
-<h1>Audit automatisé partiel : 149 € HT</h1>
+<h1>Audit automatisé partiel : 149 € net</h1>
 <p class="lead">Un rapport clair sur les problèmes d’accessibilité qu’un robot peut détecter sur vos pages clés, avec des brouillons de déclaration et de plan d’action à compléter. Ce service n’est <strong>pas encore ouvert</strong> : nous le décrivons ici tel qu’il serait livré.</p>
-<p class="price">149 € HT <span class="hint">(178,80 € TTC) – réservé aux professionnels</span></p>
+<p class="price">149 € net <span class="hint">(TVA non applicable, art. 293 B du CGI) – réservé aux professionnels</span></p>
 </section>
 <h2>Ce que comprendrait l’audit</h2>
 <ul>
@@ -37,7 +37,7 @@ export const auditBodies = {
 <p><span class="status-pill">Bald verfügbar – noch keine Bestellung möglich</span></p>
 <h1>Teilautomatisierte Barrierefreiheitsprüfung: 149 € netto</h1>
 <p class="lead">Ein verständlicher Bericht über die Barrieren, die ein Prüfautomat auf Ihren wichtigsten Seiten finden kann, mit Entwürfen für Erklärung und Maßnahmenplan. Der Dienst ist <strong>noch nicht geöffnet</strong>: Hier steht, was er enthalten würde.</p>
-<p class="price">149 € netto <span class="hint">(zzgl. USt.) – nur für Unternehmen</span></p>
+<p class="price">149 € netto <span class="hint">(keine Umsatzsteuer ausgewiesen gemäß Art. 293 B CGI) – nur für Unternehmen</span></p>
 </section>
 <h2>Was die Prüfung enthalten würde</h2>
 <ul>
@@ -63,9 +63,9 @@ export const auditBodies = {
 <p>Wir nehmen derzeit keine Bestellungen an und kassieren nichts. Bei Interesse reagieren Sie mit 👍 oder abonnieren Sie das <a href="${INTEREST_ISSUE}">öffentliche Issue „Interessentenliste“</a> auf GitHub (GitHub-Konto nötig; keine vertraulichen Angaben posten).</p>`,
   en: `<section class="hero">
 <p><span class="status-pill">Coming soon – no orders accepted yet</span></p>
-<h1>Partial automated accessibility audit: €149 excl. VAT</h1>
+<h1>Partial automated accessibility audit: €149 net</h1>
 <p class="lead">A clear report on the accessibility issues an automated engine can detect on your key pages, with draft statement and action plan to complete. This service is <strong>not open yet</strong>: this page describes exactly what it would include.</p>
-<p class="price">€149 excl. VAT <span class="hint">– businesses only</span></p>
+<p class="price">€149 net <span class="hint">(VAT not applicable, art. 293 B of the French tax code) – businesses only</span></p>
 </section>
 <h2>What the audit would include</h2>
 <ul>

@@ -59,7 +59,7 @@ export const auditOpenBodies = {
 <p><span class="status-pill">Verfügbar für Unternehmen mit Sitz in Frankreich</span></p>
 <h1>Automatisierte Teilprüfung der Barrierefreiheit: 149 € netto</h1>
 <p class="lead">Ein PDF-Bericht über die Barrieren, die ein Prüfautomat auf <strong>bis zu ${MAX_PAGES} Seiten</strong> Ihrer Website finden kann, per E-Mail <strong>innerhalb von 24 Arbeitsstunden</strong>. Es ist eine <strong>automatisierte Teilprüfung</strong>: keine Konformitätsprüfung und kein Konformitätsgrad.</p>
-<p class="price">149 € netto <span class="hint">(keine Umsatzsteuer ausgewiesen, Art. 293 B CGI) – nur für in Frankreich eingetragene Unternehmen (SIREN-Nummer)</span></p>
+<p class="price">149 € netto <span class="hint">(keine Umsatzsteuer ausgewiesen gemäß Art. 293 B CGI) – nur für in Frankreich eingetragene Unternehmen (SIREN-Nummer)</span></p>
 <p>Die Bestellung erfolgt auf Französisch; der Bericht kann auf Deutsch erstellt werden. <a class="btn" href="${url(ROUTES.order.fr)}" hreflang="fr" lang="fr">Commander l’audit</a></p>
 </section>
 <h2>Inhalt</h2>
@@ -98,10 +98,54 @@ export const auditOpenBodies = {
 };
 
 export const AUDIT_META_OPEN = {
-  fr: [`Audit automatisé partiel d’accessibilité – ${PRICE.ttc} net, rapport sous 24 h`, `Analyse automatisée axe-core de jusqu’à 20 pages, 2 tailles d’écran, rapport PDF par e-mail sous 24 h ouvrées : ${PRICE.ttc} net. Pas un audit de conformité RGAA, aucun taux de conformité.`],
-  de: ['Automatisierte Teilprüfung der Barrierefreiheit – 149 € netto', 'axe-core-Prüfung von bis zu 20 Seiten, PDF-Bericht innerhalb von 24 Arbeitsstunden, für Unternehmen mit Sitz in Frankreich. Keine Konformitätsprüfung, kein Konformitätsgrad.'],
-  en: ['Partial automated accessibility audit – €149 net', 'axe-core analysis of up to 20 pages, PDF report within 24 business hours, for companies registered in France. Not a conformance audit, no conformance rate.'],
+  fr: ['Audit accessibilité automatique EAA et RGAA (partiel) – 20 pages', `Analyse axe-core jusqu’à 20 pages (EAA, RGAA), rapport PDF sous 24 h ouvrées. ${PRICE.ttc} net, TVA non applicable, art. 293 B du CGI. Pas un audit de conformité.`],
+  de: ['Automatisierte Barrierefreiheitsprüfung BFSG/EAA – Teilprüfung', 'axe-core-Teilprüfung, bis 20 Seiten, PDF in 24 Arbeitsstunden. 149 € netto, keine Umsatzsteuer ausgewiesen gemäß Art. 293 B CGI. Keine Konformitätsprüfung.'],
+  en: ['Automated accessibility audit for the EAA (partial) – 20 pages', 'Partial axe-core scan of up to 20 pages, PDF in 24 business hours. €149 net, VAT not applicable, art. 293 B of the French tax code. Not a conformance audit.'],
 };
+
+/** schema.org publisher of the site (same @id on every page that declares it). */
+export const ORG_JSONLD = {
+  '@type': 'Organization',
+  '@id': 'https://vread-corp.github.io/#org',
+  name: 'READ FRANCE SAS',
+  legalName: 'READ FRANCE',
+  url: 'https://vread-corp.github.io/',
+  address: { '@type': 'PostalAddress', streetAddress: '11 rue Rouvet', postalCode: '75019', addressLocality: 'Paris', addressCountry: 'FR' },
+  identifier: { '@type': 'PropertyValue', propertyID: 'SIREN', value: '988741773' },
+};
+
+const AUDIT_LD_TEXT = {
+  fr: ['Audit automatisé partiel d’accessibilité (jusqu’à 20 pages)', 'Rapport PDF d’une analyse automatisée et partielle (moteur axe-core, règles WCAG A et AA, ordinateur et mobile) de jusqu’à 20 pages publiques, avec correspondances RGAA indicatives et liste des vérifications manuelles, envoyé sous 24 h ouvrées. Ce n’est pas un audit de conformité RGAA, WCAG ou EAA et il ne donne aucun taux de conformité.'],
+  de: ['Automatisierte Teilprüfung der Barrierefreiheit (bis zu 20 Seiten)', 'PDF-Bericht einer automatisierten Teilprüfung (axe-core, WCAG-Regeln A und AA, Desktop und Mobil) von bis zu 20 öffentlichen Seiten mit Liste der manuellen Prüfungen, Lieferung innerhalb von 24 Arbeitsstunden. Keine Konformitätsprüfung nach BFSG, EAA oder WCAG und kein Konformitätsgrad.'],
+  en: ['Partial automated accessibility audit (up to 20 pages)', 'PDF report of an automated, partial scan (axe-core engine, WCAG A and AA rules, desktop and mobile) of up to 20 public pages, with the list of manual checks, delivered within 24 business hours. Not a conformance audit (EAA, WCAG or RGAA) and no conformance rate.'],
+};
+
+/** JSON-LD of the audit landing pages (only built while SALES_OPEN is true): seller + Product with its Offer. */
+export function auditJsonLd(lang) {
+  const [name, description] = AUDIT_LD_TEXT[lang];
+  return {
+    '@context': 'https://schema.org',
+    '@graph': [
+      ORG_JSONLD,
+      {
+        '@type': 'Product',
+        name,
+        description,
+        url: SITE.origin + url(ROUTES.audit[lang]),
+        brand: { '@type': 'Brand', name: SITE.brand },
+        sku: 'a11y-audit-auto',
+        offers: {
+          '@type': 'Offer',
+          price: (SALES.amount / 100).toFixed(2),
+          priceCurrency: 'EUR',
+          availability: 'https://schema.org/InStock',
+          url: SITE.origin + url(ROUTES.order.fr),
+          seller: { '@id': ORG_JSONLD['@id'] },
+        },
+      },
+    ],
+  };
+}
 
 const extraFieldsHtml = `  <fieldset class="field-group"><legend>Site à analyser</legend>
     <label class="field"><span>Adresse du site</span>

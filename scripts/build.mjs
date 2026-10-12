@@ -68,7 +68,7 @@ write(
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
 ${urls
   .map(
-    (p) => `<url><loc>${SITE.origin}${SITE.base}${p.path.replace(/^\//, '')}</loc><lastmod>${SITE.updated}</lastmod>${(p.alternates || [])
+    (p) => `<url><loc>${SITE.origin}${SITE.base}${p.path.replace(/^\//, '')}</loc><lastmod>${p.updated || SITE.updated}</lastmod>${(p.alternates || [])
       .map((a) => `<xhtml:link rel="alternate" hreflang="${a.lang}" href="${SITE.origin}${SITE.base}${a.path.replace(/^\//, '')}"/>`)
       .join('')}</url>`
   )

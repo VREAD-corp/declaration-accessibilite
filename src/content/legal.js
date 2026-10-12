@@ -124,7 +124,7 @@ export const cgvBody = `<div class="legal-text">
 <h2>4. Autorisation</h2>
 <p>Le client déclare être titulaire du site analysé ou autorisé par son titulaire, et autorise le prestataire à le consulter de façon automatisée pour les besoins de la prestation.</p>
 <h2>5. Prix et paiement</h2>
-<p>149 € HT, soit 178,80 € TTC (TVA 20 %), payable à la commande par carte via un prestataire de paiement. Une facture est émise.</p>
+<p>149 € net (TVA non applicable, art. 293 B du CGI), payable à la commande par carte via un prestataire de paiement. Une facture est émise.</p>
 <h2>6. Délai</h2>
 <p>Délai indicatif de 5 jours ouvrés à compter de la réception du paiement, des adresses à analyser et de l’autorisation. En cas de dépassement de plus de 10 jours ouvrés, le client peut demander l’annulation et le remboursement intégral.</p>
 <h2>7. Obligation de moyens et limites</h2>
