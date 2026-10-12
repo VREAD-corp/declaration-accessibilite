@@ -143,7 +143,8 @@ export function payButtonText(payLabel, cents) {
  * The « Commander » form, same field names and ids as octave-checkout gas/web/index.html.
  * `payLabel`: button text, {prix} replaced by the price (e.g. « Payer {prix} et recevoir le kit … »).
  * Optional (services): `intro` (sentence under the title), `emailLabel`, `extraFieldsHtml` (fields with a
- * data-octave-extra attribute, sent to the server by pay.js), `afterTermsHtml` (e.g. an attestation box).
+ * data-octave-extra attribute, sent to the server by pay.js), `afterTermsHtml` (e.g. an attestation box),
+ * `termsDate` (CGV version date shown in both checkboxes, for a site with its own CGV; default TERMS_DATE).
  */
 export function orderFormHtml(p) {
   const pr = prices(p.config);
@@ -172,7 +173,7 @@ ${p.extraFieldsHtml ?? ''}  <label class="field"><span>${p.emailLabel ?? 'E-mail
     <p class="small muted">Pays : France.</p>
   </fieldset>
   <label class="check"><input type="checkbox" name="terms" required>
-    <span>Je commande au nom et pour le compte de l’entreprise ci-dessus, pour un usage professionnel, et j’accepte les <a id="terms-link" href="${p.cgvUrl}" target="_blank" rel="noopener">conditions générales de vente aux professionnels</a> (version du ${TERMS_DATE}).</span></label>
+    <span>Je commande au nom et pour le compte de l’entreprise ci-dessus, pour un usage professionnel, et j’accepte les <a id="terms-link" href="${p.cgvUrl}" target="_blank" rel="noopener">conditions générales de vente aux professionnels</a> (version du ${p.termsDate ?? TERMS_DATE}).</span></label>
 ${p.afterTermsHtml ?? ''}  <p id="payment-loading" class="small muted" role="status">Chargement du paiement sécurisé…</p>
   <div id="payment-element"></div>
   <p id="pay-error" class="status err" role="alert" hidden></p>
@@ -180,14 +181,15 @@ ${p.afterTermsHtml ?? ''}  <p id="payment-loading" class="small muted" role="sta
   <p class="small muted">Paiement sécurisé par carte bancaire avec Stripe : vos données de carte sont saisies dans un cadre Stripe et ne transitent pas par nos serveurs.</p>
   <noscript><p class="status err">Le paiement nécessite JavaScript.</p></noscript>
 </form>
-${p.config.quotesEnabled === true ? `${devisFormHtml({ cgvUrl: p.cgvUrl, extraFieldsHtml: p.devisExtraFieldsHtml })}\n` : ''}</section>`;
+${p.config.quotesEnabled === true ? `${devisFormHtml({ cgvUrl: p.cgvUrl, termsDate: p.termsDate, extraFieldsHtml: p.devisExtraFieldsHtml })}\n` : ''}</section>`;
 }
 
 /**
  * Quote / bank-transfer block (octave-checkout gas/web/devis-form.html), rendered by orderFormHtml() right
  * after form#octave-pay only when config.quotesEnabled is true; devis.js also keeps it hidden unless
  * window.OCTAVE_PAY.quotesEnabled === true. `extraFieldsHtml`: the same product radios / [data-octave-extra]
- * fields as the card form, with every id / for / aria-describedby suffixed « -devis ».
+ * fields as the card form, with every id / for / aria-describedby suffixed « -devis ». `termsDate`: as in
+ * orderFormHtml() (default TERMS_DATE).
  */
 export function devisFormHtml(p) {
   return `<details id="octave-devis-box" class="card devis-box" hidden>
@@ -216,7 +218,7 @@ ${p.extraFieldsHtml ?? ''}    <label class="field"><span>E-mail professionnel (r
     <!-- Honeypot: hidden from humans, bots fill it; the server drops the request silently. -->
     <div class="hp" aria-hidden="true"><label>Site web <input type="text" name="website" tabindex="-1" autocomplete="off"></label></div>
     <label class="check"><input type="checkbox" name="terms" required>
-      <span>Je demande ce devis au nom et pour le compte de l’entreprise ci-dessus, pour un usage professionnel, et j’accepte les <a class="terms-link" href="${p.cgvUrl}" target="_blank" rel="noopener">conditions générales de vente aux professionnels</a> (version du ${TERMS_DATE}). La commande devient ferme au paiement du devis.</span></label>
+      <span>Je demande ce devis au nom et pour le compte de l’entreprise ci-dessus, pour un usage professionnel, et j’accepte les <a class="terms-link" href="${p.cgvUrl}" target="_blank" rel="noopener">conditions générales de vente aux professionnels</a> (version du ${p.termsDate ?? TERMS_DATE}). La commande devient ferme au paiement du devis.</span></label>
     <p id="devis-error" class="status err" role="alert" hidden></p>
     <p id="devis-ok" class="status ok" role="status" hidden></p>
     <button type="submit" id="devis-button" class="pay-button secondary">Recevoir mon devis par e-mail</button>

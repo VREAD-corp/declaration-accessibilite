@@ -1,12 +1,17 @@
 // Paid « audit automatisé partiel » (octave-pay-gas): offer pages while SALES_OPEN is true, the order
 // page (commander.html), the Stripe return page (commande.html) and the B2B terms (cgv-pro.html).
-// CGV drafted by Octave (assistant IA de READ FRANCE SAS) on 12 October 2026: NOT legal advice, to be
-// reviewed by a lawyer. The audit is automated and partial: never an RGAA conformity audit, never a rate.
+// CGV drafted by Octave (assistant IA de READ FRANCE SAS) on 12 October 2026, updated on 13 October 2026 for
+// « paiement par virement sur devis » (vread-revenue-lab legal/REVUE-CGV-VIREMENT.md §3, Audit variants):
+// NOT legal advice, to be reviewed by a lawyer. The audit is automated and partial: never an RGAA conformity audit, never a rate.
 import { SITE, SALES, PRICE, ROUTES, RELEASE_DL } from './site.js';
 import { url, ogImage } from './layout.js';
 import { orderFormHtml, orderPageBody, checkoutCsp, orderCsp, payButtonText, TERMS_DATE } from '../../scripts/checkout-pages.mjs';
 
-export const AUDIT_TERMS_VERSION = 'cgv-pro-audit-2026-10-12';
+// Audit CGV version: id sent with every order / quote (checkout-config.js termsVersion; the octave-pay-gas
+// CATALOG entry a11y-audit-20 must carry the same id) and date shown on the CGV, the audit page and both
+// checkboxes of commander.html.
+export const AUDIT_TERMS_VERSION = 'cgv-pro-audit-2026-10-13';
+export const AUDIT_TERMS_DATE = '13 octobre 2026';
 // « Commander » button ({prix} = the price: « Payer 149 € et commander l’audit »).
 export const AUDIT_PAY_LABEL = 'Payer {prix} et commander l’audit';
 export const MAX_PAGES = 20;
@@ -52,7 +57,7 @@ export const auditOpenBodies = {
 <h2>Avant de commander</h2>
 <ul>
 <li>Vous devez être <strong>titulaire du site ou autorisé par son titulaire</strong> à le faire analyser : vous l’attestez à la commande.</li>
-<li>Vente réservée aux professionnels (entreprises immatriculées en France, SIREN obligatoire). <a href="${url(ROUTES.cgvPro.fr)}">Conditions générales de vente</a> (version du ${TERMS_DATE}).</li>
+<li>Vente réservée aux professionnels (entreprises immatriculées en France, SIREN obligatoire). <a href="${url(ROUTES.cgvPro.fr)}">Conditions générales de vente</a> (version du ${AUDIT_TERMS_DATE}).</li>
 </ul>
 <h2>Voir un exemple</h2>
 <p>Un <a href="${RELEASE_DL}${sample('fr')}">exemple de rapport</a> (page de démonstration volontairement défectueuse) est téléchargeable gratuitement.</p>
@@ -193,6 +198,7 @@ ${orderFormHtml({
   // quote form copy (shared devisFormHtml has no after-terms slot: the attestation follows the site fields)
   devisExtraFieldsHtml: indent(extraFieldsHtml('-devis') + afterTermsHtml.replace('l’entreprise ci-dessus', 'l’entreprise indiquée ci-dessous')),
   payLabel: AUDIT_PAY_LABEL,
+  termsDate: AUDIT_TERMS_DATE,
 }).replace('<section class="checkout"', '<section class="checkout" data-section="commande"')}`;
 
 export const orderScripts = `<script src="${url('assets/checkout/checkout-config.js')}"></script>
@@ -209,17 +215,18 @@ export const ORDER_CSP = SALES.SALES_OPEN ? checkoutCsp(SALES) : '';
 export const ORDER_RETURN_CSP = SALES.SALES_OPEN ? orderCsp(SALES) : '';
 
 export const cgvProBody = `<!--
-  CGV B2B rédigées par Octave (assistant IA de READ FRANCE SAS) le 12 octobre 2026.
+  CGV B2B rédigées par Octave (assistant IA de READ FRANCE SAS) le 12 octobre 2026, mises à jour le 13 octobre 2026
+  (paiement par virement sur devis, d'après la revue REVUE-CGV-VIREMENT.md).
   CE N'EST PAS UN CONSEIL JURIDIQUE : texte à faire relire par un avocat ou un juriste.
 -->
 <div class="legal-text">
 <h1>Conditions générales de vente aux professionnels – audit automatisé partiel d’accessibilité</h1>
-<p class="hint">Version du ${TERMS_DATE} (référence ${AUDIT_TERMS_VERSION}).</p>
+<p class="hint">Version du ${AUDIT_TERMS_DATE} (référence ${AUDIT_TERMS_VERSION}).</p>
 <h2>1. Vendeur</h2>
 <p>${SELLER.name}, ${SELLER.form} au capital de ${SELLER.capital}, dont le siège social est situé ${SELLER.address}, immatriculée sous le numéro SIREN ${SELLER.siren} (${SELLER.rcs}), bénéficiant de la franchise en base de TVA (TVA non applicable, art. 293 B du CGI), représentée par ${SELLER.president}, président (ci-après « le Vendeur »). Contact : en répondant à l’e-mail de confirmation de commande. Voir aussi les <a href="${url(ROUTES.legal.fr)}">mentions légales</a>.</p>
 <h2>2. Champ d’application et acceptation</h2>
 <p>Les présentes conditions générales de vente (« CGV ») s’appliquent exclusivement à la prestation « ${PRODUCT_NAME} » (la « Prestation ») commandée en ligne par un <strong>professionnel</strong> (l’« Acheteur ») : une entreprise immatriculée en France, identifiée par son numéro SIREN, qui commande pour les besoins de son activité. La Prestation n’est pas proposée aux consommateurs.</p>
-<p>La personne qui commande déclare agir au nom et pour le compte de l’entreprise indiquée et avoir le pouvoir de l’engager. Avant de payer, l’Acheteur accepte expressément les présentes CGV en cochant la case prévue ; la version acceptée est conservée avec la commande. Les CGV prévalent sur toute condition d’achat de l’Acheteur, sauf accord écrit contraire du Vendeur.</p>
+<p>La personne qui commande déclare agir au nom et pour le compte de l’entreprise indiquée et avoir le pouvoir de l’engager. Avant de payer par carte ou de demander un devis, l’Acheteur accepte expressément les présentes CGV en cochant la case prévue ; la version acceptée est conservée avec la commande. Les CGV prévalent sur toute condition d’achat de l’Acheteur, sauf accord écrit contraire du Vendeur.</p>
 <h2>3. Description de la Prestation</h2>
 <p>La Prestation est une <strong>analyse automatisée et partielle</strong> de l’accessibilité de pages web publiques, réalisée avec le moteur open source axe-core (règles WCAG 2.0, 2.1 et 2.2, niveaux A et AA) dans un navigateur Chromium, sur deux tailles d’écran (1 280 px et 390 px) :</p>
 <ul>
@@ -232,11 +239,22 @@ export const cgvProBody = `<!--
 <h2>5. Prix</h2>
 <p>Le prix est de <strong>${PRICE.sentence}</strong> par commande, payable en une fois. Le prix applicable est celui affiché sur la page de commande au moment de la validation ; il figure sur la facture, qui porte la mention « TVA non applicable, art. 293 B du CGI ».</p>
 <h2>6. Commande et paiement</h2>
-<p>L’Acheteur renseigne sur la page « Commander » : l’adresse du site et, le cas échéant, les pages à analyser, la langue du rapport, son adresse électronique, la raison sociale et le SIREN de l’entreprise, l’adresse de facturation, puis ses données de carte. Il valide en cliquant sur le bouton de paiement (par exemple « ${payButtonText(AUDIT_PAY_LABEL, SALES.amount)} »).</p>
-<p>Le paiement s’effectue <strong>par carte bancaire, au comptant, via le prestataire de paiement Stripe</strong> (Stripe Payments Europe, Ltd.). Le Vendeur n’a jamais accès aux données de carte. Le contrat est formé à la confirmation du paiement par Stripe.</p>
+<p>L’Acheteur renseigne sur la page « Commander » l’adresse du site et, le cas échéant, les pages à analyser, la langue du rapport, son adresse électronique, la raison sociale et le SIREN de l’entreprise, l’adresse de facturation, puis choisit son mode de paiement.</p>
+<p>Le prix est payable comptant et d’avance, en une fois, au choix de l’Acheteur :</p>
+<ul>
+<li>par carte bancaire : l’Acheteur saisit ses données de carte dans un module sécurisé de Stripe, auxquelles le Vendeur n’a jamais accès, et valide en cliquant sur le bouton de paiement (par exemple « ${payButtonText(AUDIT_PAY_LABEL, SALES.amount)} ») ; le contrat est formé à la confirmation du paiement par Stripe ; en cas de refus du paiement, la commande n’est pas enregistrée ;</li>
+<li>par virement bancaire SEPA en euros, après demande de devis sur la même page, dans les conditions ci-dessous.</li>
+</ul>
+<p>Les paiements sont traités par le prestataire de services de paiement Stripe (pour l’Espace économique européen : Stripe Payments Europe, Limited et Stripe Technology Europe, Limited, sociétés de droit irlandais).</p>
+<p><strong>Devis.</strong> Le devis est adressé à l’Acheteur par courrier électronique. Il indique le produit, le prix, sa date de fin de validité, l’IBAN et le BIC à utiliser — un numéro de compte bancaire virtuel attribué par Stripe, dont le bénéficiaire est le Vendeur, propre à l’Acheteur et identique pour tous ses devis — et une référence propre au devis, à reporter dans le libellé du virement. Le devis constitue une offre du Vendeur, valable trente (30) jours à compter de son émission ; le prix y est ferme pendant cette durée.</p>
+<p><strong>Formation du contrat.</strong> Le contrat est formé, et la commande devient ferme, à la réception par Stripe, pendant la durée de validité du devis, de l’intégralité de son montant : ce paiement vaut acceptation du devis. Les présentes CGV, acceptées lors de la demande de devis et rappelées sur celui-ci, s’appliquent au contrat. Un paiement partiel ne forme pas le contrat et ne déclenche ni la livraison ni le début du service ; l’Acheteur est informé du solde restant à virer avec la même référence. Les frais bancaires éventuels de l’Acheteur restent à sa charge : le montant reçu par Stripe doit être égal au montant du devis.</p>
+<p><strong>Expiration.</strong> À défaut de paiement intégral pendant sa durée de validité, le devis devient caduc. Si le paiement reste partiel à l’expiration, le Vendeur invite l’Acheteur à le compléter ; à défaut de paiement intégral dans les trente (30) jours suivant l’expiration, les sommes reçues lui sont remboursées. Un paiement reçu après l’expiration est, au choix du Vendeur, accepté aux conditions du devis — le contrat est alors formé à l’envoi par le Vendeur de la livraison ou de la confirmation de commande — ou remboursé.</p>
+<p><strong>Affectation des paiements.</strong> Le paiement est affecté au devis dont la référence figure dans le libellé du virement. À défaut de référence exploitable, il est affecté au devis en cours de l’Acheteur dont le montant correspond, le plus ancien en premier ; une somme reçue au-delà du montant d’un devis peut être affectée aux autres devis en cours de l’Acheteur. L’Acheteur, qui a demandé ces devis, accepte que cette affectation vaille paiement et acceptation du devis concerné.</p>
+<p><strong>Remboursements.</strong> Toute somme reçue qui n’est pas affectée à une commande (excédent, paiement en double, paiement partiel ou tardif non accepté) est remboursée à l’Acheteur dans un délai de trente (30) jours suivant sa réception ou, pour un paiement partiel, suivant le terme prévu ci-dessus. Tout remboursement dû en application des présentes CGV est effectué par le moyen de paiement utilisé : sur la carte débitée, ou par virement sur le compte bancaire d’origine. Lorsque Stripe ne dispose pas des coordonnées bancaires de l’Acheteur, elle les lui demande par courrier électronique ; le délai court alors à compter de leur communication.</p>
+<p><strong>Définition.</strong> Dans les présentes CGV, la « confirmation du paiement » désigne la confirmation par Stripe d’un paiement par carte ou la réception par Stripe de l’intégralité du montant d’un devis pendant sa durée de validité, ou, pour un paiement tardif, son acceptation par le Vendeur.</p>
 <h2>7. Délai et livraison</h2>
 <p>Le rapport et la facture acquittée sont envoyés à l’adresse électronique indiquée <strong>sous 24 heures ouvrées</strong> à compter de la confirmation du paiement. Les heures ouvrées s’entendent du lundi au vendredi, hors jours fériés en France : une commande passée le vendredi soir ou le week-end est livrée au plus tard le premier jour ouvré suivant. La livraison est réputée effectuée à l’envoi du courrier électronique. Lorsque le rapport est trop volumineux pour être joint, il est mis à disposition par un lien de téléchargement valable 90 jours.</p>
-<p>Si le site est inaccessible ou ne peut être analysé (erreur du serveur, blocage du robot, absence de page publique), le Vendeur relance l’analyse puis prend contact avec l’Acheteur. À défaut de livraison dans les 5 jours ouvrés suivant le paiement, l’Acheteur peut demander l’annulation de la commande et le remboursement intégral du prix.</p>
+<p>Si le site est inaccessible ou ne peut être analysé (erreur du serveur, blocage du robot, absence de page publique), le Vendeur relance l’analyse puis prend contact avec l’Acheteur. À défaut de livraison dans les 5 jours ouvrés suivant la confirmation du paiement, l’Acheteur peut demander l’annulation de la commande et le remboursement intégral du prix.</p>
 <h2>8. Absence de droit de rétractation</h2>
 <p>La vente étant conclue entre professionnels, pour les besoins de l’activité de l’Acheteur, le droit de rétractation prévu par le code de la consommation <strong>ne s’applique pas</strong>.</p>
 <h2>9. Usage du rapport</h2>
@@ -244,31 +262,35 @@ export const cgvProBody = `<!--
 <h2>10. Responsabilité</h2>
 <p>Le Vendeur est tenu d’une obligation de moyens. Le rapport décrit l’état des pages analysées à la date de l’analyse ; il ne garantit ni la conformité du site à une norme ou à une obligation légale, ni l’absence de réclamation ou de sanction. La responsabilité du Vendeur ne peut être engagée qu’en cas de faute prouvée et pour les seuls dommages directs ; elle est en tout état de cause <strong>limitée au prix payé</strong> pour la commande concernée. Ces limitations ne s’appliquent pas en cas de faute lourde ou dolosive.</p>
 <h2>11. Facturation et pénalités de retard</h2>
-<p>Une facture conforme à l’article 242 nonies A de l’annexe II du code général des impôts est établie à la livraison du rapport et envoyée en PDF avec celui-ci. L’Acheteur garantit l’exactitude des données de facturation qu’il fournit. Le prix étant payé comptant à la commande, aucun escompte n’est accordé. Conformément à l’article L441-10 du code de commerce, toute somme non payée à son échéance entraîne de plein droit des <strong>pénalités de retard au taux égal à trois fois le taux d’intérêt légal</strong> et une <strong>indemnité forfaitaire pour frais de recouvrement de 40 €</strong> (article D441-5 du code de commerce).</p>
+<p>Une facture conforme à l’article L441-9 du code de commerce et à l’article 242 nonies A de l’annexe II du code général des impôts est établie pour chaque commande et envoyée en PDF par courrier électronique à la livraison du rapport, avec celui-ci. À compter de la date à laquelle le Vendeur y sera tenu, la facture est émise et transmise sous forme électronique dans les conditions prévues par la réglementation sur la facturation électronique. L’Acheteur garantit l’exactitude des données de facturation qu’il fournit.</p>
+<p>Le prix est payable comptant et d’avance, en une fois : à la commande en cas de paiement par carte, pendant la durée de validité du devis en cas de paiement par virement (article 6). La facture, établie à la livraison du rapport, est acquittée. Escompte pour paiement anticipé : néant.</p>
+<p>Conformément à l’article L441-10 du code de commerce, toute somme non payée à son échéance entraîne de plein droit, sans rappel préalable, des <strong>pénalités de retard au taux égal à trois fois le taux d’intérêt légal</strong>, ainsi qu’une <strong>indemnité forfaitaire pour frais de recouvrement de 40 €</strong> (article D441-5 du code de commerce), sans préjudice d’une indemnisation complémentaire sur justificatifs si les frais de recouvrement exposés sont supérieurs.</p>
 <h2>12. Données personnelles</h2>
-<p>Le Vendeur, responsable de traitement, traite les données fournies lors de la commande (adresse électronique, raison sociale, SIREN, adresse de facturation, adresse du site et des pages à analyser, données de commande et de paiement, à l’exclusion des données de carte, traitées par Stripe) pour exécuter la Prestation, établir la facture, tenir sa comptabilité et prévenir la fraude. Bases légales : exécution du contrat et obligations légales.</p>
-<p>Destinataires : Stripe (paiement) ; Google (registre des commandes et des factures, envoi des courriers électroniques et stockage des rapports, au moyen de Google Apps Script, Gmail, Sheets et Drive) ; GitHub (exécution de l’analyse dans un dépôt privé, GitHub Actions) ; le cas échéant l’expert-comptable du Vendeur. Ces prestataires peuvent traiter des données hors de l’Union européenne, dans le cadre des garanties prévues par le RGPD. Durées : adresses analysées et rapport, <strong>90 jours après la livraison</strong> ; factures et pièces comptables, 10 ans (article L123-22 du code de commerce) ; autres données de commande, 5 ans.</p>
-<p>Toute personne concernée dispose de droits d’accès, de rectification, d’effacement, de limitation, d’opposition et de portabilité, qu’elle exerce en répondant à l’e-mail de commande ; elle peut introduire une réclamation auprès de la <a href="https://www.cnil.fr/fr/plaintes">CNIL</a>. Voir aussi la <a href="${url(ROUTES.privacy.fr)}">politique de confidentialité</a>.</p>
+<p>Le Vendeur, responsable de traitement, traite les données fournies lors de la demande de devis ou de la commande (adresse électronique, raison sociale, SIREN, adresse de facturation, référence interne éventuelle, adresse du site et des pages à analyser, données de commande et de paiement, à l’exclusion des données de carte, traitées par Stripe). En cas de paiement par virement, il traite également les données que la banque de l’Acheteur transmet avec le virement et que Stripe lui communique : nom du titulaire du compte émetteur, BIC, quatre derniers chiffres de l’IBAN, date, montant et libellé du virement.</p>
+<p>Ces données servent à établir et suivre le devis, exécuter la Prestation, établir la facture, effectuer les remboursements, tenir la comptabilité et prévenir la fraude. Bases légales : mesures précontractuelles et exécution du contrat ; obligations légales (comptables et fiscales).</p>
+<p>Destinataires : Stripe (paiement par carte ; pour le virement, attribution du numéro de compte virtuel, réception et rapprochement des fonds, remboursements), qui traite aussi certaines de ces données pour son propre compte, notamment pour la prévention de la fraude et la lutte contre le blanchiment, selon sa politique de confidentialité ; Google (envoi des courriers électroniques, tenue du registre des devis, des commandes et des factures et stockage des rapports, au moyen de Google Apps Script, Gmail, Sheets et Drive) ; GitHub (exécution de l’analyse dans un dépôt privé, GitHub Actions) ; et le cas échéant l’expert-comptable du Vendeur. Ces prestataires peuvent traiter des données hors de l’Union européenne, dans le cadre des garanties prévues par le RGPD (décision d’adéquation ou clauses contractuelles types).</p>
+<p>Durées : factures et pièces comptables, y compris les données du virement qui s’y rapportent, 10 ans (article L123-22 du code de commerce) ; autres données de commande, 5 ans après la commande ; adresses analysées et rapport, <strong>90 jours après la livraison</strong> ; devis non suivis de commande, 1 an après leur expiration.</p>
+<p>Toute personne concernée dispose de droits d’accès, de rectification, d’effacement, de limitation, d’opposition et de portabilité, qu’elle exerce auprès du Vendeur (contact ci-dessus) ; elle peut introduire une réclamation auprès de la <a href="https://www.cnil.fr/fr/plaintes">CNIL</a>. Voir aussi la <a href="${url(ROUTES.privacy.fr)}">politique de confidentialité</a>.</p>
 <h2>13. Droit applicable et juridiction</h2>
 <p>Les présentes CGV sont soumises au <strong>droit français</strong>. Les parties recherchent d’abord une solution amiable. À défaut, tout litige relève de la <strong>compétence exclusive des tribunaux de Paris</strong>.</p>
 <h2>14. Dispositions diverses</h2>
-<p>Le Vendeur peut modifier les présentes CGV ; la version applicable est celle acceptée par l’Acheteur lors de sa commande. Si une clause est déclarée nulle, les autres demeurent applicables.</p>
-<p class="hint">Version du ${TERMS_DATE}.</p>
+<p>Le Vendeur peut modifier les présentes CGV ; la version applicable est celle acceptée par l’Acheteur lors de sa commande ou de sa demande de devis, rappelée sur le devis. Si une clause est déclarée nulle, les autres demeurent applicables.</p>
+<p class="hint">Version du ${AUDIT_TERMS_DATE}.</p>
 </div>`;
 
 export const privacyOrderSection = {
   fr: `<h2>Commande de l’audit automatisé</h2>
-<p>Lorsque vous commandez l’<a href="${url(ROUTES.audit.fr)}">audit automatisé partiel</a>, et seulement dans ce cas, READ FRANCE SAS (responsable de traitement) reçoit les données saisies sur la page de commande : adresse électronique, raison sociale, SIREN, adresse de facturation, adresse du site et des pages à analyser, langue du rapport. Elles servent à réaliser l’analyse, envoyer le rapport et la facture, tenir la comptabilité et prévenir la fraude (exécution du contrat et obligations légales).</p>
+<p>Lorsque vous commandez l’<a href="${url(ROUTES.audit.fr)}">audit automatisé partiel</a> ou en demandez un devis, et seulement dans ces cas, READ FRANCE SAS (responsable de traitement) reçoit les données saisies sur la page de commande : adresse électronique, raison sociale, SIREN, adresse de facturation, référence interne éventuelle, adresse du site et des pages à analyser, langue du rapport. En cas de paiement par virement, elle reçoit aussi, par l’intermédiaire de Stripe, les données que votre banque transmet avec le virement : nom du titulaire du compte émetteur, BIC, quatre derniers chiffres de l’IBAN, date, montant et libellé du virement. Ces données servent à établir et suivre le devis, réaliser l’analyse, envoyer le rapport et la facture, effectuer les remboursements, tenir la comptabilité et prévenir la fraude (mesures précontractuelles et exécution du contrat ; obligations légales comptables et fiscales).</p>
 <ul>
-<li>Destinataires : Stripe (paiement ; les données de carte sont saisies chez Stripe et ne nous parviennent jamais), Google (Apps Script, Gmail, Sheets et Drive : registre des commandes, envoi des e-mails, stockage du rapport), GitHub (exécution de l’analyse dans un dépôt privé). Transferts hors UE encadrés par les garanties du RGPD.</li>
-<li>Durées : adresses analysées et rapport supprimés 90 jours après la livraison ; factures conservées 10 ans ; autres données de commande 5 ans.</li>
+<li>Destinataires : Stripe (paiement par carte, les données de carte étant saisies chez Stripe et ne nous parvenant jamais ; pour le virement, numéro de compte virtuel, réception et rapprochement des fonds, remboursements), qui traite aussi certaines données pour son propre compte (prévention de la fraude, lutte contre le blanchiment) ; Google (Apps Script, Gmail, Sheets et Drive : registre des devis et des commandes, envoi des e-mails, stockage du rapport) ; GitHub (exécution de l’analyse dans un dépôt privé). Transferts hors UE encadrés par les garanties du RGPD.</li>
+<li>Durées : adresses analysées et rapport supprimés 90 jours après la livraison ; factures et pièces comptables, y compris les données du virement qui s’y rapportent, conservées 10 ans ; autres données de commande 5 ans ; devis non suivis de commande, 1 an après leur expiration.</li>
 <li>Vos droits (accès, rectification, effacement, limitation, opposition, portabilité) s’exercent en répondant à l’e-mail de commande ; réclamation possible auprès de la <a href="https://www.cnil.fr/fr/plaintes">CNIL</a>.</li>
 <li>La page de commande charge le module de paiement de Stripe (js.stripe.com), qui peut déposer des cookies nécessaires à la sécurité du paiement. Aucun autre cookie ni traceur.</li>
 </ul>`,
   de: `<h2>Bestellung der automatisierten Prüfung</h2>
-<p>Nur wenn Sie die kostenpflichtige automatisierte Prüfung bestellen (für Unternehmen mit Sitz in Frankreich), verarbeitet die READ FRANCE SAS die Bestelldaten (E-Mail, Firma, SIREN, Rechnungsadresse, zu prüfende Adressen) zur Vertragserfüllung. Empfänger: Stripe (Zahlung), Google (E-Mail, Register, Speicherung des Berichts), GitHub (Durchführung der Prüfung in einem privaten Repository). Prüfadressen und Bericht werden 90 Tage nach Lieferung gelöscht, Rechnungen 10 Jahre aufbewahrt. Einzelheiten auf der französischen Seite.</p>`,
+<p>Nur wenn Sie die kostenpflichtige automatisierte Prüfung bestellen (für Unternehmen mit Sitz in Frankreich), verarbeitet die READ FRANCE SAS die Bestelldaten (E-Mail, Firma, SIREN, Rechnungsadresse, zu prüfende Adressen) zur Vertragserfüllung. Bei Zahlung per Überweisung (auf Angebot) erhält sie über Stripe zudem die Überweisungsdaten (Name des Kontoinhabers, BIC, letzte vier Ziffern der IBAN, Datum, Betrag, Verwendungszweck). Empfänger: Stripe (Zahlung), Google (E-Mail, Register, Speicherung des Berichts), GitHub (Durchführung der Prüfung in einem privaten Repository). Prüfadressen und Bericht werden 90 Tage nach Lieferung gelöscht, Rechnungen samt zugehörigen Überweisungsdaten 10 Jahre aufbewahrt, nicht angenommene Angebote 1 Jahr nach Ablauf gelöscht. Einzelheiten auf der französischen Seite.</p>`,
   en: `<h2>Ordering the automated audit</h2>
-<p>Only when you order the paid automated audit (companies registered in France), READ FRANCE SAS processes the order data (e-mail, company, SIREN, billing address, URLs to scan) to perform the contract. Recipients: Stripe (payment), Google (e-mail, register, report storage), GitHub (runs the scan in a private repository). Scanned URLs and the report are deleted 90 days after delivery; invoices are kept 10 years. Details on the French page.</p>`,
+<p>Only when you order the paid automated audit (companies registered in France), READ FRANCE SAS processes the order data (e-mail, company, SIREN, billing address, URLs to scan) to perform the contract. When paying by bank transfer (on quote), it also receives through Stripe the transfer data (account holder name, BIC, last four IBAN digits, date, amount, reference). Recipients: Stripe (payment), Google (e-mail, register, report storage), GitHub (runs the scan in a private repository). Scanned URLs and the report are deleted 90 days after delivery; invoices, with the related transfer data, are kept 10 years; quotes not taken up are deleted 1 year after they expire. Details on the French page.</p>`,
 };
 
 export const cgvDraftReplaced = `<div class="legal-text">

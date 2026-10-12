@@ -130,7 +130,8 @@ test('quotesEnabled=true: quote block once right after #octave-pay, devis.js aft
   assert.match(quote, /name="scanAuthorized" data-octave-extra="bool" required/);
   assert.match(quote, /<div class="hp" aria-hidden="true">.*name="website" tabindex="-1"/);
   assert.match(quote, /class="terms-link" href="\/declaration-accessibilite\/cgv-pro\.html"/);
-  assert.match(quote, /\(version du 12 octobre 2026\)/);
+  assert.match(quote, /\(version du 13 octobre 2026\)/);
+  assert.match(card, /\(version du 13 octobre 2026\)/);
   assert.doesNotMatch(quote, /\{\{|\}\}/);
   assert.match(readFileSync(join(quotesDir, 'assets/checkout/checkout-config.js'), 'utf8'), /"quotesEnabled":true/);
   assert.match(readFileSync(join(quotesDir, 'assets/site.css'), 'utf8'), /\.hp\{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden\}/);
@@ -190,7 +191,7 @@ test('B2B terms (cgv-pro.html): service clauses, authorisation, 24 h ouvrées, n
   assert.match(html, /<!--[\s\S]*PAS UN CONSEIL JURIDIQUE[\s\S]*-->/);
   const t = text(html);
   for (const re of [
-    /[Vv]ersion du 12 octobre 2026/, /cgv-pro-audit-2026-10-12/,
+    /[Vv]ersion du 13 octobre 2026/, /cgv-pro-audit-2026-10-13/,
     /READ FRANCE SAS, société par actions simplifiée \(SAS\) au capital de 1 000 €/, /SIREN 988 741 773/, /TVA non applicable, art\. 293 B du CGI/,
     /professionnel/, /accepte expressément/,
     /analyse automatisée et partielle/, /au plus 20 pages/, /robots\.txt/,
@@ -200,11 +201,26 @@ test('B2B terms (cgv-pro.html): service clauses, authorisation, 24 h ouvrées, n
     /droit de rétractation[^.]*ne s’applique pas/, /limitée au prix payé/,
     /trois fois le taux d’intérêt légal/, /40 €/, /90 jours après la livraison/, /10 ans/, /GitHub/, /CNIL/,
     /compétence exclusive des tribunaux de Paris/,
+    // paiement par virement sur devis (REVUE-CGV-VIREMENT.md §3, Audit numbering: 6 / 7 / 11 / 12 / 14)
+    /Avant de payer par carte ou de demander un devis, l’Acheteur accepte expressément/,
+    /6\. Commande et paiement .*par virement bancaire SEPA en euros, après demande de devis/,
+    /Stripe Payments Europe, Limited et Stripe Technology Europe, Limited, sociétés de droit irlandais/,
+    /numéro de compte bancaire virtuel attribué par Stripe, dont le bénéficiaire est le Vendeur, propre à l’Acheteur et identique pour tous ses devis/,
+    /valable trente \(30\) jours/, /Un paiement partiel ne forme pas le contrat/, /Affectation des paiements/,
+    /par le moyen de paiement utilisé : sur la carte débitée, ou par virement sur le compte bancaire d’origine/,
+    /la « confirmation du paiement » désigne/,
+    /7\. Délai et livraison .*dans les 5 jours ouvrés suivant la confirmation du paiement/,
+    /11\. Facturation .*article L441-9 du code de commerce.*à la livraison du rapport, avec celui-ci.*\(article 6\)\. La facture, établie à la livraison du rapport, est acquittée\. Escompte pour paiement anticipé : néant\./,
+    /12\. Données personnelles .*quatre derniers chiffres de l’IBAN.*GitHub \(exécution de l’analyse.*adresses analysées et rapport, 90 jours après la livraison ; devis non suivis de commande, 1 an après leur expiration/,
+    /14\. Dispositions diverses .*lors de sa commande ou de sa demande de devis, rappelée sur le devis/,
   ]) assert.match(t, re, String(re));
+  assert.doesNotMatch(t, /Ltd\.|à réception du devis|compte de paiement|suivant le paiement/);
   assert.doesNotMatch(t, /\d+\s?%\s*(de conformité|conforme)/);
   const privacy = text(readFileSync(join(openDir, 'confidentialite/index.html'), 'utf8'));
   assert.match(privacy, /Commande de l’audit automatisé/);
   assert.match(privacy, /supprimés 90 jours après la livraison/);
+  assert.match(privacy, /quatre derniers chiffres de l’IBAN/);
+  assert.match(privacy, /devis non suivis de commande, 1 an après leur expiration/);
   assert.doesNotMatch(privacy, /Ce site ne collecte aucune donnée personnelle/);
   assert.match(text(readFileSync(join(openDir, 'mentions-legales/index.html'), 'utf8')), /Capital social : 1 000 €/);
 });
@@ -247,7 +263,7 @@ test('browser: audit fields are checked (same site, ≤ 20 pages, attestation) a
   await page.route('https://js.stripe.com/**', (r) => r.fulfill({ contentType: 'text/javascript', body: FAKE_STRIPE }));
   await page.route('https://octave-test.invalid/**', async (r) => {
     const req = r.request();
-    if (req.method() === 'GET') return r.fulfill({ contentType: 'application/json', body: JSON.stringify({ ok: true, product: 'a11y-audit-20', name: 'Audit', amount: 14900, currency: 'eur', label: '149,00 € net (TVA non applicable, art. 293 B du CGI)', termsVersion: 'cgv-pro-audit-2026-10-12' }) });
+    if (req.method() === 'GET') return r.fulfill({ contentType: 'application/json', body: JSON.stringify({ ok: true, product: 'a11y-audit-20', name: 'Audit', amount: 14900, currency: 'eur', label: '149,00 € net (TVA non applicable, art. 293 B du CGI)', termsVersion: 'cgv-pro-audit-2026-10-13' }) });
     posts.push(JSON.parse(req.postData()));
     return r.fulfill({ contentType: 'application/json', body: JSON.stringify({ ok: false, error: 'stub', message: 'stub: arrêt avant paiement' }) });
   });
@@ -280,7 +296,7 @@ test('browser: audit fields are checked (same site, ≤ 20 pages, attestation) a
   assert.equal(posts.length, 1);
   assert.deepEqual(posts[0].extra, { siteUrl: 'www.boutique-exemple.fr', pages: '/\n/panier', reportLang: 'en', scanAuthorized: true });
   assert.equal(posts[0].product, 'a11y-audit-20');
-  assert.equal(posts[0].termsVersion, 'cgv-pro-audit-2026-10-12');
+  assert.equal(posts[0].termsVersion, 'cgv-pro-audit-2026-10-13');
   assert.equal(posts[0].expectedAmount, 14900);
   assert.equal(await page.textContent('#pay-button'), 'Payer 149\u00a0€ et commander l’audit');
   const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
@@ -299,7 +315,7 @@ test('browser (quotesEnabled=true): devis.js shows the box and posts action quot
   await page.route('https://js.stripe.com/**', (r) => r.fulfill({ contentType: 'text/javascript', body: FAKE_STRIPE }));
   await page.route('https://octave-test.invalid/**', async (r) => {
     const req = r.request();
-    if (req.method() === 'GET') return r.fulfill({ contentType: 'application/json', body: JSON.stringify({ ok: true, product: 'a11y-audit-20', name: 'Audit', amount: 14900, currency: 'eur', label: '149,00 €', termsVersion: 'cgv-pro-audit-2026-10-12' }) });
+    if (req.method() === 'GET') return r.fulfill({ contentType: 'application/json', body: JSON.stringify({ ok: true, product: 'a11y-audit-20', name: 'Audit', amount: 14900, currency: 'eur', label: '149,00 €', termsVersion: 'cgv-pro-audit-2026-10-13' }) });
     posts.push(JSON.parse(req.postData()));
     return r.fulfill({ contentType: 'application/json', body: JSON.stringify({ ok: true, quote: 'D-2026-0001', email_masked: 'a***@entreprise.example' }) });
   });
@@ -327,7 +343,7 @@ test('browser (quotesEnabled=true): devis.js shows the box and posts action quot
   assert.equal(posts[0].action, 'quote');
   assert.equal(posts[0].product, 'a11y-audit-20');
   assert.equal(posts[0].expectedAmount, 14900);
-  assert.equal(posts[0].termsVersion, 'cgv-pro-audit-2026-10-12');
+  assert.equal(posts[0].termsVersion, 'cgv-pro-audit-2026-10-13');
   assert.deepEqual(posts[0].extra, { siteUrl: 'www.boutique-exemple.fr', pages: '/\n/panier', reportLang: 'de', scanAuthorized: true });
   assert.match(await page.textContent('#devis-ok'), /D-2026-0001/);
   const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
