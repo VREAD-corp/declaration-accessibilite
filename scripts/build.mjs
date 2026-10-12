@@ -53,10 +53,11 @@ copy('node_modules/axe-core/locales/de.json', 'assets/vendor/axe/de.json');
 const axeVersion = JSON.parse(readFileSync(join(root, 'node_modules/axe-core/package.json'))).version;
 write('assets/vendor/axe/VERSION.txt', `axe-core ${axeVersion} (https://github.com/dequelabs/axe-core), Mozilla Public License 2.0, unmodified.\n`);
 
-// paid audit order flow: only while SALES_OPEN is true (pay.js / order.js are verbatim copies of
-// VREAD-corp/octave-checkout gas/web/, the shared octave-pay-gas checkout scripts)
+// paid audit order flow: only while SALES_OPEN is true (pay.js / order.js / devis.js are verbatim copies of
+// VREAD-corp/octave-checkout gas/web/, the shared octave-pay-gas checkout scripts). The quote form and its
+// devis.js script tag are only on commander.html when sales.config.json has quotesEnabled: true.
 if (OPEN) {
-  for (const f of ['pay.js', 'order.js', 'audit-order.js']) copy(`src/checkout/${f}`, `assets/checkout/${f}`);
+  for (const f of ['pay.js', 'order.js', 'devis.js', 'audit-order.js']) copy(`src/checkout/${f}`, `assets/checkout/${f}`);
   write(
     'assets/checkout/checkout-config.js',
     checkoutConfigJs(SALES, {

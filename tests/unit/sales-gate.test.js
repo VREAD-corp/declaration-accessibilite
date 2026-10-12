@@ -2,6 +2,8 @@
 //  - SALES_OPEN=false: no order page, no Stripe.js, no checkout script, the audit page says « bientôt ».
 //  - SALES_OPEN=true (test build: fake endpoint, pk_test_): order page with the audit fields, CSP, B2B terms
 //    (cgv-pro.html), order page; a browser run with a stubbed Stripe.js and endpoint checks the form.
+//  - quotesEnabled (quote / bank-transfer form, octave-checkout gas/web/devis-form.html + devis.js): committed
+//    false → no quote block, no devis.js tag; true (temp config only) → block right after #octave-pay.
 import { test, before, after } from 'node:test';
 import assert from 'node:assert/strict';
 import { execFileSync } from 'node:child_process';
@@ -28,10 +30,11 @@ const files = (dir) => readdirSync(dir, { recursive: true }).map(String).filter(
 const text = (html) => html.replace(/<!--[\s\S]*?-->/g, '').replace(/<[^>]+>/g, ' ').replace(/&nbsp;| | /g, ' ').replace(/\s+/g, ' ');
 const OPEN_CFG = { ...repoConfig, SALES_OPEN: true, endpoint: 'https://octave-test.invalid/exec', publishableKey: 'pk_test_fakeForGateTest123' };
 
-let closedDir, openDir;
+let closedDir, openDir, quotesDir;
 before(() => {
   closedDir = build({ ...repoConfig, SALES_OPEN: false });
-  openDir = build(OPEN_CFG, { SALES_ALLOW_TEST: '1' });
+  openDir = build({ ...OPEN_CFG, quotesEnabled: false }, { SALES_ALLOW_TEST: '1' });
+  quotesDir = build({ ...OPEN_CFG, quotesEnabled: true }, { SALES_ALLOW_TEST: '1' });
   execFileSync(process.execPath, ['scripts/build.mjs'], { cwd: ROOT, stdio: 'pipe' }); // leave dist/ as committed config
 });
 
@@ -89,6 +92,52 @@ test('SALES_OPEN=true: offer page, order page (audit fields, attestation, CSP), 
   assert.match(cfg, /"product":"a11y-audit-20"/);
   assert.match(cfg, /"orderPage":"commande\.html"/);
   assert.doesNotMatch(readFileSync(join(openDir, 'sitemap.xml'), 'utf8'), /commande|commander|cgv-pro/);
+});
+
+const OCTAVE_WEB = [process.env.OCTAVE_CHECKOUT_WEB, join(ROOT, '..', 'octave-checkout', 'gas', 'web'), join(ROOT, '..', '..', 'octave-checkout', 'gas', 'web')].find((d) => d && existsSync(join(d, 'devis.js')));
+const ids = (html) => [...html.replace(/<!--[\s\S]*?-->/g, '').matchAll(/\sid="([^"]+)"/g)].map((m) => m[1]);
+const EXTRA_NAMES = ['siteUrl', 'pages', 'reportLang', 'scanAuthorized'];
+
+test('quotesEnabled: committed false; false → no quote block nor devis.js tag; config carries the boolean', () => {
+  assert.equal(repoConfig.quotesEnabled, false);
+  const order = readFileSync(join(openDir, 'commander.html'), 'utf8');
+  assert.doesNotMatch(order, /octave-devis/);
+  assert.doesNotMatch(order, /devis\.js/);
+  assert.match(readFileSync(join(openDir, 'assets/checkout/checkout-config.js'), 'utf8'), /"quotesEnabled":false/);
+  const dflt = build((({ quotesEnabled, ...c }) => c)(OPEN_CFG), { SALES_ALLOW_TEST: '1' }); // key absent → false
+  assert.match(readFileSync(join(dflt, 'assets/checkout/checkout-config.js'), 'utf8'), /"quotesEnabled":false/);
+  assert.doesNotMatch(readFileSync(join(dflt, 'commander.html'), 'utf8'), /octave-devis/);
+  assert.throws(() => build({ ...OPEN_CFG, quotesEnabled: 'yes' }, { SALES_ALLOW_TEST: '1' }));
+});
+
+test('quotesEnabled=true: quote block once right after #octave-pay, devis.js after pay.js, unique ids, order fields copied', () => {
+  const order = readFileSync(join(quotesDir, 'commander.html'), 'utf8');
+  assert.equal(order.match(/id="octave-devis-box"/g).length, 1);
+  assert.equal(order.match(/<form id="octave-devis"/g).length, 1);
+  assert.match(order, /<form id="octave-pay"[\s\S]*?<\/form>\s*<details id="octave-devis-box" class="card devis-box" hidden>/);
+  const scripts = [...order.matchAll(/<script src="([^"]+)"/g)].map((m) => m[1].split('/').pop());
+  assert.equal(scripts.indexOf('devis.js'), scripts.indexOf('pay.js') + 1);
+  assert.equal(scripts.filter((s) => s === 'devis.js').length, 1);
+  const all = ids(order);
+  assert.deepEqual(all.filter((x, i) => all.indexOf(x) !== i), [], 'duplicate ids');
+  for (const html of [order]) for (const m of html.matchAll(/aria-describedby="([^"]+)"/g)) for (const id of m[1].split(' ')) assert.ok(all.includes(id), `aria-describedby → #${id}`);
+  const quote = order.slice(order.indexOf('<form id="octave-devis"'), order.indexOf('</details>', order.indexOf('<form id="octave-devis"')));
+  const card = order.slice(order.indexOf('<form id="octave-pay"'), order.indexOf('<details id="octave-devis-box"'));
+  const extras = (html) => [...html.matchAll(/<(?:input|textarea|select)\b[^>]*>/g)].map((m) => m[0]).filter((t) => /data-octave-extra/.test(t)).map((t) => `${/name="([^"]+)"/.exec(t)[1]}=${/data-octave-extra(?:="([^"]*)")?/.exec(t)[1] ?? ''}`);
+  assert.deepEqual(extras(quote).sort(), extras(card).sort());
+  assert.deepEqual(extras(quote).map((e) => e.split('=')[0]).sort(), [...EXTRA_NAMES].sort());
+  assert.match(quote, /name="scanAuthorized" data-octave-extra="bool" required/);
+  assert.match(quote, /<div class="hp" aria-hidden="true">.*name="website" tabindex="-1"/);
+  assert.match(quote, /class="terms-link" href="\/declaration-accessibilite\/cgv-pro\.html"/);
+  assert.match(quote, /\(version du 12 octobre 2026\)/);
+  assert.doesNotMatch(quote, /\{\{|\}\}/);
+  assert.match(readFileSync(join(quotesDir, 'assets/checkout/checkout-config.js'), 'utf8'), /"quotesEnabled":true/);
+  assert.match(readFileSync(join(quotesDir, 'assets/site.css'), 'utf8'), /\.hp\{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden\}/);
+  for (const f of ['pay.js', 'devis.js']) assert.equal(readFileSync(join(quotesDir, 'assets/checkout', f), 'utf8'), readFileSync(join(ROOT, 'src/checkout', f), 'utf8'));
+});
+
+test('vendored pay.js / devis.js / order.js are identical to octave-checkout gas/web', { skip: !OCTAVE_WEB && 'octave-checkout checkout not found (set OCTAVE_CHECKOUT_WEB)' }, () => {
+  for (const f of ['pay.js', 'devis.js', 'order.js']) assert.equal(readFileSync(join(ROOT, 'src/checkout', f), 'utf8'), readFileSync(join(OCTAVE_WEB, f), 'utf8'), f);
 });
 
 const jsonLd = (html) => [...html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)].flatMap((m) => {
@@ -161,14 +210,14 @@ const FAKE_STRIPE = `window.Stripe = function () { return {
   elements: function () { return { create: function () { var h = {}; return { on: function (e, f) { h[e] = f; }, mount: function (sel) { document.querySelector(sel).textContent = '[carte]'; setTimeout(function () { h.ready && h.ready(); }, 10); } }; }, submit: function () { return Promise.resolve({}); }, update: function () {} }; },
   confirmPayment: function () { return Promise.resolve({ error: { message: 'stub: no payment in tests' } }); } }; };`;
 
-let server, browser, base;
+let server, browser, base, serveDir;
 before(async () => {
   const TYPES = { '.html': 'text/html; charset=utf-8', '.css': 'text/css', '.js': 'text/javascript', '.svg': 'image/svg+xml' };
   server = createServer((req, res) => {
     let p = normalize(decodeURIComponent(new URL(req.url, 'http://x').pathname)).replace(/^\/+/, '').replace(/^declaration-accessibilite\/?/, '');
     if (!p || p.endsWith('/')) p += 'index.html';
     try {
-      const body = readFileSync(join(openDir, p));
+      const body = readFileSync(join(serveDir ?? openDir, p));
       res.writeHead(200, { 'content-type': TYPES[extname(p)] ?? 'application/octet-stream' });
       res.end(body);
     } catch {
@@ -234,4 +283,52 @@ test('browser: audit fields are checked (same site, ≤ 20 pages, attestation) a
   assert.ok(overflow <= 0, `horizontal scroll ${overflow}px`);
   assert.deepEqual(errors, []);
   await page.close();
+});
+
+test('browser (quotesEnabled=true): devis.js shows the box and posts action quote with the same extra fields', async () => {
+  const { chromium } = await import('@playwright/test');
+  browser ??= await chromium.launch();
+  const page = await browser.newPage({ viewport: { width: 390, height: 900 } });
+  const errors = [];
+  page.on('pageerror', (e) => errors.push(String(e)));
+  const posts = [];
+  await page.route('https://js.stripe.com/**', (r) => r.fulfill({ contentType: 'text/javascript', body: FAKE_STRIPE }));
+  await page.route('https://octave-test.invalid/**', async (r) => {
+    const req = r.request();
+    if (req.method() === 'GET') return r.fulfill({ contentType: 'application/json', body: JSON.stringify({ ok: true, product: 'a11y-audit-20', name: 'Audit', amount: 14900, currency: 'eur', label: '149,00 €', termsVersion: 'cgv-pro-audit-2026-10-12' }) });
+    posts.push(JSON.parse(req.postData()));
+    return r.fulfill({ contentType: 'application/json', body: JSON.stringify({ ok: true, quote: 'D-2026-0001', email_masked: 'a***@entreprise.example' }) });
+  });
+  serveDir = quotesDir;
+  await page.goto(base + 'commander.html');
+  await page.waitForSelector('#octave-devis-box:not([hidden])');
+  await page.click('#octave-devis-box summary');
+  const q = '#octave-devis ';
+  await page.fill(q + 'input[name="siteUrl"]', 'www.boutique-exemple.fr');
+  await page.fill(q + 'textarea[name="pages"]', '/\n/panier');
+  await page.selectOption(q + 'select[name="reportLang"]', 'de');
+  await page.fill(q + 'input[name="email"]', 'achat@entreprise.example');
+  await page.fill(q + 'input[name="company"]', 'Boutique Exemple SAS');
+  await page.fill(q + 'input[name="siren"]', '732 829 320');
+  await page.fill(q + 'input[name="addressLine1"]', '1 place Exemple');
+  await page.fill(q + 'input[name="postalCode"]', '75011');
+  await page.fill(q + 'input[name="city"]', 'Paris');
+  await page.check(q + 'input[name="terms"]');
+  await page.click('#devis-button');
+  assert.equal(posts.length, 0, 'scanAuthorized is required');
+  await page.check(q + 'input[name="scanAuthorized"]');
+  await page.click('#devis-button');
+  await page.waitForSelector('#devis-ok:not([hidden])');
+  assert.equal(posts.length, 1);
+  assert.equal(posts[0].action, 'quote');
+  assert.equal(posts[0].product, 'a11y-audit-20');
+  assert.equal(posts[0].expectedAmount, 14900);
+  assert.equal(posts[0].termsVersion, 'cgv-pro-audit-2026-10-12');
+  assert.deepEqual(posts[0].extra, { siteUrl: 'www.boutique-exemple.fr', pages: '/\n/panier', reportLang: 'de', scanAuthorized: true });
+  assert.match(await page.textContent('#devis-ok'), /D-2026-0001/);
+  const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
+  assert.ok(overflow <= 0, `horizontal scroll ${overflow}px`);
+  assert.deepEqual(errors, []);
+  await page.close();
+  serveDir = undefined;
 });

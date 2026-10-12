@@ -1,5 +1,6 @@
 {
   "SALES_OPEN": true,
+  "quotesEnabled": false,
   "product": "a11y-audit-20",
   "amount": 14900,
   "VAT": "franchise293B",

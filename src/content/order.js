@@ -149,15 +149,17 @@ export function auditJsonLd(lang) {
   };
 }
 
-const extraFieldsHtml = `  <fieldset class="field-group"><legend>Site à analyser</legend>
+// Order fields (data-octave-extra, sent by pay.js / devis.js in body.extra). `sfx`: id suffix, '' for the card
+// form, '-devis' for the quote form copy (plain inputs: audit-order.js only binds the card form; the server
+// checks the fields again for both).
+const extraFieldsHtml = (sfx = '') => `  <fieldset class="field-group"><legend>Site à analyser</legend>
     <label class="field"><span>Adresse du site</span>
-      <input type="text" name="siteUrl" data-octave-extra inputmode="url" autocomplete="url" required maxlength="300" placeholder="https://www.exemple.fr/" aria-describedby="site-help"></label>
-    <p id="site-help" class="small muted">Point de départ de l’analyse. Pages publiques uniquement : pas de pages derrière une connexion, pas de paiement.</p>
+      <input type="text" name="siteUrl" data-octave-extra inputmode="url" autocomplete="url" required maxlength="300" placeholder="https://www.exemple.fr/" aria-describedby="site-help${sfx}"></label>
+    <p id="site-help${sfx}" class="small muted">Point de départ de l’analyse. Pages publiques uniquement : pas de pages derrière une connexion, pas de paiement.</p>
     <label class="field"><span>Pages à analyser (facultatif : une adresse par ligne, ${MAX_PAGES} au maximum)</span>
-      <textarea name="pages" data-octave-extra data-max="${MAX_PAGES}" rows="5" maxlength="6400" spellcheck="false" aria-describedby="pages-help pages-count"></textarea></label>
-    <p id="pages-help" class="small muted">Laissez vide pour une exploration automatique : jusqu’à ${MAX_PAGES} pages du même site trouvées en suivant les liens depuis l’adresse ci-dessus, en respectant son fichier robots.txt. Les chemins du type /panier sont acceptés.</p>
-    <p id="pages-count" class="small muted" aria-live="polite"></p>
-    <label class="field"><span>Langue du rapport</span>
+      <textarea name="pages" data-octave-extra data-max="${MAX_PAGES}" rows="5" maxlength="6400" spellcheck="false" aria-describedby="pages-help${sfx}${sfx ? '' : ' pages-count'}"></textarea></label>
+    <p id="pages-help${sfx}" class="small muted">Laissez vide pour une exploration automatique : jusqu’à ${MAX_PAGES} pages du même site trouvées en suivant les liens depuis l’adresse ci-dessus, en respectant son fichier robots.txt. Les chemins du type /panier sont acceptés.</p>
+${sfx ? '' : '    <p id="pages-count" class="small muted" aria-live="polite"></p>\n'}    <label class="field"><span>Langue du rapport</span>
       <select name="reportLang" data-octave-extra><option value="fr" selected>Français</option><option value="de" lang="de">Deutsch</option><option value="en" lang="en">English</option></select></label>
   </fieldset>
 `;
@@ -165,6 +167,7 @@ const extraFieldsHtml = `  <fieldset class="field-group"><legend>Site à analyse
 const afterTermsHtml = `  <label class="check"><input type="checkbox" name="scanAuthorized" data-octave-extra="bool" required>
     <span>J’atteste que l’entreprise ci-dessus est titulaire du site indiqué ou dûment autorisée par son titulaire, et j’autorise READ FRANCE SAS à analyser automatiquement ses pages publiques pour cette prestation.</span></label>
 `;
+const indent = (html) => html.replace(/^(?=.)/gm, '  ');
 
 export const orderBody = `<section class="hero">
 <h1>Commander l’audit automatisé partiel d’accessibilité</h1>
@@ -176,15 +179,17 @@ ${orderFormHtml({
   cgvUrl: url(ROUTES.cgvPro.fr),
   intro: 'Vente réservée aux professionnels (entreprises immatriculées en France, SIREN obligatoire). Le rapport PDF et la facture acquittée sont envoyés par e-mail sous 24 h ouvrées après le paiement.',
   emailLabel: 'E-mail professionnel (réception du rapport et de la facture)',
-  extraFieldsHtml,
+  extraFieldsHtml: extraFieldsHtml(),
   afterTermsHtml,
+  // quote form copy (shared devisFormHtml has no after-terms slot: the attestation follows the site fields)
+  devisExtraFieldsHtml: indent(extraFieldsHtml('-devis') + afterTermsHtml.replace('l’entreprise ci-dessus', 'l’entreprise indiquée ci-dessous')),
   payLabel: AUDIT_PAY_LABEL,
 })}`;
 
 export const orderScripts = `<script src="${url('assets/checkout/checkout-config.js')}"></script>
 <script src="https://js.stripe.com/v3/"></script>
 <script src="${url('assets/checkout/pay.js')}"></script>
-<script src="${url('assets/checkout/audit-order.js')}"></script>
+${SALES.quotesEnabled === true ? `<script src="${url('assets/checkout/devis.js')}"></script>\n` : ''}<script src="${url('assets/checkout/audit-order.js')}"></script>
 `;
 
 export const orderReturnBody = orderPageBody();
