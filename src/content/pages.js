@@ -1,4 +1,5 @@
-import { SITE, ROUTES, RELEASE_DL } from './site.js';
+import { SITE, ROUTES, RELEASE_DL, OPEN } from './site.js';
+import { auditOpenBodies, AUDIT_META_OPEN, orderBody, orderScripts, orderReturnBody, orderReturnScripts, ORDER_CSP, ORDER_RETURN_CSP, cgvProBody, privacyOrderSection, cgvDraftReplaced } from './order.js';
 import { url } from './layout.js';
 import { formHtml } from './form.js';
 import { legalBodies, privacyBodies, cgvBody } from './legal.js';
@@ -37,7 +38,7 @@ const HOME = {
     next: [
       ['Vérifier les bases', `Faites l’<a href="${url(ROUTES.check.fr)}">auto-contrôle en 20 points</a> et le mini-test automatique d’un extrait HTML.`],
       ['Comprendre vos obligations', `Textes officiels, exemption des microentreprises et autorités de contrôle : <a href="${url(ROUTES.sources.fr)}">sources et champ d’application</a>.`],
-      ['Aller plus loin', `Un <a href="${url(ROUTES.audit.fr)}">audit automatisé partiel à 149 € HT</a> est en préparation (pas encore de commande possible).`],
+      ['Aller plus loin', OPEN ? `Un <a href="${url(ROUTES.audit.fr)}">audit automatisé partiel à 149 € net</a> analyse jusqu’à 20 pages de votre site avec axe-core : rapport PDF sous 24 h ouvrées (ce n’est pas un audit de conformité RGAA).` : `Un <a href="${url(ROUTES.audit.fr)}">audit automatisé partiel à 149 € HT</a> est en préparation (pas encore de commande possible).`],
     ],
   },
   de: {
@@ -64,7 +65,7 @@ const HOME = {
     next: [
       ['Grundlagen prüfen', `Machen Sie den <a href="${url(ROUTES.check.de)}">Selbsttest in 20 Punkten</a> und die automatische Mini-Prüfung eines HTML-Auszugs.`],
       ['Pflichten verstehen', `Gesetzestexte, Ausnahme für Kleinstunternehmen, Marktüberwachung: <a href="${url(ROUTES.sources.de)}">Quellen und Anwendungsbereich</a>.`],
-      ['Weitergehen', `Eine <a href="${url(ROUTES.audit.de)}">teilautomatisierte Prüfung für 149 € netto</a> ist in Vorbereitung (noch keine Bestellung möglich).`],
+      ['Weitergehen', OPEN ? `Eine <a href="${url(ROUTES.audit.de)}">automatisierte Teilprüfung für 149 € netto</a> (bis zu 20 Seiten, PDF-Bericht, für Unternehmen mit Sitz in Frankreich).` : `Eine <a href="${url(ROUTES.audit.de)}">teilautomatisierte Prüfung für 149 € netto</a> ist in Vorbereitung (noch keine Bestellung möglich).`],
     ],
   },
   en: {
@@ -91,7 +92,7 @@ const HOME = {
     next: [
       ['Check the basics', `Run the <a href="${url(ROUTES.check.en)}">20-point self-check</a> and the automated mini-test of an HTML snippet.`],
       ['Understand your obligations', `Official texts, the microenterprise exemption and enforcement: <a href="${url(ROUTES.sources.en)}">sources and scope</a>.`],
-      ['Go further', `A <a href="${url(ROUTES.audit.en)}">partial automated audit at €149</a> is in preparation (no orders yet).`],
+      ['Go further', OPEN ? `A <a href="${url(ROUTES.audit.en)}">partial automated audit at €149 net</a> (up to 20 pages, PDF report, companies registered in France).` : `A <a href="${url(ROUTES.audit.en)}">partial automated audit at €149</a> is in preparation (no orders yet).`],
     ],
   },
 };
@@ -316,6 +317,25 @@ function alternates(key, lang) {
     .map(([l, path]) => ({ lang: l, path }));
 }
 
+const PRIVACY_OPEN_DESC = {
+  fr: 'Le générateur et le mini-test ne collectent aucune donnée ; la commande de l’audit payant traite les données de commande.',
+  de: 'Generator und Mini-Prüfung erheben keine Daten; die Bestellung der kostenpflichtigen Prüfung verarbeitet Bestelldaten.',
+  en: 'The generator and mini-test collect no data; ordering the paid audit processes order data.',
+};
+
+/** Privacy notice once the paid audit is on sale: the free tools still collect nothing; the order does. */
+function privacyOpen(lang) {
+  const lead = {
+    fr: ['<p><strong>Ce site ne collecte aucune donnée personnelle.</strong></p>', '<p><strong>Le générateur, l’auto-contrôle et le mini-test ne collectent aucune donnée personnelle.</strong> Seule la commande de l’audit payant en traite (voir plus bas).</p>'],
+    de: ['<p><strong>Diese Website erhebt keine personenbezogenen Daten.</strong></p>', '<p><strong>Generator, Selbsttest und Mini-Prüfung erheben keine personenbezogenen Daten.</strong> Nur die Bestellung der kostenpflichtigen Prüfung verarbeitet Daten (siehe unten).</p>'],
+    en: ['<p><strong>This website collects no personal data.</strong></p>', '<p><strong>The generator, the self-check and the mini-test collect no personal data.</strong> Only ordering the paid audit does (see below).</p>'],
+  }[lang];
+  const body = privacyBodies[lang];
+  if (!body.includes(lead[0])) throw new Error(`privacy ${lang}: lead sentence changed`);
+  const i = body.lastIndexOf('</div>');
+  return body.replace(lead[0], lead[1]).slice(0, i + lead[1].length - lead[0].length) + privacyOrderSection[lang] + '\n</div>';
+}
+
 const LANGS = ['fr', 'de', 'en'];
 export const PAGES = [];
 for (const lang of LANGS) {
@@ -356,10 +376,10 @@ for (const lang of LANGS) {
     id: 'audit',
     lang,
     path: ROUTES.audit[lang],
-    title: META.audit[lang][0],
-    description: META.audit[lang][1],
+    title: (OPEN ? AUDIT_META_OPEN : META.audit)[lang][0],
+    description: (OPEN ? AUDIT_META_OPEN : META.audit)[lang][1],
     alternates: alternates('audit', lang),
-    body: auditBodies[lang],
+    body: OPEN ? auditOpenBodies[lang] : auditBodies[lang],
   });
   PAGES.push({
     id: 'sources',
@@ -371,15 +391,21 @@ for (const lang of LANGS) {
     body: sourcesBodies[lang].body,
   });
   PAGES.push({ id: 'legal', lang, path: ROUTES.legal[lang], title: META.legal[lang][0], description: META.legal[lang][1], alternates: alternates('legal', lang), body: legalBodies[lang] });
-  PAGES.push({ id: 'privacy', lang, path: ROUTES.privacy[lang], title: META.privacy[lang][0], description: META.privacy[lang][1], alternates: alternates('privacy', lang), body: privacyBodies[lang] });
+  PAGES.push({ id: 'privacy', lang, path: ROUTES.privacy[lang], title: META.privacy[lang][0], description: OPEN ? PRIVACY_OPEN_DESC[lang] : META.privacy[lang][1], alternates: alternates('privacy', lang), body: OPEN ? privacyOpen(lang) : privacyBodies[lang] });
 }
 PAGES.push({
   id: 'cgv',
   lang: 'fr',
   path: ROUTES.cgv.fr,
-  title: 'Conditions générales de vente (projet) – A11y Kit',
-  description: 'Projet de conditions générales de vente de l’audit automatisé partiel, en attente de validation. Aucune vente ouverte.',
-  body: cgvBody,
+  title: OPEN ? 'Conditions générales de vente – A11y Kit' : 'Conditions générales de vente (projet) – A11y Kit',
+  description: OPEN ? 'Les conditions générales de vente de l’audit automatisé partiel sont publiées sur la page CGV pro.' : 'Projet de conditions générales de vente de l’audit automatisé partiel, en attente de validation. Aucune vente ouverte.',
+  body: OPEN ? cgvDraftReplaced : cgvBody,
   noindex: true,
 });
+if (OPEN) {
+  const ORDER_NOTE = 'Aucun cookie ni traceur de notre part. Les données de commande sont transmises à Stripe et à notre service de commande (voir Confidentialité).';
+  PAGES.push({ id: 'order', lang: 'fr', path: ROUTES.order.fr, file: 'commander.html', title: 'Commander l’audit automatisé partiel d’accessibilité – A11y Kit', description: 'Commande de l’audit automatisé partiel (axe-core, jusqu’à 20 pages, rapport PDF sous 24 h ouvrées), réservée aux professionnels.', body: orderBody, bodyScripts: orderScripts, csp: ORDER_CSP, noindex: true, noTracking: ORDER_NOTE });
+  PAGES.push({ id: 'order-return', lang: 'fr', path: ROUTES.orderReturn.fr, file: 'commande.html', title: 'Votre commande – A11y Kit', description: 'Confirmation de commande de l’audit automatisé partiel.', body: orderReturnBody, bodyScripts: orderReturnScripts, csp: ORDER_RETURN_CSP, noindex: true, noTracking: ORDER_NOTE });
+  PAGES.push({ id: 'cgv-pro', lang: 'fr', path: ROUTES.cgvPro.fr, file: 'cgv-pro.html', title: 'Conditions générales de vente aux professionnels – audit automatisé – A11y Kit', description: 'CGV B2B de l’audit automatisé partiel d’accessibilité (version du 12 octobre 2026).', body: cgvProBody, noindex: true });
+}
 PAGES.push({ id: '404', lang: 'fr', path: '/404/', title: 'Page introuvable – A11y Kit', description: 'Page introuvable.', body: NOT_FOUND });

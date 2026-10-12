@@ -3,6 +3,8 @@ import { mkdirSync, rmSync, writeFileSync, copyFileSync, readFileSync, readdirSy
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { PAGES, SITE } from '../src/content/pages.js';
+import { OPEN, SALES } from '../src/content/site.js';
+import { checkoutConfigJs } from './checkout-pages.mjs';
 import { layout } from '../src/content/layout.js';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
@@ -20,8 +22,8 @@ function copy(from, rel) {
   copyFileSync(join(root, from), p);
 }
 
-// pages
-for (const page of PAGES) write(join(page.path, 'index.html').replace(/^\//, ''), layout(page));
+// pages (a page with `file` is written at that path, e.g. commander.html)
+for (const page of PAGES) write(page.file || join(page.path, 'index.html').replace(/^\//, ''), layout(page));
 // 404
 const notFound = PAGES.find((p) => p.id === '404');
 if (notFound) write('404.html', layout(notFound));
@@ -41,11 +43,25 @@ copy('node_modules/axe-core/locales/de.json', 'assets/vendor/axe/de.json');
 const axeVersion = JSON.parse(readFileSync(join(root, 'node_modules/axe-core/package.json'))).version;
 write('assets/vendor/axe/VERSION.txt', `axe-core ${axeVersion} (https://github.com/dequelabs/axe-core), Mozilla Public License 2.0, unmodified.\n`);
 
+// paid audit order flow: only while SALES_OPEN is true (pay.js / order.js are verbatim copies of
+// VREAD-corp/octave-checkout gas/web/, the shared octave-pay-gas checkout scripts)
+if (OPEN) {
+  for (const f of ['pay.js', 'order.js', 'audit-order.js']) copy(`src/checkout/${f}`, `assets/checkout/${f}`);
+  write(
+    'assets/checkout/checkout-config.js',
+    checkoutConfigJs(SALES, {
+      termsUrl: `${SITE.base}cgv-pro.html`,
+      orderPage: 'commande.html',
+      laterText: 'Si vous fermez cette page, votre commande est tout de même enregistrée automatiquement dans les 10 minutes ; le rapport et la facture vous sont envoyés par e-mail sous 24 h ouvrées.',
+    })
+  );
+}
+
 // deliberately inaccessible demo page (noindex, not in sitemap) for the sample audit report
 copy('src/demo/boutique-demo.html', 'demo/boutique-demo/index.html');
 
 // sitemap + robots
-const urls = PAGES.filter((p) => p.id !== '404' && !p.noindex);
+const urls = PAGES.filter((p) => p.id !== '404' && !p.noindex && !p.file);
 write(
   'sitemap.xml',
   `<?xml version="1.0" encoding="UTF-8"?>

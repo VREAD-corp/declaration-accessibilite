@@ -30,7 +30,7 @@ export function layout(page) {
 <html lang="${page.lang}">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+${page.csp ? `<meta http-equiv="Content-Security-Policy" content="${esc(page.csp)}">\n` : ''}<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>${esc(page.title)}</title>
 <meta name="description" content="${esc(page.description)}">
 ${page.noindex || page.id === '404' ? '<meta name="robots" content="noindex">' : `<link rel="canonical" href="${abs(page.path)}">`}
@@ -44,7 +44,7 @@ ${hreflang}
 <meta name="twitter:card" content="summary">
 <meta name="color-scheme" content="light dark">
 <link rel="icon" href="${url('favicon.svg')}" type="image/svg+xml">
-<link rel="stylesheet" href="${url('assets/site.css')}">
+${page.head || ''}<link rel="stylesheet" href="${url('assets/site.css')}">
 ${jsonld}
 </head>
 <body>
@@ -67,10 +67,10 @@ ${page.body}
 <ul>
 ${c.footerLinks.map((l) => `<li><a href="${l.external ? l.path : url(l.path)}"${l.lang ? ` hreflang="${l.lang}"` : ''}>${esc(l.label)}</a></li>`).join('\n')}
 </ul>
-<p>${esc(c.product)} · ${esc(c.noTracking)}</p>
+<p>${esc(c.product)} · ${esc(page.noTracking || c.noTracking)}</p>
 </div>
 </footer>
-${scripts}
+${page.bodyScripts || ''}${scripts}
 </body>
 </html>
 `;

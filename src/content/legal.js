@@ -18,7 +18,7 @@ export const legalBodies = {
   fr: `<div class="legal-text">
 <h1>Mentions légales</h1>
 <h2>Éditeur</h2>
-<p>${PUB.name}, ${PUB.form.fr}<br>SIREN ${PUB.siren} – SIRET du siège ${PUB.siret}<br>Siège social : ${PUB.address}<br>Capital social : information en cours de mise à jour.</p>
+<p>${PUB.name}, ${PUB.form.fr}<br>SIREN ${PUB.siren} – SIRET du siège ${PUB.siret}<br>Siège social : ${PUB.address}<br>Capital social : 1 000 €.</p>
 <p>Directeur de la publication : ${PUB.director}, président.</p>
 <h2>Contact</h2>
 <p>En attendant l’ouverture d’une adresse e-mail dédiée, vous pouvez nous écrire via les <a href="${ISSUES}">tickets GitHub du projet</a> (les tickets sont publics : n’y indiquez pas d’informations personnelles ou confidentielles).</p>
