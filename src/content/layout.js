@@ -1,4 +1,4 @@
-import { SITE, NAV, CHROME } from './site.js';
+import { SITE, NAV, CHROME, ROUTES } from './site.js';
 
 const esc = (s) =>
   String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
@@ -12,13 +12,13 @@ const LANG_NAMES = { fr: 'Français', de: 'Deutsch', en: 'English' };
 export function layout(page) {
   const c = CHROME[page.lang];
   const nav = NAV[page.lang]
-    .map((n) => `<li><a href="${url(n.path)}"${n.path === page.path ? ' aria-current="page"' : ''}>${esc(n.label)}</a></li>`)
+    .map((n) => `<li><a href="${url(n.path)}"${n.path === ROUTES.audit[page.lang] ? ' class="nav-cta"' : ''}${n.path === page.path ? ' aria-current="page"' : ''}>${esc(n.label)}</a></li>`)
     .join('');
   const alts = page.alternates || [];
   const langLinks = ['fr', 'de', 'en']
     .map((l) => {
       const a = l === page.lang ? { path: page.path } : alts.find((x) => x.lang === l) || { path: NAV[l][0].path };
-      return `<li><a href="${url(a.path)}" hreflang="${l}" lang="${l}"${l === page.lang ? ' aria-current="true"' : ''}>${LANG_NAMES[l]}</a></li>`;
+      return `<li><a href="${url(a.path)}" hreflang="${l}" lang="${l}"${l === page.lang ? ' aria-current="true"' : ''}>${l.toUpperCase()}<span class="sr-only"> – ${LANG_NAMES[l]}</span></a></li>`;
     })
     .join('');
   const hreflang = page.id === '404' ? '' : [{ lang: page.lang, path: page.path }, ...alts]
@@ -50,10 +50,19 @@ ${jsonld}
 <body>
 <a class="skip" href="#main">${esc(c.skip)}</a>
 <header class="site-header">
-<div class="wrap">
-<a class="brand" href="${url(NAV[page.lang][0].path)}"><span class="brand-mark" aria-hidden="true">A11y</span>${esc(SITE.brand)}</a>
+<div class="wrap header-row">
+<a class="brand" href="${url(NAV[page.lang][0].path)}"><span class="brand-mark" aria-hidden="true">A11y</span><span class="brand-text">${esc(SITE.brand)}<span class="brand-by">READ FRANCE</span></span></a>
+<div class="header-desktop">
 <nav class="site-nav" aria-label="${esc(c.navLabel)}"><ul>${nav}</ul></nav>
 <nav class="lang-switch" aria-label="${esc(c.langLabel)}"><ul>${langLinks}</ul></nav>
+</div>
+<details class="menu">
+<summary>${esc(c.menu)}</summary>
+<div class="menu-panel">
+<nav class="site-nav" aria-label="${esc(c.navLabel)}"><ul>${nav}</ul></nav>
+<nav class="lang-switch" aria-label="${esc(c.langLabel)}"><ul>${langLinks}</ul></nav>
+</div>
+</details>
 </div>
 </header>
 <main id="main" tabindex="-1">
@@ -67,7 +76,7 @@ ${page.body}
 <ul>
 ${c.footerLinks.map((l) => `<li><a href="${l.external ? l.path : url(l.path)}"${l.lang ? ` hreflang="${l.lang}"` : ''}>${esc(l.label)}</a></li>`).join('\n')}
 </ul>
-<p>${esc(c.product)} · ${esc(page.noTracking || c.noTracking)}</p>
+<p>${esc(c.product)} (SIREN 988 741 773, Paris) · ${esc(page.noTracking || c.noTracking)}</p>
 </div>
 </footer>
 ${page.bodyScripts || ''}${scripts}

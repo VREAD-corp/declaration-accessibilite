@@ -1,9 +1,10 @@
 import { SITE, ROUTES, RELEASE_DL, OPEN, PRICE } from './site.js';
-import { auditOpenBodies, AUDIT_META_OPEN, auditJsonLd, ORG_JSONLD, orderBody, orderScripts, orderReturnBody, orderReturnScripts, ORDER_CSP, ORDER_RETURN_CSP, cgvProBody, privacyOrderSection, cgvDraftReplaced } from './order.js';
+import { AUDIT_META_OPEN, auditJsonLd, ORG_JSONLD, orderBody, orderScripts, orderReturnBody, orderReturnScripts, ORDER_CSP, ORDER_RETURN_CSP, cgvProBody, privacyOrderSection, cgvDraftReplaced } from './order.js';
 import { url } from './layout.js';
 import { formHtml } from './form.js';
 import { legalBodies, privacyBodies, cgvBody } from './legal.js';
 import { auditBodies } from './audit.js';
+import { auditSalesBodies } from './audit-open.js';
 import { sourcesBodies } from './sources.js';
 import { DOCS } from '../lib/statement.js';
 import { CHECKS, rgaaFor } from '../lib/checklist.js';
@@ -33,13 +34,21 @@ const HOME = {
     reset: 'Effacer mes réponses',
     noscript: 'Le générateur nécessite JavaScript. Vous pouvez aussi télécharger les modèles vierges ci-dessous.',
     tplTitle: 'Modèles gratuits à télécharger',
-    tplText: 'Versions vierges à compléter, hébergées sur GitHub :',
-    teaser: `<strong>Nouveau :</strong> <a href="${url(ROUTES.audit.fr)}">audit d’accessibilité automatisé partiel, ${PRICE.ttc} net</a> (TVA non applicable, art. 293 B du CGI) : jusqu’à 20 pages analysées avec axe-core, rapport PDF sous 24 h ouvrées. Ce n’est pas un audit de conformité RGAA.`,
+    tplText: 'Versions vierges à compléter :',
+    eyebrow: 'Gratuit · sans inscription · rien n’est envoyé',
+    start: 'Commencer le questionnaire',
+    promo: {
+      title: 'Savoir ce qui bloque sur votre site',
+      text: 'Vos 20 pages clés testées sur ordinateur et mobile : rapport PDF sous 24 h ouvrées, problèmes classés par gravité, éléments à corriger.',
+      cta: 'Voir l’audit – 149 €',
+      fine: '149 € net, TVA non applicable (art. 293 B du CGI). Analyse automatisée : ce n’est pas un audit RGAA complet.',
+      alt: 'Aperçu d’un rapport d’audit : synthèse des problèmes classés par gravité',
+    },
     nextTitle: 'Et ensuite ?',
     next: [
       ['Vérifier les bases', `Faites l’<a href="${url(ROUTES.check.fr)}">auto-contrôle en 20 points</a> et le mini-test automatique d’un extrait HTML.`],
       ['Comprendre vos obligations', `Textes officiels, exemption des microentreprises et autorités de contrôle : <a href="${url(ROUTES.sources.fr)}">sources et champ d’application</a>.`],
-      ['Aller plus loin', OPEN ? `Un <a href="${url(ROUTES.audit.fr)}">audit automatisé partiel à ${PRICE.ttc} net</a> (TVA non applicable, art. 293 B du CGI) analyse jusqu’à 20 pages de votre site avec axe-core : rapport PDF sous 24 h ouvrées (ce n’est pas un audit de conformité RGAA).` : `Un <a href="${url(ROUTES.audit.fr)}">audit automatisé partiel à 149 € net</a> (TVA non applicable, art. 293 B du CGI) est en préparation (pas encore de commande possible).`],
+      ['Aller plus loin', OPEN ? `L’<a href="${url(ROUTES.audit.fr)}">audit automatisé</a> teste jusqu’à 20 pages de votre site sur ordinateur et mobile : rapport PDF sous 24 h ouvrées.` : `Un <a href="${url(ROUTES.audit.fr)}">audit automatisé partiel à 149 € net</a> (TVA non applicable, art. 293 B du CGI) est en préparation (pas encore de commande possible).`],
     ],
   },
   de: {
@@ -61,13 +70,21 @@ const HOME = {
     reset: 'Angaben löschen',
     noscript: 'Der Generator benötigt JavaScript. Sie können auch die leeren Vorlagen unten herunterladen.',
     tplTitle: 'Kostenlose Vorlagen',
-    tplText: 'Leere Vorlagen zum Ausfüllen, gehostet auf GitHub:',
-    teaser: `<strong>Neu:</strong> <a href="${url(ROUTES.audit.de)}">automatisierte Teilprüfung der Barrierefreiheit, 149 € netto</a> (keine Umsatzsteuer ausgewiesen gemäß Art. 293 B CGI): bis zu 20 Seiten mit axe-core, PDF-Bericht innerhalb von 24 Arbeitsstunden, für Unternehmen mit Sitz in Frankreich. Keine Konformitätsprüfung.`,
+    tplText: 'Leere Vorlagen zum Ausfüllen:',
+    eyebrow: 'Kostenlos · ohne Anmeldung · keine Datenübertragung',
+    start: 'Fragebogen starten',
+    promo: {
+      title: 'Wissen, was auf Ihrer Website blockiert',
+      text: 'Ihre 20 wichtigsten Seiten auf Desktop und Mobil geprüft: PDF-Bericht in 24 Arbeitsstunden, Probleme nach Schweregrad (für Unternehmen mit Sitz in Frankreich).',
+      cta: 'Zur Prüfung – 149 €',
+      fine: '149 € netto, keine Umsatzsteuer ausgewiesen gemäß Art. 293 B CGI. Automatisierte Prüfung, keine Konformitätsprüfung.',
+      alt: 'Vorschau eines Prüfberichts: Übersicht der Probleme nach Schweregrad',
+    },
     nextTitle: 'Wie weiter?',
     next: [
       ['Grundlagen prüfen', `Machen Sie den <a href="${url(ROUTES.check.de)}">Selbsttest in 20 Punkten</a> und die automatische Mini-Prüfung eines HTML-Auszugs.`],
       ['Pflichten verstehen', `Gesetzestexte, Ausnahme für Kleinstunternehmen, Marktüberwachung: <a href="${url(ROUTES.sources.de)}">Quellen und Anwendungsbereich</a>.`],
-      ['Weitergehen', OPEN ? `Eine <a href="${url(ROUTES.audit.de)}">automatisierte Teilprüfung für 149 € netto</a> (keine Umsatzsteuer ausgewiesen gemäß Art. 293 B CGI; bis zu 20 Seiten, PDF-Bericht, für Unternehmen mit Sitz in Frankreich).` : `Eine <a href="${url(ROUTES.audit.de)}">teilautomatisierte Prüfung für 149 € netto</a> (keine Umsatzsteuer ausgewiesen gemäß Art. 293 B CGI) ist in Vorbereitung (noch keine Bestellung möglich).`],
+      ['Weitergehen', OPEN ? `Die <a href="${url(ROUTES.audit.de)}">automatisierte Prüfung</a> testet bis zu 20 Seiten Ihrer Website auf Desktop und Mobil: PDF-Bericht in 24 Arbeitsstunden.` : `Eine <a href="${url(ROUTES.audit.de)}">teilautomatisierte Prüfung für 149 € netto</a> (keine Umsatzsteuer ausgewiesen gemäß Art. 293 B CGI) ist in Vorbereitung (noch keine Bestellung möglich).`],
     ],
   },
   en: {
@@ -89,13 +106,21 @@ const HOME = {
     reset: 'Erase my answers',
     noscript: 'The generator needs JavaScript. You can also download the blank templates below.',
     tplTitle: 'Free templates',
-    tplText: 'Blank templates to fill in, hosted on GitHub:',
-    teaser: `<strong>New:</strong> <a href="${url(ROUTES.audit.en)}">partial automated accessibility audit, €149 net</a> (VAT not applicable, art. 293 B of the French tax code): up to 20 pages scanned with axe-core, PDF report within 24 business hours, companies registered in France. Not a conformance audit.`,
+    tplText: 'Blank templates to fill in:',
+    eyebrow: 'Free · no sign-up · nothing is sent',
+    start: 'Start the questionnaire',
+    promo: {
+      title: 'Find out what blocks users on your site',
+      text: 'Your 20 key pages tested on desktop and mobile: PDF report within 24 business hours, issues ranked by severity (companies registered in France).',
+      cta: 'See the audit – €149',
+      fine: '€149 net, VAT not applicable (art. 293 B of the French tax code). Automated analysis, not a full conformance audit.',
+      alt: 'Preview of an audit report: summary of issues ranked by severity',
+    },
     nextTitle: 'What next?',
     next: [
       ['Check the basics', `Run the <a href="${url(ROUTES.check.en)}">20-point self-check</a> and the automated mini-test of an HTML snippet.`],
       ['Understand your obligations', `Official texts, the microenterprise exemption and enforcement: <a href="${url(ROUTES.sources.en)}">sources and scope</a>.`],
-      ['Go further', OPEN ? `A <a href="${url(ROUTES.audit.en)}">partial automated audit at €149 net</a> (VAT not applicable, art. 293 B of the French tax code; up to 20 pages, PDF report, companies registered in France).` : `A <a href="${url(ROUTES.audit.en)}">partial automated audit at €149 net</a> (VAT not applicable, art. 293 B of the French tax code) is in preparation (no orders yet).`],
+      ['Go further', OPEN ? `The <a href="${url(ROUTES.audit.en)}">automated audit</a> tests up to 20 pages of your site on desktop and mobile: PDF report within 24 business hours.` : `A <a href="${url(ROUTES.audit.en)}">partial automated audit at €149 net</a> (VAT not applicable, art. 293 B of the French tax code) is in preparation (no orders yet).`],
     ],
   },
 };
@@ -109,19 +134,45 @@ function templatesList(lang) {
 function homeBody(lang) {
   const h = HOME[lang];
   const docs = DOCS[lang];
-  return `<section class="hero">
+  const promo = OPEN
+    ? `<aside class="audit-promo" id="audit-offer" aria-labelledby="promo-title">
+<div class="promo-thumb"><img src="${url(`assets/img/rapport-${lang}-p1.webp`)}" alt="${esc(h.promo.alt)}" width="760" height="1075" decoding="async"></div>
+<div>
+<h2 id="promo-title">${esc(h.promo.title)}</h2>
+<p>${esc(h.promo.text)}</p>
+<p><a class="btn" href="${url(ROUTES.audit[lang])}">${esc(h.promo.cta)}</a></p>
+<p class="fine">${esc(h.promo.fine)}</p>
+</div>
+</aside>`
+    : '';
+  return `<section class="lp-hero gen-hero${OPEN ? '' : ' solo'}">
+<div class="lp-hero-text">
+<p class="eyebrow">${esc(h.eyebrow)}</p>
 <h1>${esc(h.h1)}</h1>
 <p class="lead">${esc(h.lead)}</p>
 <ul class="badges">${h.badges.map((b) => `<li>${esc(b)}</li>`).join('')}</ul>
-<div class="callout">${h.warn}</div>
-${OPEN ? `<p class="callout info" id="audit-offer">${h.teaser}</p>\n` : ''}<noscript><p class="callout">${esc(h.noscript)}</p></noscript>
+<p><a class="text-link" href="#form-title">${esc(h.start)} ↓</a></p>
+</div>
+${promo}
 </section>
+<noscript><p class="callout">${esc(h.noscript)}</p></noscript>
 <div class="grid gen-grid">
 <section aria-labelledby="form-title">
 <h2 id="form-title">${esc(h.formTitle)}</h2>
+<p class="note">${h.warn}</p>
 <form id="gen-form" novalidate>
 ${formHtml(lang)}
 </form>
+<div class="save-box">
+<h3 class="save-title">${esc(h.saveTitle)}</h3>
+<p class="hint">${esc(h.saveText)}</p>
+<div class="btn-row">
+<button type="button" class="btn secondary" id="save-json">${esc(h.saveJson)}</button>
+<label class="btn secondary" for="import-json">${esc(h.loadJson)}</label>
+<input type="file" id="import-json" accept="application/json,.json" class="sr-only">
+<button type="button" class="btn secondary" id="reset">${esc(h.reset)}</button>
+</div>
+</div>
 </section>
 <section class="preview-col" aria-labelledby="preview-title">
 <h2 id="preview-title">${esc(h.previewTitle)}</h2>
@@ -133,14 +184,6 @@ ${Object.entries(h.exportBtns).map(([k, v], i) => `<button type="button" class="
 </div>
 <p id="export-status" role="status" class="hint"></p>
 <div class="preview" id="preview" tabindex="0" aria-label="${esc(h.previewTitle)}"></div>
-<h3>${esc(h.saveTitle)}</h3>
-<p class="hint">${esc(h.saveText)}</p>
-<div class="btn-row">
-<button type="button" class="btn secondary" id="save-json">${esc(h.saveJson)}</button>
-<label class="btn secondary" for="import-json">${esc(h.loadJson)}</label>
-<input type="file" id="import-json" accept="application/json,.json" class="sr-only">
-<button type="button" class="btn secondary" id="reset">${esc(h.reset)}</button>
-</div>
 </section>
 </div>
 <section aria-labelledby="tpl-title">
@@ -256,6 +299,13 @@ const CHECK = {
   },
 };
 
+/** Lead-in from the free mini-test result to the paid audit (display only, while SALES_OPEN). */
+const UPSELL = {
+  fr: { upsell: '{n} point(s) relevé(s) sur cet extrait → l’audit vérifie jusqu’à 20 pages de votre site, sur ordinateur et mobile, pour 149 €.', upsellNone: 'Rien de détecté sur cet extrait ? L’audit vérifie jusqu’à 20 pages de votre site, sur ordinateur et mobile, pour 149 €.', upsellCta: 'Voir l’audit et un exemple de rapport', upsellHref: url(ROUTES.audit.fr) },
+  de: { upsell: '{n} Punkt(e) in diesem Auszug gefunden → die Prüfung testet bis zu 20 Seiten Ihrer Website auf Desktop und Mobil, für 149 €.', upsellNone: 'Nichts gefunden? Die Prüfung testet bis zu 20 Seiten Ihrer Website auf Desktop und Mobil, für 149 €.', upsellCta: 'Prüfung und Beispielbericht ansehen', upsellHref: url(ROUTES.audit.de) },
+  en: { upsell: '{n} item(s) flagged in this snippet → the audit checks up to 20 pages of your site, on desktop and mobile, for €149.', upsellNone: 'Nothing detected in this snippet? The audit checks up to 20 pages of your site, on desktop and mobile, for €149.', upsellCta: 'See the audit and a sample report', upsellHref: url(ROUTES.audit.en) },
+};
+
 export const EXAMPLE_SNIPPET = `<style>.promo{color:#aaa;background:#fff}</style>
 <header><img src="logo.png"><a href="/panier"><img src="cart.svg"></a></header>
 <h3>Nouveautés</h3>
@@ -288,7 +338,7 @@ ${CHECKS.map((k, i) => `<tr><td>${i + 1}</td><th scope="row">${esc(k[lang][0])}<
 <p id="mc-status" role="status"></p>
 </form>
 <div id="mc-results" class="results"></div>
-<script type="application/json" id="mc-i18n">${JSON.stringify(c.i18n).replace(/</g, '\\u003c')}</script>
+<script type="application/json" id="mc-i18n">${JSON.stringify(OPEN ? { ...c.i18n, ...UPSELL[lang] } : c.i18n).replace(/</g, '\\u003c')}</script>
 <script type="application/json" id="mc-example-src">${JSON.stringify(EXAMPLE_SNIPPET).replace(/</g, '\\u003c')}</script>
 </section>`;
 }
@@ -388,7 +438,7 @@ for (const lang of LANGS) {
     title: (OPEN ? AUDIT_META_OPEN : META.audit)[lang][0],
     description: (OPEN ? AUDIT_META_OPEN : META.audit)[lang][1],
     alternates: alternates('audit', lang),
-    body: OPEN ? auditOpenBodies[lang] : auditBodies[lang],
+    body: OPEN ? auditSalesBodies[lang] : auditBodies[lang],
     jsonld: OPEN ? auditJsonLd(lang) : undefined,
     updated: '2026-10-12',
   });

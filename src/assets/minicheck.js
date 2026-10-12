@@ -165,6 +165,15 @@ export function renderResults(container, res, t, lang) {
   section(t.review, res.incomplete, 'review');
   if (!res.violations.length && !res.incomplete.length) container.append(el('p', {}, t.none));
   container.append(el('p', { class: 'callout' }, t.limits));
+  // Lead-in to the paid audit (only present in the i18n while the audit is on sale).
+  if (t.upsell && t.upsellHref) {
+    const n = res.violations.length + res.incomplete.length;
+    container.append(
+      el('div', { class: 'upsell' },
+        el('p', {}, n ? t.upsell.replace('{n}', String(n)) : t.upsellNone),
+        el('p', {}, el('a', { class: 'btn', href: t.upsellHref }, t.upsellCta)))
+    );
+  }
   summary.focus();
 }
 

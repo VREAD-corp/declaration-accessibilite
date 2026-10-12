@@ -5,7 +5,7 @@ import { join, extname, normalize } from 'node:path';
 const base = process.env.SITE_BASE || '/declaration-accessibilite/';
 const root = new URL('../dist/', import.meta.url).pathname;
 const port = Number(process.env.PORT || 4173);
-const types = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript', '.css': 'text/css', '.json': 'application/json', '.svg': 'image/svg+xml', '.xml': 'application/xml', '.txt': 'text/plain' };
+const types = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript', '.css': 'text/css', '.json': 'application/json', '.svg': 'image/svg+xml', '.xml': 'application/xml', '.txt': 'text/plain', '.webp': 'image/webp', '.pdf': 'application/pdf' };
 createServer(async (req, res) => {
   const u = new URL(req.url, 'http://x');
   if (!u.pathname.startsWith(base)) { res.writeHead(404); return res.end('not found'); }

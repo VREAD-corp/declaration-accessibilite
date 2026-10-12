@@ -36,6 +36,13 @@ for (const f of readdirSync(join(root, 'src/lib'))) copy(`src/lib/${f}`, `assets
 copy('src/data/rgaa-map.js', 'assets/js/data/rgaa-map.js');
 copy('src/data/axe-rgaa.js', 'assets/js/data/axe-rgaa.js');
 copy('src/assets/favicon.svg', 'favicon.svg');
+for (const f of readdirSync(join(root, 'src/assets/img'))) copy(`src/assets/img/${f}`, `assets/img/${f}`);
+// sample reports of the paid audit, produced by the real audit runner on the demo page: served as .html
+// (opens in the browser, unlike a GitHub release asset) and as the PDF format actually delivered
+for (const f of readdirSync(join(root, 'src/samples'))) {
+  if (f.endsWith('.html')) write(`exemples/${f}`, readFileSync(join(root, 'src/samples', f), 'utf8').replace('<meta charset="utf-8">', '<meta charset="utf-8"><meta name="robots" content="noindex">'));
+  else copy(`src/samples/${f}`, `exemples/${f}`);
+}
 // axe-core (MPL-2.0) bundled unmodified, with its licence
 copy('node_modules/axe-core/axe.min.js', 'assets/vendor/axe/axe.min.js');
 copy('node_modules/axe-core/LICENSE', 'assets/vendor/axe/LICENSE.txt');

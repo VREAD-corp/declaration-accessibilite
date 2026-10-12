@@ -1,7 +1,7 @@
 // Mentions légales / Impressum / Legal notice, privacy notices, CGV draft.
 // Publisher data from the public French company registry
 // (recherche-entreprises.api.gouv.fr, SIREN 988 741 773, read 2026-10-11).
-import { SITE, ISSUES, ROUTES } from './site.js';
+import { SITE, ROUTES, CONTACT } from './site.js';
 import { url } from './layout.js';
 
 const PUB = {
@@ -21,7 +21,8 @@ export const legalBodies = {
 <p>${PUB.name}, ${PUB.form.fr}<br>SIREN ${PUB.siren} – SIRET du siège ${PUB.siret}<br>Siège social : ${PUB.address}<br>Capital social : 1 000 €.</p>
 <p>Directeur de la publication : ${PUB.director}, président.</p>
 <h2>Contact</h2>
-<p>En attendant l’ouverture d’une adresse e-mail dédiée, vous pouvez nous écrire via les <a href="${ISSUES}">tickets GitHub du projet</a> (les tickets sont publics : n’y indiquez pas d’informations personnelles ou confidentielles).</p>
+<p>Par e-mail : <a href="mailto:${CONTACT}">${CONTACT}</a>.</p>
+<!-- TODO phone -->
 <h2>Hébergement</h2>
 <p>${HOST}.</p>
 <h2>Propriété intellectuelle et licences</h2>
@@ -41,7 +42,8 @@ export const legalBodies = {
 <p>${PUB.name}, ${PUB.form.de}<br>SIREN ${PUB.siren} (französisches Unternehmensregister) – SIRET ${PUB.siret}<br>Sitz: ${PUB.address}<br>Vertreten durch den Präsidenten ${PUB.director}.</p>
 <p>Inhaltlich verantwortlich: ${PUB.director}.</p>
 <h2>Kontakt</h2>
-<p>Bis eine eigene E-Mail-Adresse eingerichtet ist, erreichen Sie uns über die <a href="${ISSUES}">GitHub-Issues des Projekts</a> (öffentlich – bitte keine persönlichen oder vertraulichen Angaben).</p>
+<p>E-Mail: <a href="mailto:${CONTACT}">${CONTACT}</a>.</p>
+<!-- TODO phone -->
 <h2>Hosting</h2>
 <p>${HOST}.</p>
 <h2>Lizenzen</h2>
@@ -58,7 +60,8 @@ export const legalBodies = {
 <h2>Publisher</h2>
 <p>${PUB.name}, ${PUB.form.en}<br>SIREN ${PUB.siren} – SIRET ${PUB.siret}<br>Registered office: ${PUB.address}<br>Publication director: ${PUB.director}, president.</p>
 <h2>Contact</h2>
-<p>Until a dedicated mailbox exists, please use the <a href="${ISSUES}">project’s GitHub issues</a> (public – do not post personal or confidential information).</p>
+<p>E-mail: <a href="mailto:${CONTACT}">${CONTACT}</a>.</p>
+<!-- TODO phone -->
 <h2>Hosting</h2>
 <p>${HOST}.</p>
 <h2>Licences</h2>
@@ -84,7 +87,7 @@ export const privacyBodies = {
 <li>L’hébergeur GitHub peut enregistrer des données techniques de connexion (adresse IP, par exemple) pour la sécurité du service : voir la <a href="https://docs.github.com/fr/site-policy/privacy-policies/github-general-privacy-statement">déclaration de confidentialité de GitHub</a>.</li>
 <li>Le téléchargement des modèles se fait depuis GitHub (page « Releases ») ; GitHub compte le nombre de téléchargements, sans nous transmettre d’information sur vous.</li>
 </ul>
-<p>Pour toute question : <a href="${ISSUES}">tickets GitHub du projet</a>.</p>
+<p>Pour toute question : <a href="mailto:${CONTACT}">${CONTACT}</a>.</p>
 </div>`,
   de: `<div class="legal-text">
 <h1>Datenschutz</h1>

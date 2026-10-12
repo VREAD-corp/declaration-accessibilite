@@ -17,6 +17,14 @@ export const SITE = {
 
 export const RELEASE_DL = `${SITE.repo}/releases/latest/download/`;
 export const ISSUES = `${SITE.repo}/issues`;
+/** Public contact (replaces GitHub issues as the contact channel). */
+export const CONTACT = 'octave@vread.fr';
+/** Sample report of the paid audit, served as real pages (HTML opens in the browser) + the delivered PDF format. */
+export const SAMPLE = {
+  fr: { html: 'exemples/exemple-rapport-audit-fr.html', pdf: 'exemples/exemple-rapport-audit-fr.pdf' },
+  de: { html: 'exemples/beispiel-bericht-pruefung-de.html', pdf: 'exemples/beispiel-bericht-pruefung-de.pdf' },
+  en: { html: 'exemples/sample-report-audit-en.html', pdf: 'exemples/sample-report-audit-en.pdf' },
+};
 
 export const ROUTES = {
   home: { fr: '/', de: '/de/', en: '/en/' },
@@ -35,21 +43,21 @@ export const ROUTES = {
 export const NAV = {
   fr: [
     { path: ROUTES.home.fr, label: 'Générateur' },
-    { path: ROUTES.check.fr, label: 'Auto-contrôle et mini-test' },
-    { path: ROUTES.audit.fr, label: OPEN ? 'Audit automatisé 149 €' : 'Audit 149 € (bientôt)' },
-    { path: ROUTES.sources.fr, label: 'Sources et champ d’application' },
+    { path: ROUTES.check.fr, label: 'Mini-test gratuit' },
+    { path: ROUTES.audit.fr, label: OPEN ? 'Audit 20 pages – 149 €' : 'Audit 149 € (bientôt)' },
+    { path: ROUTES.sources.fr, label: 'Obligations et sources' },
   ],
   de: [
     { path: ROUTES.home.de, label: 'Generator' },
-    { path: ROUTES.check.de, label: 'Selbsttest und Mini-Prüfung' },
-    { path: ROUTES.audit.de, label: OPEN ? 'Automatisierte Prüfung 149 €' : 'Audit 149 € (bald)' },
-    { path: ROUTES.sources.de, label: 'Quellen und Anwendungsbereich' },
+    { path: ROUTES.check.de, label: 'Mini-Prüfung' },
+    { path: ROUTES.audit.de, label: OPEN ? 'Prüfung 20 Seiten – 149 €' : 'Audit 149 € (bald)' },
+    { path: ROUTES.sources.de, label: 'Pflichten und Quellen' },
   ],
   en: [
     { path: ROUTES.home.en, label: 'Generator' },
-    { path: ROUTES.check.en, label: 'Self-check and mini-test' },
-    { path: ROUTES.audit.en, label: OPEN ? 'Automated audit €149' : 'Audit €149 (coming soon)' },
-    { path: ROUTES.sources.en, label: 'Sources and scope' },
+    { path: ROUTES.check.en, label: 'Free mini-test' },
+    { path: ROUTES.audit.en, label: OPEN ? '20-page audit – €149' : 'Audit €149 (coming soon)' },
+    { path: ROUTES.sources.en, label: 'Obligations and sources' },
   ],
 };
 
@@ -58,6 +66,7 @@ export const CHROME = {
     skip: 'Aller au contenu',
     navLabel: 'Navigation principale',
     langLabel: 'Langue',
+    menu: 'Menu',
     disclaimer:
       '<strong>Information uniquement.</strong> Cet outil aide à rédiger des documents à partir de vos réponses. Il ne constitue ni un conseil juridique, ni un audit, ni une attestation de conformité.',
     product: 'Un produit de READ FRANCE SAS',
@@ -67,7 +76,8 @@ export const CHROME = {
       { path: ROUTES.privacy.fr, label: 'Confidentialité' },
       ...(OPEN ? [{ path: ROUTES.cgvPro.fr, label: 'CGV (audit)' }] : []),
       { path: ROUTES.sources.fr, label: 'Sources officielles' },
-      { path: `${SITE.repo}/releases`, label: 'Modèles gratuits (GitHub)', external: true },
+      { path: `mailto:${CONTACT}`, label: `Contact : ${CONTACT}`, external: true },
+      { path: `${SITE.repo}/releases`, label: 'Modèles vierges', external: true },
       { path: SITE.repo, label: 'Code source', external: true },
     ],
   },
@@ -75,6 +85,7 @@ export const CHROME = {
     skip: 'Zum Inhalt springen',
     navLabel: 'Hauptnavigation',
     langLabel: 'Sprache',
+    menu: 'Menü',
     disclaimer:
       '<strong>Nur zur Information.</strong> Dieses Werkzeug hilft, Dokumente aus Ihren Angaben zu erstellen. Es ist keine Rechtsberatung, keine Prüfung und keine Konformitätsbescheinigung.',
     product: 'Ein Produkt der READ FRANCE SAS',
@@ -83,7 +94,8 @@ export const CHROME = {
       { path: ROUTES.legal.de, label: 'Impressum' },
       { path: ROUTES.privacy.de, label: 'Datenschutz' },
       { path: ROUTES.sources.de, label: 'Amtliche Quellen' },
-      { path: `${SITE.repo}/releases`, label: 'Kostenlose Vorlagen (GitHub)', external: true },
+      { path: `mailto:${CONTACT}`, label: `Kontakt: ${CONTACT}`, external: true },
+      { path: `${SITE.repo}/releases`, label: 'Leere Vorlagen', external: true },
       { path: SITE.repo, label: 'Quellcode', external: true },
     ],
   },
@@ -91,6 +103,7 @@ export const CHROME = {
     skip: 'Skip to content',
     navLabel: 'Main navigation',
     langLabel: 'Language',
+    menu: 'Menu',
     disclaimer:
       '<strong>Information only.</strong> This tool helps you draft documents from your own answers. It is not legal advice, not an audit and not a certificate of conformity.',
     product: 'A product of READ FRANCE SAS',
@@ -99,7 +112,8 @@ export const CHROME = {
       { path: ROUTES.legal.en, label: 'Legal notice' },
       { path: ROUTES.privacy.en, label: 'Privacy' },
       { path: ROUTES.sources.en, label: 'Official sources' },
-      { path: `${SITE.repo}/releases`, label: 'Free templates (GitHub)', external: true },
+      { path: `mailto:${CONTACT}`, label: `Contact: ${CONTACT}`, external: true },
+      { path: `${SITE.repo}/releases`, label: 'Blank templates', external: true },
       { path: SITE.repo, label: 'Source code', external: true },
     ],
   },
