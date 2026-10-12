@@ -6,6 +6,48 @@ const esc = (s) =>
 export const url = (path) => SITE.base + path.replace(/^\//, '');
 export const abs = (path) => SITE.origin + url(path);
 
+/** Cross-site block « Autres outils READ FRANCE » (same markup on every outils.vread.fr site; absolute URLs). */
+const NETWORK = {
+  fr: ['Autres outils READ FRANCE', [
+    ['https://outils.vread.fr/', 'Tous les outils'],
+    ['https://outils.vread.fr/kit-qualiopi-v10/', 'Kit Qualiopi V10'],
+    ['https://outils.vread.fr/kit-gpsr-vendeurs/pack.html', 'Pack documentation GPSR'],
+    ['https://outils.vread.fr/veille-ao-formation/alertes/', 'Alertes appels d’offres formation'],
+    ['https://outils.vread.fr/declaration-accessibilite/audit/', 'Audit d’accessibilité'],
+  ]],
+  en: ['Other READ FRANCE tools', [
+    ['https://outils.vread.fr/', 'All tools'],
+    ['https://outils.vread.fr/kit-qualiopi-v10/', 'Qualiopi V10 kit (in French)', 'fr'],
+    ['https://outils.vread.fr/kit-gpsr-vendeurs/en/pack.html', 'GPSR documentation pack'],
+    ['https://outils.vread.fr/veille-ao-formation/alertes/', 'Public training tender alerts (in French)', 'fr'],
+    ['https://outils.vread.fr/declaration-accessibilite/en/audit/', 'Accessibility audit'],
+  ]],
+  de: ['Weitere Tools von READ FRANCE', [
+    ['https://outils.vread.fr/', 'Alle Tools'],
+    ['https://outils.vread.fr/kit-qualiopi-v10/', 'Qualiopi-V10-Kit (auf Französisch)', 'fr'],
+    ['https://outils.vread.fr/kit-gpsr-vendeurs/en/pack.html', 'GPSR-Dokumentationspaket (auf Englisch)', 'en'],
+    ['https://outils.vread.fr/veille-ao-formation/alertes/', 'Ausschreibungs-Alerts Weiterbildung (auf Französisch)', 'fr'],
+    ['https://outils.vread.fr/declaration-accessibilite/de/audit/', 'Barrierefreiheits-Audit'],
+  ]],
+};
+export function networkBlock(lang) {
+  const [label, links] = NETWORK[lang] || NETWORK.fr;
+  return `<nav class="rf-network" aria-label="${esc(label)}">
+<p class="rf-network-title">${esc(label)}</p>
+<ul>
+${links.map(([href, text, hl]) => `<li><a href="${href}"${hl ? ` hreflang="${hl}"` : ''}>${esc(text)}</a></li>`).join('\n')}
+</ul>
+</nav>`;
+}
+
+/** Sharing image per language (1200x630, rendered by scripts/make-og.mjs). */
+const OG_ALT = {
+  fr: 'A11y Kit : générateur gratuit de déclaration d’accessibilité (RGAA, EAA) et audit automatisé, par READ FRANCE',
+  de: 'A11y Kit: kostenloser Generator für Barrierefreiheitserklärungen (BFSG, EAA) und automatisierte Prüfung, von READ FRANCE',
+  en: 'A11y Kit: free accessibility statement generator (EAA) and automated audit, by READ FRANCE',
+};
+export const ogImage = (lang) => abs(`assets/og-${OG_ALT[lang] ? lang : 'fr'}.png`);
+
 const LOCALE = { fr: 'fr_FR', de: 'de_DE', en: 'en_GB' };
 const LANG_NAMES = { fr: 'Français', de: 'Deutsch', en: 'English' };
 
@@ -41,7 +83,11 @@ ${hreflang}
 <meta property="og:description" content="${esc(page.description)}">
 <meta property="og:url" content="${abs(page.path)}">
 <meta property="og:locale" content="${LOCALE[page.lang]}">
-<meta name="twitter:card" content="summary">
+<meta property="og:image" content="${ogImage(page.lang)}">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="${esc(OG_ALT[page.lang] || OG_ALT.fr)}">
+<meta name="twitter:card" content="summary_large_image">
 <meta name="color-scheme" content="light dark">
 <link rel="icon" href="${url('favicon.svg')}" type="image/svg+xml">
 ${page.head || ''}<link rel="stylesheet" href="${url('assets/site.css')}">
@@ -72,6 +118,7 @@ ${page.body}
 </main>
 <footer class="site-footer">
 <div class="wrap">
+${networkBlock(page.lang)}
 <p>${c.disclaimer}</p>
 <ul>
 ${c.footerLinks.map((l) => `<li><a href="${l.external ? l.path : url(l.path)}"${l.lang ? ` hreflang="${l.lang}"` : ''}>${esc(l.label)}</a></li>`).join('\n')}

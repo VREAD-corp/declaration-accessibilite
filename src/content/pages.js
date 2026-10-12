@@ -1,5 +1,5 @@
 import { SITE, ROUTES, RELEASE_DL, OPEN, PRICE } from './site.js';
-import { AUDIT_META_OPEN, auditJsonLd, ORG_JSONLD, orderBody, orderScripts, orderReturnBody, orderReturnScripts, ORDER_CSP, ORDER_RETURN_CSP, cgvProBody, privacyOrderSection, cgvDraftReplaced } from './order.js';
+import { AUDIT_META_OPEN, auditJsonLd, ORG_REF, orderBody, orderScripts, orderReturnBody, orderReturnScripts, ORDER_CSP, ORDER_RETURN_CSP, cgvProBody, privacyOrderSection, cgvDraftReplaced } from './order.js';
 import { url } from './layout.js';
 import { formHtml } from './form.js';
 import { legalBodies, privacyBodies, cgvBody } from './legal.js';
@@ -45,6 +45,7 @@ const HOME = {
       alt: 'Aperçu d’un rapport d’audit : synthèse des problèmes classés par gravité',
     },
     nextTitle: 'Après la déclaration',
+    gpsr: 'Vous vendez des produits en ligne ? Le règlement GPSR impose aussi des informations de sécurité sur chaque fiche produit : <a href="https://outils.vread.fr/kit-gpsr-vendeurs/">générateur gratuit de fiche produit GPSR</a>.',
     next: [
       ['Vérifier les bases', `L’<a href="${url(ROUTES.check.fr)}">auto-contrôle en 20 points</a> se fait à la main sur vos pages clés ; le mini-test passe un extrait HTML au moteur axe-core, dans votre navigateur.`],
       ['Comprendre vos obligations', `Moins de 10 personnes et 2 M€ de chiffre d’affaires ou de bilan au plus : vous êtes probablement exempté. Les textes et les sanctions sont sur la page <a href="${url(ROUTES.sources.fr)}">obligations et sources</a>.`],
@@ -81,6 +82,7 @@ const HOME = {
       alt: 'Vorschau eines Prüfberichts: Übersicht der Probleme nach Schweregrad',
     },
     nextTitle: 'Nach der Erklärung',
+    gpsr: 'Sie verkaufen Produkte online? Die Produktsicherheitsverordnung (GPSR) verlangt außerdem Sicherheitsangaben in jedem Produktangebot: <a href="https://outils.vread.fr/kit-gpsr-vendeurs/en/" hreflang="en">kostenloser GPSR-Generator für Produktangaben (auf Englisch)</a>.',
     next: [
       ['Grundlagen prüfen', `Den <a href="${url(ROUTES.check.de)}">Selbsttest in 20 Punkten</a> machen Sie von Hand auf Ihren wichtigsten Seiten; die Mini-Prüfung testet einen HTML-Auszug mit axe-core, direkt im Browser.`],
       ['Pflichten verstehen', `Weniger als 10 Beschäftigte und höchstens 2 Mio. € Umsatz oder Bilanzsumme: Dann greift wahrscheinlich die Ausnahme nach § 3 Abs. 3 BFSG. Gesetzestexte und Bußgelder stehen unter <a href="${url(ROUTES.sources.de)}">Pflichten und Quellen</a>.`],
@@ -117,6 +119,7 @@ const HOME = {
       alt: 'Preview of an audit report: summary of issues ranked by severity',
     },
     nextTitle: 'After the statement',
+    gpsr: 'Do you sell products online? The General Product Safety Regulation (GPSR) also requires safety information on every product listing: <a href="https://outils.vread.fr/kit-gpsr-vendeurs/en/">free GPSR product information generator</a>.',
     next: [
       ['Check the basics', `The <a href="${url(ROUTES.check.en)}">20-point self-check</a> is done by hand on your key pages; the mini-test runs an HTML snippet through axe-core, in your browser.`],
       ['Understand your obligations', `Fewer than 10 staff and at most €2 million in turnover or balance sheet total: the microenterprise exemption probably applies. The texts and fines are on the <a href="${url(ROUTES.sources.en)}">obligations and sources</a> page.`],
@@ -197,6 +200,7 @@ ${templatesList(lang)}
 <section aria-labelledby="next-title">
 <h2 id="next-title">${esc(h.nextTitle)}</h2>
 <ul class="next-list">${h.next.map(([title, text]) => `<li><h3>${esc(title)}</h3><p>${text}</p></li>`).join('')}</ul>
+<p>${h.gpsr}</p>
 </section>`;
 }
 
@@ -401,7 +405,6 @@ function sourcesJsonLd(lang) {
   return {
     '@context': 'https://schema.org',
     '@graph': [
-      ORG_JSONLD,
       {
         '@type': 'Article',
         headline: src.h1,
@@ -411,8 +414,8 @@ function sourcesJsonLd(lang) {
         mainEntityOfPage: abs(ROUTES.sources[lang]),
         datePublished: '2026-10-11',
         dateModified: '2026-10-13',
-        author: { '@id': ORG_JSONLD['@id'] },
-        publisher: { '@id': ORG_JSONLD['@id'] },
+        author: ORG_REF,
+        publisher: ORG_REF,
       },
       {
         '@type': 'BreadcrumbList',
@@ -442,7 +445,6 @@ for (const lang of LANGS) {
     jsonld: {
       '@context': 'https://schema.org',
       '@graph': [
-        ORG_JSONLD,
         {
           '@type': 'WebApplication',
           name: h.h1,
@@ -452,7 +454,7 @@ for (const lang of LANGS) {
           inLanguage: lang,
           isAccessibleForFree: true,
           offers: { '@type': 'Offer', price: '0', priceCurrency: 'EUR' },
-          publisher: { '@id': ORG_JSONLD['@id'] },
+          publisher: ORG_REF,
         },
       ],
     },

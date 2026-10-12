@@ -3,7 +3,7 @@
 // CGV drafted by Octave (assistant IA de READ FRANCE SAS) on 12 October 2026: NOT legal advice, to be
 // reviewed by a lawyer. The audit is automated and partial: never an RGAA conformity audit, never a rate.
 import { SITE, SALES, PRICE, ROUTES, RELEASE_DL } from './site.js';
-import { url } from './layout.js';
+import { url, ogImage } from './layout.js';
 import { orderFormHtml, orderPageBody, checkoutCsp, orderCsp, payButtonText, TERMS_DATE } from '../../scripts/checkout-pages.mjs';
 
 export const AUDIT_TERMS_VERSION = 'cgv-pro-audit-2026-10-12';
@@ -105,16 +105,8 @@ export const AUDIT_META_OPEN = {
   en: ['Automated accessibility audit for companies in France', 'Partial automated audit of up to 20 pages, PDF in 24 business hours. €149 net, VAT not applicable (art. 293 B CGI). Companies registered in France only.'],
 };
 
-/** schema.org publisher of the site (same @id on every page that declares it). */
-export const ORG_JSONLD = {
-  '@type': 'Organization',
-  '@id': 'https://outils.vread.fr/#org',
-  name: 'READ FRANCE SAS',
-  legalName: 'READ FRANCE',
-  url: 'https://outils.vread.fr/',
-  address: { '@type': 'PostalAddress', streetAddress: '11 rue Rouvet', postalCode: '75019', addressLocality: 'Paris', addressCountry: 'FR' },
-  identifier: { '@type': 'PropertyValue', propertyID: 'SIREN', value: '988741773' },
-};
+/** Reference to the publisher entity defined once on the hub (https://outils.vread.fr/), never duplicated here. */
+export const ORG_REF = { '@type': 'Organization', '@id': 'https://outils.vread.fr/#org', name: 'READ FRANCE SAS' };
 
 const AUDIT_LD_TEXT = {
   fr: ['Audit automatisé partiel d’accessibilité (jusqu’à 20 pages)', 'Rapport PDF d’une analyse automatisée et partielle (moteur axe-core, règles WCAG A et AA, ordinateur et mobile) de jusqu’à 20 pages publiques, avec correspondances RGAA indicatives et liste des vérifications manuelles, envoyé sous 24 h ouvrées. Ce n’est pas un audit de conformité RGAA, WCAG ou EAA et il ne donne aucun taux de conformité.'],
@@ -128,12 +120,12 @@ export function auditJsonLd(lang) {
   return {
     '@context': 'https://schema.org',
     '@graph': [
-      ORG_JSONLD,
       {
         '@type': 'Product',
         name,
         description,
         url: SITE.origin + url(ROUTES.audit[lang]),
+        image: ogImage(lang),
         brand: { '@type': 'Brand', name: SITE.brand },
         sku: 'a11y-audit-auto',
         offers: {
@@ -142,7 +134,7 @@ export function auditJsonLd(lang) {
           priceCurrency: 'EUR',
           availability: 'https://schema.org/InStock',
           url: SITE.origin + url(ROUTES.order.fr),
-          seller: { '@id': ORG_JSONLD['@id'] },
+          seller: { '@id': ORG_REF['@id'] },
         },
       },
     ],

@@ -295,3 +295,9 @@ label.check input { margin-top: .3rem; width: 1.2rem; height: 1.2rem; flex: none
 .status.err { color: var(--bad-line); }
 .small { font-size: .93rem; }
 .muted { color: var(--muted); }
+
+/* Cross-site block « Autres outils READ FRANCE » (same markup on every outils.vread.fr site) */
+.rf-network { margin: .25rem 0 .9rem; font-size: .9rem; }
+.rf-network-title { margin: 0 0 .3rem; font-weight: 600; color: var(--text); }
+.site-footer .rf-network ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: .3rem 1.1rem; }
+.rf-network a { display: inline-block; padding: .2rem 0; }

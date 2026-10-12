@@ -1,0 +1,48 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex">
+<title>og-*.png (source)</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700;800&display=swap">
+<style>
+  *{box-sizing:border-box;margin:0}
+  body{width:1200px;height:630px;background:#f8fafc;color:#0f172a;font-family:Inter,system-ui,sans-serif;padding:60px 72px 52px;display:flex;flex-direction:column;position:relative;overflow:hidden}
+  body::before{content:"";position:absolute;inset:0 0 auto 0;height:12px;background:#1d4ed8}
+  .brand{display:flex;align-items:center;gap:18px}
+  .mark{width:72px;height:72px}
+  .brand-text{display:flex;flex-direction:column;line-height:1.1}
+  .brand-text b{font-size:34px;font-weight:800}
+  .brand-text span{font-size:17px;font-weight:700;letter-spacing:.1em;color:#475569;margin-top:4px}
+  .eyebrow{margin-top:52px;font-size:24px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#1d4ed8}
+  h1{font-size:66px;line-height:1.06;font-weight:800;letter-spacing:-.02em;margin-top:14px;max-width:1040px}
+  .sub{font-size:29px;line-height:1.35;color:#334155;margin-top:24px;font-weight:500;max-width:1000px}
+  .foot{display:flex;justify-content:space-between;align-items:center;margin-top:auto;font-size:22px;color:#475569;font-weight:600}
+  .foot b{color:#1d4ed8}
+</style>
+</head>
+<body>
+  <div class="brand">
+    <svg class="mark" viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="14" fill="#1d4ed8"/><circle cx="32" cy="15" r="6" fill="#fff"/><path d="M14 24h36v6H37v8l6 16h-6l-5-13-5 13h-6l6-16v-8H14z" fill="#fff"/></svg>
+    <div class="brand-text"><b>A11y Kit</b><span>READ FRANCE</span></div>
+  </div>
+  <p class="eyebrow" id="eyebrow"></p>
+  <h1 id="title"></h1>
+  <p class="sub" id="sub"></p>
+  <div class="foot"><b>outils.vread.fr/declaration-accessibilite</b><span id="by"></span></div>
+<script>
+  const T = {
+    fr: ['Gratuit · sans inscription', 'Générateur de déclaration d’accessibilité', 'Modèle RGAA et informations de l’Acte européen sur l’accessibilité (EAA). Export Word, HTML, Markdown.', 'Audit automatisé de 20 pages'],
+    de: ['Kostenlos · ohne Anmeldung', 'Generator für Barrierefreiheits­erklärungen', 'Barrierefreiheitsinformationen nach BFSG Anlage 3 und EAA. Export als Word, HTML, Markdown.', 'Automatisierte Prüfung, 20 Seiten'],
+    en: ['Free · no sign-up', 'Accessibility statement generator', 'The information required by the European Accessibility Act (EAA). Export to Word, HTML, Markdown.', 'Automated 20-page audit'],
+  };
+  const lang = new URLSearchParams(location.search).get('lang') || 'fr';
+  document.documentElement.lang = lang;
+  const [e, t, s, b] = T[lang];
+  document.getElementById('eyebrow').textContent = e;
+  document.getElementById('title').textContent = t;
+  document.getElementById('sub').textContent = s;
+  document.getElementById('by').textContent = b;
+</script>
+</body>
+</html>

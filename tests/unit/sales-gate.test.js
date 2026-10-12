@@ -146,7 +146,7 @@ const jsonLd = (html) => [...html.matchAll(/<script type="application\/ld\+json"
 });
 const ORG_ID = 'https://outils.vread.fr/#org';
 
-test('SALES_OPEN=true: audit pages carry parseable Product JSON-LD (149.00 EUR, InStock) and the Organization with its SIREN', () => {
+test('SALES_OPEN=true: audit pages carry parseable Product JSON-LD (149.00 EUR, InStock) referencing the hub Organization by @id', () => {
   for (const [path, lang] of [['audit/index.html', 'fr'], ['en/audit/index.html', 'en'], ['de/audit/index.html', 'de']]) {
     const html = readFileSync(join(openDir, path), 'utf8');
     const nodes = jsonLd(html);
@@ -164,17 +164,16 @@ test('SALES_OPEN=true: audit pages carry parseable Product JSON-LD (149.00 EUR, 
     assert.equal(product.offers.url, 'https://outils.vread.fr/declaration-accessibilite/commander.html');
     assert.equal(product.offers.seller['@id'], ORG_ID);
     assert.ok(!('valueAddedTaxIncluded' in product.offers));
-    const org = nodes.find((n) => n['@type'] === 'Organization');
-    assert.equal(org['@id'], ORG_ID);
-    assert.equal(org.legalName, 'READ FRANCE');
-    assert.deepEqual(org.identifier, { '@type': 'PropertyValue', propertyID: 'SIREN', value: '988741773' });
-    assert.equal(org.address.postalCode, '75019');
+    assert.equal(product.image, `https://outils.vread.fr/declaration-accessibilite/assets/og-${lang}.png`);
+    // the full Organization lives on the hub only (https://outils.vread.fr/#org): no duplicated node here
+    assert.ok(!nodes.some((n) => n['@type'] === 'Organization'), `${path}: no standalone Organization`);
+    assert.ok(!html.includes('"legalName"') && !html.includes('"identifier"'), `${path}: no duplicated Organization data`);
     assert.match(html, /<meta name="description" content="[^"]*net[^"]*293 B/);
   }
   for (const path of ['index.html', 'en/index.html', 'de/index.html']) {
     const nodes = jsonLd(readFileSync(join(openDir, path), 'utf8'));
-    assert.ok(nodes.some((n) => n['@type'] === 'WebApplication' && n.publisher['@id'] === ORG_ID), path);
-    assert.equal(nodes.find((n) => n['@type'] === 'Organization').identifier.value, '988741773', path);
+    assert.ok(nodes.some((n) => n['@type'] === 'WebApplication' && n.publisher['@id'] === ORG_ID && n.publisher.name === 'READ FRANCE SAS'), path);
+    assert.ok(!nodes.some((n) => n['@type'] === 'Organization'), `${path}: no standalone Organization`);
   }
   for (const path of ['audit/index.html', 'en/audit/index.html', 'de/audit/index.html']) {
     assert.ok(!jsonLd(readFileSync(join(closedDir, path), 'utf8')).some((n) => n['@type'] === 'Product'), `closed ${path}: no Product`);
