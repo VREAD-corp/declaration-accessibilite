@@ -7,6 +7,8 @@ import { url } from './layout.js';
 import { orderFormHtml, orderPageBody, checkoutCsp, orderCsp, TERMS_DATE } from '../../scripts/checkout-pages.mjs';
 
 export const AUDIT_TERMS_VERSION = 'cgv-pro-audit-2026-10-12';
+// « Commander » button ({prix} = the price: « Payer 149 € et commander l’audit »).
+export const AUDIT_PAY_LABEL = 'Payer {prix} et commander l’audit';
 export const MAX_PAGES = 20;
 const PRODUCT_NAME = 'Audit automatisé partiel d’accessibilité – jusqu’à 20 pages';
 
@@ -176,6 +178,7 @@ ${orderFormHtml({
   emailLabel: 'E-mail professionnel (réception du rapport et de la facture)',
   extraFieldsHtml,
   afterTermsHtml,
+  payLabel: AUDIT_PAY_LABEL,
 })}`;
 
 export const orderScripts = `<script src="${url('assets/checkout/checkout-config.js')}"></script>

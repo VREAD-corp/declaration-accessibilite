@@ -5,6 +5,7 @@ import { fileURLToPath } from 'node:url';
 import { PAGES, SITE } from '../src/content/pages.js';
 import { OPEN, SALES } from '../src/content/site.js';
 import { checkoutConfigJs } from './checkout-pages.mjs';
+import { AUDIT_PAY_LABEL, AUDIT_TERMS_VERSION } from '../src/content/order.js';
 import { layout } from '../src/content/layout.js';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
@@ -52,6 +53,8 @@ if (OPEN) {
     checkoutConfigJs(SALES, {
       termsUrl: `${SITE.base}cgv-pro.html`,
       orderPage: 'commande.html',
+      termsVersion: AUDIT_TERMS_VERSION,
+      payLabel: AUDIT_PAY_LABEL,
       laterText: 'Si vous fermez cette page, votre commande est tout de même enregistrée automatiquement dans les 10 minutes ; le rapport et la facture vous sont envoyés par e-mail sous 24 h ouvrées.',
     })
   );

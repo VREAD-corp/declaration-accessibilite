@@ -227,6 +227,8 @@ test('browser: audit fields are checked (same site, ≤ 20 pages, attestation) a
   assert.deepEqual(posts[0].extra, { siteUrl: 'www.boutique-exemple.fr', pages: '/\n/panier', reportLang: 'en', scanAuthorized: true });
   assert.equal(posts[0].product, 'a11y-audit-20');
   assert.equal(posts[0].termsVersion, 'cgv-pro-audit-2026-10-12');
+  assert.equal(posts[0].expectedAmount, 14900);
+  assert.equal(await page.textContent('#pay-button'), 'Payer 149\u00a0€ et commander l’audit');
   const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
   assert.ok(overflow <= 0, `horizontal scroll ${overflow}px`);
   assert.deepEqual(errors, []);
