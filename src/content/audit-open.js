@@ -7,6 +7,29 @@ import { url } from './layout.js';
 import { MAX_PAGES } from './order.js';
 
 const ORDER = url(ROUTES.order.fr);
+// Founders (facts from vread.fr/presse and Vincent Cance's CV; same block on every outils.vread.fr site).
+const FOUNDERS = [
+  {
+    name: 'Tanguy Warsmann',
+    photo: 'tanguy-warsmann.webp',
+    role: { fr: 'Fondateur &amp; CEO', de: 'Gründer &amp; CEO', en: 'Founder &amp; CEO' },
+    bio: {
+      fr: 'Formé aux lettres à la Sorbonne puis à emlyon business school, il a travaillé chez Cartier, puis chez AR/Factory, où il a piloté la stratégie de contenus shopping de médias comme Ouest-France, 20 Minutes et Le Figaro.',
+      de: 'Nach einem Literaturstudium an der Sorbonne und einem Studium an der emlyon business school arbeitete er bei Cartier und danach bei AR/Factory, wo er die Shopping-Content-Strategie von Medien wie Ouest-France, 20 Minutes und Le Figaro leitete.',
+      en: 'After studying literature at the Sorbonne and then at emlyon business school, he worked at Cartier and then at AR/Factory, where he led the shopping-content strategy of media such as Ouest-France, 20 Minutes and Le Figaro.',
+    },
+  },
+  {
+    name: 'Vincent Cance',
+    photo: 'vincent-cance.webp',
+    role: { fr: 'Cofondateur &amp; CTO', de: 'Mitgründer &amp; CTO', en: 'Co-founder &amp; CTO' },
+    bio: {
+      fr: 'Développeur full stack web et mobile, il a été cofondateur et CTO de Genipatient, un logiciel de gestion de cabinet pour ostéopathes.',
+      de: 'Als Full-Stack-Entwickler für Web und Mobile war er Mitgründer und CTO von Genipatient, einer Praxisverwaltungssoftware für Osteopathen.',
+      en: 'A full-stack web and mobile developer, he was co-founder and CTO of Genipatient, practice-management software for osteopaths.',
+    },
+  },
+];
 const img = (lang, p) => url(`assets/img/rapport-${lang}-p${p}.webp`);
 
 const T = {
@@ -72,6 +95,8 @@ const T = {
     aboutTitle: 'Qui sommes-nous',
     about: `<strong>READ FRANCE SAS</strong>, société basée à Paris (SIREN 988 741 773), édite des outils et des kits pour aider les entreprises à respecter leurs obligations réglementaires : accessibilité numérique, Qualiopi, sécurité des produits.`,
     contact: 'Une question avant de commander ?',
+    foundersLabel: 'Fondateurs',
+    portrait: 'Portrait de',
     more: 'Tous nos outils',
     legal: `Sources : <a href="${url(ROUTES.sources.fr)}">textes officiels et champ d’application</a> · <a href="${url(ROUTES.cgvPro.fr)}">CGV</a> · <a href="${url(ROUTES.legal.fr)}">mentions légales</a>. Produit indépendant : il n’est ni validé ni recommandé par l’État.`,
     bar: ['Audit 20 pages · 149 €', 'Commander'],
@@ -134,6 +159,8 @@ const T = {
     aboutTitle: 'Über uns',
     about: '<strong>READ FRANCE SAS</strong>, Paris (SIREN 988 741 773), entwickelt Werkzeuge und Kits, mit denen Unternehmen regulatorische Pflichten erfüllen: digitale Barrierefreiheit, Qualiopi, Produktsicherheit.',
     contact: 'Fragen vor der Bestellung?',
+    foundersLabel: 'Gründer',
+    portrait: 'Porträt von',
     more: 'Alle unsere Werkzeuge',
     legal: `Quellen: <a href="${url(ROUTES.sources.de)}">Gesetzestexte und Anwendungsbereich</a> · <a href="${url(ROUTES.legal.de)}">Impressum</a>. Unabhängiges Produkt, nicht staatlich geprüft oder empfohlen.`,
     bar: ['Prüfung 20 Seiten · 149 €', 'Bestellen'],
@@ -196,6 +223,8 @@ const T = {
     aboutTitle: 'About us',
     about: '<strong>READ FRANCE SAS</strong>, based in Paris (SIREN 988 741 773), builds tools and kits that help businesses meet regulatory obligations: digital accessibility, Qualiopi, product safety.',
     contact: 'A question before ordering?',
+    foundersLabel: 'Founders',
+    portrait: 'Portrait of',
     more: 'All our tools',
     legal: `Sources: <a href="${url(ROUTES.sources.en)}">official texts and scope</a> · <a href="${url(ROUTES.legal.en)}">legal notice</a>. Independent product, not endorsed or validated by any government.`,
     bar: ['20-page audit · €149', 'Order'],
@@ -282,10 +311,19 @@ ${t.faq.map(([q, a]) => `<details><summary>${q}</summary><div class="faq-a">${a}
 </section>
 
 <section class="lp-section about" aria-labelledby="about-title">
-<!-- TODO founder photo/name -->
-<h2 id="about-title">${t.aboutTitle}</h2>
+<div class="about-intro">
+<p class="eyebrow">${t.aboutTitle}</p>
+<h2 id="about-title">READ FRANCE SAS, Paris</h2>
 <p>${t.about}</p>
-<p>${t.contact} <a href="mailto:${CONTACT}">${CONTACT}</a> · <a href="https://outils.vread.fr/">${t.more}</a></p>
+</div>
+<ul class="founders" aria-label="${t.foundersLabel}">
+${FOUNDERS.map((f) => `<li class="founder">
+<img class="founder-photo" src="${url(`assets/img/${f.photo}`)}" width="112" height="112" alt="${t.portrait} ${f.name}" loading="lazy" decoding="async">
+<div><h3 class="founder-name">${f.name}</h3><p class="founder-role">${f.role[lang]}</p></div>
+<p class="founder-bio">${f.bio[lang]}</p>
+</li>`).join('\n')}
+</ul>
+<p class="about-foot">${t.contact} <a href="mailto:${CONTACT}">${CONTACT}</a> · <a href="https://outils.vread.fr/">${t.more}</a></p>
 </section>
 
 <p class="fine sources-line">${t.legal}</p>

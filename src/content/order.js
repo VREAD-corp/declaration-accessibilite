@@ -4,7 +4,7 @@
 // reviewed by a lawyer. The audit is automated and partial: never an RGAA conformity audit, never a rate.
 import { SITE, SALES, PRICE, ROUTES, RELEASE_DL } from './site.js';
 import { url } from './layout.js';
-import { orderFormHtml, orderPageBody, checkoutCsp, orderCsp, TERMS_DATE } from '../../scripts/checkout-pages.mjs';
+import { orderFormHtml, orderPageBody, checkoutCsp, orderCsp, payButtonText, TERMS_DATE } from '../../scripts/checkout-pages.mjs';
 
 export const AUDIT_TERMS_VERSION = 'cgv-pro-audit-2026-10-12';
 // « Commander » button ({prix} = the price: « Payer 149 € et commander l’audit »).
@@ -218,7 +218,7 @@ export const cgvProBody = `<!--
 <h2>5. Prix</h2>
 <p>Le prix est de <strong>${PRICE.sentence}</strong> par commande, payable en une fois. Le prix applicable est celui affiché sur la page de commande au moment de la validation ; il figure sur la facture, qui porte la mention « TVA non applicable, art. 293 B du CGI ».</p>
 <h2>6. Commande et paiement</h2>
-<p>L’Acheteur renseigne sur la page « Commander » : l’adresse du site et, le cas échéant, les pages à analyser, la langue du rapport, son adresse électronique, la raison sociale et le SIREN de l’entreprise, l’adresse de facturation, puis ses données de carte. Il valide en cliquant sur « Commander avec obligation de paiement ».</p>
+<p>L’Acheteur renseigne sur la page « Commander » : l’adresse du site et, le cas échéant, les pages à analyser, la langue du rapport, son adresse électronique, la raison sociale et le SIREN de l’entreprise, l’adresse de facturation, puis ses données de carte. Il valide en cliquant sur le bouton de paiement (par exemple « ${payButtonText(AUDIT_PAY_LABEL, SALES.amount)} »).</p>
 <p>Le paiement s’effectue <strong>par carte bancaire, au comptant, via le prestataire de paiement Stripe</strong> (Stripe Payments Europe, Ltd.). Le Vendeur n’a jamais accès aux données de carte. Le contrat est formé à la confirmation du paiement par Stripe.</p>
 <h2>7. Délai et livraison</h2>
 <p>Le rapport et la facture acquittée sont envoyés à l’adresse électronique indiquée <strong>sous 24 heures ouvrées</strong> à compter de la confirmation du paiement. Les heures ouvrées s’entendent du lundi au vendredi, hors jours fériés en France : une commande passée le vendredi soir ou le week-end est livrée au plus tard le premier jour ouvré suivant. La livraison est réputée effectuée à l’envoi du courrier électronique. Lorsque le rapport est trop volumineux pour être joint, il est mis à disposition par un lien de téléchargement valable 90 jours.</p>
