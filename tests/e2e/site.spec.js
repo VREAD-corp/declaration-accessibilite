@@ -1,6 +1,9 @@
 import { test, expect } from '@playwright/test';
 import { readFileSync } from 'node:fs';
 
+// Our checks are not visits: mesure.js sends them to the excluded counters (octave_notrack=1, reason notrack).
+test.beforeEach(async ({ page }) => { await page.addInitScript(() => { try { localStorage.setItem('octave_notrack', '1'); } catch {} }); });
+
 const AXE = readFileSync(new URL('../../node_modules/axe-core/axe.min.js', import.meta.url), 'utf8');
 
 async function sitemapPaths(request, baseURL) {
