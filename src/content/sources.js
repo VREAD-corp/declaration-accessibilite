@@ -46,7 +46,7 @@ export const sourcesBodies = {
     title: 'Acte européen sur l’accessibilité : obligations et sanctions',
     h1: 'Acte européen sur l’accessibilité : textes officiels et champ d’application',
     description: 'Directive (UE) 2019/882, loi n° 2023-171, article 47 de la loi de 2005, BFSG : qui publie quoi, exemption des microentreprises, sanctions, textes liés.',
-    body: `<section class="hero"><h1>Acte européen sur l’accessibilité : textes officiels et champ d’application</h1>
+    body: `<section class="hero" data-section="hero"><h1>Acte européen sur l’accessibilité : textes officiels et champ d’application</h1>
 <p class="lead">${VERIFIED.fr}. Résumé informatif : seuls les textes officiels liés font foi. Ce n’est pas un conseil juridique.</p></section>
 
 <h2 id="eaa">Acte européen sur l’accessibilité (directive (UE) 2019/882)</h2>
@@ -103,7 +103,7 @@ export const sourcesBodies = {
     title: 'BFSG und European Accessibility Act: Pflichten und Quellen',
     h1: 'BFSG und European Accessibility Act: Gesetzestexte und Anwendungsbereich',
     description: 'BFSG § 14 und Anlage 3, BFSGV § 19, Richtlinie (EU) 2019/882: Pflichten für Online-Shops, Ausnahme für Kleinstunternehmen, Bußgeld, amtliche Links.',
-    body: `<section class="hero"><h1>BFSG und European Accessibility Act: Gesetzestexte und Anwendungsbereich</h1>
+    body: `<section class="hero" data-section="hero"><h1>BFSG und European Accessibility Act: Gesetzestexte und Anwendungsbereich</h1>
 <p class="lead">${VERIFIED.de}. Zusammenfassung nur zur Information; maßgeblich sind die verlinkten amtlichen Texte. Keine Rechtsberatung.</p></section>
 
 <h2 id="bfsg">Barrierefreiheitsstärkungsgesetz (BFSG)</h2>
@@ -131,7 +131,7 @@ export const sourcesBodies = {
     title: 'European Accessibility Act: scope and official sources',
     h1: 'European Accessibility Act: official texts and scope',
     description: 'Directive (EU) 2019/882 Annex V, the microenterprise exemption, French and German transpositions (Code de la consommation, BFSG), linked to official texts.',
-    body: `<section class="hero"><h1>European Accessibility Act: official texts and scope</h1>
+    body: `<section class="hero" data-section="hero"><h1>European Accessibility Act: official texts and scope</h1>
 <p class="lead">${VERIFIED.en}. Informative summary only: the linked official texts prevail. Not legal advice.</p></section>
 
 <h2 id="eaa">Directive (EU) 2019/882 (European Accessibility Act)</h2>

@@ -1,9 +1,13 @@
-import { SITE, NAV, CHROME, ROUTES } from './site.js';
+import { SITE, NAV, CHROME, ROUTES, CRO } from './site.js';
 
 const esc = (s) =>
   String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 
 export const url = (path) => SITE.base + path.replace(/^\//, '');
+
+/** cro.js tag (aggregate behaviour counters; no OCTAVE_XP: this site runs no A/B test). */
+export const croTag = () =>
+  `<script src="${url('cro.js')}" data-site="${CRO.site}" data-api="${CRO.api}" data-hosts="${CRO.hosts}" data-cta="${esc(CRO.cta)}" defer></script>`;
 export const abs = (path) => SITE.origin + url(path);
 
 /** Cross-site block « Autres outils READ FRANCE » (same markup on every outils.vread.fr site; absolute URLs). */
@@ -102,7 +106,7 @@ ${jsonld}
 <nav class="site-nav" aria-label="${esc(c.navLabel)}"><ul>${nav}</ul></nav>
 <nav class="lang-switch" aria-label="${esc(c.langLabel)}"><ul>${langLinks}</ul></nav>
 </div>
-<details class="menu">
+<details class="menu" data-faq="menu">
 <summary>${esc(c.menu)}</summary>
 <div class="menu-panel">
 <nav class="site-nav" aria-label="${esc(c.navLabel)}"><ul>${nav}</ul></nav>
@@ -126,6 +130,7 @@ ${c.footerLinks.map((l) => `<li><a href="${l.external ? l.path : url(l.path)}"${
 <p>${esc(c.product)} (SIREN 988 741 773, Paris) · ${esc(page.noTracking || c.noTracking)}</p>
 </div>
 </footer>
+${croTag()}
 <script src="${url('mesure.js')}" defer></script>
 ${page.bodyScripts || ''}${scripts}
 </body>

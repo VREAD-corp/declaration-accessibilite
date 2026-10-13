@@ -49,9 +49,10 @@ test('committed config is coherent: product a11y-audit-20, 149 € net (293 B), 
 
 test('SALES_OPEN=false: no buy UI anywhere, audit page still « bientôt »', () => {
   for (const f of ['commander.html', 'commande.html', 'cgv-pro.html', 'assets/checkout/pay.js', 'assets/checkout/checkout-config.js']) assert.ok(!existsSync(join(closedDir, f)), `${f} must not exist`);
-  // mesure.js: shared audience snippet (verbatim copy), it only names the order form id to count checkout_start
-  for (const f of files(closedDir).filter((x) => /\.(html|js|xml|txt)$/.test(x) && !x.startsWith('assets/vendor/') && x !== 'mesure.js')) {
-    const body = readFileSync(join(closedDir, f), 'utf8');
+  // mesure.js / cro.js: shared measurement snippets (verbatim copies); mesure.js only names the order form id to
+  // count checkout_start, and the cro.js tag names the measurement backend (data-api), not a buy UI
+  for (const f of files(closedDir).filter((x) => /\.(html|js|xml|txt)$/.test(x) && !x.startsWith('assets/vendor/') && x !== 'mesure.js' && x !== 'cro.js')) {
+    const body = readFileSync(join(closedDir, f), 'utf8').replace(/<script src="[^"]*\/cro\.js" [^>]*><\/script>/g, '');
     for (const re of BUY_MARKERS) assert.doesNotMatch(body, re, `${f} contains ${re}`);
   }
   assert.match(readFileSync(join(closedDir, 'audit/index.html'), 'utf8'), /Bientôt – aucune commande possible/);

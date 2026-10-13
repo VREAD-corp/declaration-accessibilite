@@ -1,5 +1,6 @@
 /* A11y Kit order page: browser-side checks of the audit fields (the server checks them again).
- * Runs on the "octave-validate" event that pay.js dispatches before the form validity check. */
+ * Runs on the "octave-validate" event that pay.js dispatches before the form validity check.
+ * Also records the cro.js 'checkout' goal (aggregate A/B counter, no data) when a valid order form is submitted. */
 (function () {
   'use strict';
   var form = document.getElementById('octave-pay');
@@ -33,5 +34,9 @@
   site.addEventListener('input', check);
   pages.addEventListener('input', check);
   form.addEventListener('octave-validate', check);
+  // cro.js goal: checkout started (pay.js, registered first, has validated the form and starts the payment).
+  form.addEventListener('submit', function () {
+    if (form.checkValidity() && window.octaveCro) window.octaveCro.goal('checkout');
+  });
   check();
 })();

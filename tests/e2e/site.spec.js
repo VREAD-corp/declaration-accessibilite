@@ -167,3 +167,22 @@ test('mini-test runs axe-core in the browser on a pasted snippet without network
   await expect(page.locator('#mc-results')).not.toContainText('%');
   expect(foreign).toEqual([]);
 });
+
+test('cro.js (behaviour counters) loads on the pages, no A/B test, nothing sent under octave_notrack=1', async ({ page, request, baseURL }) => {
+  const sent = [];
+  page.on('request', (r) => { if (/script\.google\.com/.test(r.url()) && /"kind":"cro"/.test(r.postData() || '')) sent.push(r.url()); });
+  const res = await request.get(new URL('cro.js', baseURL).href);
+  expect(res.status()).toBe(200);
+  expect(await res.text()).toContain('Octave cro.js');
+  for (const p of ['', 'audit/', 'de/', 'en/audit/', 'confidentialite/', 'exemples/exemple-rapport-audit-fr.html']) {
+    await page.goto(new URL(`${p}${p.includes('?') ? '&' : '?'}octave_notrack=1`, baseURL).href);
+    const tag = page.locator('script[src$="/cro.js"]');
+    await expect(tag, p).toHaveCount(1);
+    await expect(tag, p).toHaveAttribute('data-site', 'declaration-accessibilite');
+    await expect(tag, p).toHaveAttribute('data-hosts', 'outils.vread.fr');
+    await page.waitForFunction(() => window.octaveCro && typeof window.octaveCro.goal === 'function');
+    expect(await page.evaluate(() => [window.OCTAVE_XP, window.octaveCro.v('price'), [...document.documentElement.attributes].some((a) => a.name.startsWith('data-xp-'))])).toEqual([undefined, undefined, false]);
+    await page.evaluate(() => { window.octaveCro.goal('download'); dispatchEvent(new Event('pagehide')); });
+  }
+  expect(sent).toEqual([]);
+});

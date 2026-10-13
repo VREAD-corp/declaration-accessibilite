@@ -256,7 +256,7 @@ function auditPage(lang) {
 <a class="btn btn-lg" href="${ORDER}"${orderAttrs}>${t.cta}</a>
 <a class="text-link" href="${url(t.second[1])}">${t.second[0]} →</a>
 </div>`;
-  return `<section class="lp-hero">
+  return `<section class="lp-hero" data-section="hero">
 <div class="lp-hero-text">
 <p class="eyebrow">${t.eyebrow}</p>
 <h1>${t.h1}</h1>
@@ -274,13 +274,13 @@ ${t.ctaNote ? `<p class="fine">${t.ctaNote}</p>\n` : ''}<p class="fine limits">$
 </figure>
 </section>
 
-<section class="lp-section" aria-labelledby="why-title">
+<section class="lp-section" data-section="pourquoi" aria-labelledby="why-title">
 <h2 id="why-title">${t.whyTitle}</h2>
 <div class="prose">${t.why.map((p) => `<p>${p}</p>`).join('\n')}</div>
 <p><a href="${url(t.whyMore[1])}">${t.whyMore[0]} →</a></p>
 </section>
 
-<section class="lp-section" aria-labelledby="get-title">
+<section class="lp-section" data-section="livrables" aria-labelledby="get-title">
 <h2 id="get-title">${t.getTitle}</h2>
 <ul class="ticks">${t.get.map((g) => `<li>${check}<span>${g}</span></li>`).join('')}</ul>
 </section>
@@ -297,7 +297,7 @@ ${t.shots.map(([alt, cap], i) => `<figure><a href="${url(sample.html)}"><img src
 </div>
 </section>
 
-<section class="lp-section" aria-labelledby="who-title">
+<section class="lp-section" data-section="pour-qui" aria-labelledby="who-title">
 <h2 id="who-title">${t.whoTitle}</h2>
 <ul class="who-list">${t.who.map((p) => `<li>${p}</li>`).join('')}</ul>
 <p class="callout">${t.whoNot}</p>
@@ -320,14 +320,14 @@ ${t.shots.map(([alt, cap], i) => `<figure><a href="${url(sample.html)}"><img src
 </div>
 </section>
 
-<section class="lp-section" aria-labelledby="faq-title">
+<section class="lp-section" data-section="faq" aria-labelledby="faq-title">
 <h2 id="faq-title">${t.faqTitle}</h2>
 <div class="faq">
-${t.faq.map(([q, a]) => `<details><summary>${q}</summary><div class="faq-a">${a}</div></details>`).join('\n')}
+${t.faq.map(([q, a], i) => `<details id="faq-${i + 1}"><summary>${q}</summary><div class="faq-a">${a}</div></details>`).join('\n')}
 </div>
 </section>
 
-<section class="lp-section about" aria-labelledby="about-title">
+<section class="lp-section about" data-section="fondateurs" aria-labelledby="about-title">
 <div class="about-intro">
 <p class="eyebrow">${t.aboutTitle}</p>
 <h2 id="about-title">READ FRANCE SAS, Paris</h2>

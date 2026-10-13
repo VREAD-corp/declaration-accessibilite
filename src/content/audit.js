@@ -4,7 +4,7 @@ import { url } from './layout.js';
 export const INTEREST_ISSUE = `${ISSUES}/1`;
 
 export const auditBodies = {
-  fr: `<section class="hero">
+  fr: `<section class="hero" data-section="hero">
 <p><span class="status-pill">Bientôt – aucune commande possible pour l’instant</span></p>
 <h1>Audit automatisé partiel : 149 € net</h1>
 <p class="lead">Un rapport clair sur les problèmes d’accessibilité qu’un robot peut détecter sur vos pages clés, avec des brouillons de déclaration et de plan d’action à compléter. Ce service n’est <strong>pas encore ouvert</strong> : nous le décrivons ici tel qu’il serait livré.</p>
@@ -33,7 +33,7 @@ export const auditBodies = {
 <h2>Être prévenu de l’ouverture</h2>
 <p>Nous ne prenons pas de commande et n’encaissons aucun paiement aujourd’hui. Si ce service vous intéresse, ajoutez une réaction 👍 ou abonnez-vous au <a href="${INTEREST_ISSUE}">ticket public « Liste d’intérêt »</a> sur GitHub (compte GitHub nécessaire, n’y publiez pas d’informations confidentielles).</p>
 <p>En attendant, le <a href="${url(ROUTES.home.fr)}">générateur</a>, l’<a href="${url(ROUTES.check.fr)}">auto-contrôle et le mini-test</a> sont gratuits. Projet de conditions de vente : <a href="${url(ROUTES.cgv.fr)}">CGV (projet, non applicable)</a>.</p>`,
-  de: `<section class="hero">
+  de: `<section class="hero" data-section="hero">
 <p><span class="status-pill">Bald verfügbar – noch keine Bestellung möglich</span></p>
 <h1>Teilautomatisierte Barrierefreiheitsprüfung: 149 € netto</h1>
 <p class="lead">Ein verständlicher Bericht über die Barrieren, die ein Prüfautomat auf Ihren wichtigsten Seiten finden kann, mit Entwürfen für Erklärung und Maßnahmenplan. Der Dienst ist <strong>noch nicht geöffnet</strong>: Hier steht, was er enthalten würde.</p>
@@ -61,7 +61,7 @@ export const auditBodies = {
 <p>Ein <a href="${RELEASE_DL}beispiel-bericht-automatisierte-pruefung-de.html">Beispielbericht</a> (absichtlich fehlerhafte Demo-Seite) steht kostenlos zum Download bereit.</p>
 <h2>Benachrichtigt werden</h2>
 <p>Wir nehmen derzeit keine Bestellungen an und kassieren nichts. Bei Interesse reagieren Sie mit 👍 oder abonnieren Sie das <a href="${INTEREST_ISSUE}">öffentliche Issue „Interessentenliste“</a> auf GitHub (GitHub-Konto nötig; keine vertraulichen Angaben posten).</p>`,
-  en: `<section class="hero">
+  en: `<section class="hero" data-section="hero">
 <p><span class="status-pill">Coming soon – no orders accepted yet</span></p>
 <h1>Partial automated accessibility audit: €149 net</h1>
 <p class="lead">A clear report on the accessibility issues an automated engine can detect on your key pages, with draft statement and action plan to complete. This service is <strong>not open yet</strong>: this page describes exactly what it would include.</p>

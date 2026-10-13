@@ -26,7 +26,7 @@ const sample = (lang) =>
   ({ fr: 'exemple-rapport-audit-automatise-fr.html', de: 'beispiel-bericht-automatisierte-pruefung-de.html', en: 'sample-report-automated-audit-en.html' })[lang];
 
 export const auditOpenBodies = {
-  fr: `<section class="hero">
+  fr: `<section class="hero" data-section="hero">
 <p><span class="status-pill">Disponible – commande en ligne</span></p>
 <h1>Audit automatisé partiel d’accessibilité : ${PRICE.ttc} net</h1>
 <p class="lead">Un rapport PDF clair sur les problèmes d’accessibilité qu’un robot peut détecter sur <strong>jusqu’à ${MAX_PAGES} pages</strong> de votre site, envoyé par e-mail <strong>sous 24 h ouvrées</strong>. C’est une analyse <strong>automatisée et partielle</strong> : ce n’est pas un audit de conformité RGAA et elle ne donne aucun taux de conformité.</p>
@@ -57,7 +57,7 @@ export const auditOpenBodies = {
 <h2>Voir un exemple</h2>
 <p>Un <a href="${RELEASE_DL}${sample('fr')}">exemple de rapport</a> (page de démonstration volontairement défectueuse) est téléchargeable gratuitement.</p>
 <p>Pour rédiger votre déclaration d’accessibilité, le <a href="${url(ROUTES.home.fr)}">générateur</a> reste gratuit, comme l’<a href="${url(ROUTES.check.fr)}">auto-contrôle et le mini-test</a>.</p>`,
-  de: `<section class="hero">
+  de: `<section class="hero" data-section="hero">
 <p><span class="status-pill">Verfügbar für Unternehmen mit Sitz in Frankreich</span></p>
 <h1>Automatisierte Teilprüfung der Barrierefreiheit: 149 € netto</h1>
 <p class="lead">Ein PDF-Bericht über die Barrieren, die ein Prüfautomat auf <strong>bis zu ${MAX_PAGES} Seiten</strong> Ihrer Website finden kann, per E-Mail <strong>innerhalb von 24 Arbeitsstunden</strong>. Es ist eine <strong>automatisierte Teilprüfung</strong>: keine Konformitätsprüfung und kein Konformitätsgrad.</p>
@@ -77,7 +77,7 @@ export const auditOpenBodies = {
 </ul>
 <h2>Beispiel ansehen</h2>
 <p>Ein <a href="${RELEASE_DL}${sample('de')}">Beispielbericht</a> (absichtlich fehlerhafte Demo-Seite) steht kostenlos zum Download bereit.</p>`,
-  en: `<section class="hero">
+  en: `<section class="hero" data-section="hero">
 <p><span class="status-pill">Available to companies registered in France</span></p>
 <h1>Partial automated accessibility audit: €149 net</h1>
 <p class="lead">A PDF report on the accessibility issues an automated engine can detect on <strong>up to ${MAX_PAGES} pages</strong> of your website, e-mailed <strong>within 24 business hours</strong>. It is an <strong>automated, partial</strong> analysis: not a conformance audit, and it gives no conformance rate.</p>
@@ -178,7 +178,7 @@ const afterTermsHtml = `  <label class="check"><input type="checkbox" name="scan
 `;
 const indent = (html) => html.replace(/^(?=.)/gm, '  ');
 
-export const orderBody = `<section class="hero">
+export const orderBody = `<section class="hero" data-section="hero">
 <h1>Commander l’audit automatisé partiel d’accessibilité</h1>
 <div class="callout"><p><strong>Analyse automatisée et partielle</strong> (moteur axe-core) de jusqu’à ${MAX_PAGES} pages : ce n’est <strong>pas un audit de conformité RGAA</strong> et le rapport ne donne <strong>aucun taux de conformité</strong>. Détail sur la page <a href="${url(ROUTES.audit.fr)}">Audit</a>.</p></div>
 </section>
@@ -193,7 +193,7 @@ ${orderFormHtml({
   // quote form copy (shared devisFormHtml has no after-terms slot: the attestation follows the site fields)
   devisExtraFieldsHtml: indent(extraFieldsHtml('-devis') + afterTermsHtml.replace('l’entreprise ci-dessus', 'l’entreprise indiquée ci-dessous')),
   payLabel: AUDIT_PAY_LABEL,
-})}`;
+}).replace('<section class="checkout"', '<section class="checkout" data-section="commande"')}`;
 
 export const orderScripts = `<script src="${url('assets/checkout/checkout-config.js')}"></script>
 <script src="https://js.stripe.com/v3/"></script>

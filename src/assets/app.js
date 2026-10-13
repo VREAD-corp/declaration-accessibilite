@@ -102,6 +102,9 @@ function download(name, data, type) {
   status.textContent = t.downloaded.replace('{f}', name);
 }
 
+// cro.js conversion goal: the statement was exported (downloaded or copied); counted once per tab, name only.
+const goalDownload = () => window.octaveCro && window.octaveCro.goal('download');
+
 document.getElementById('export').addEventListener('click', async (e) => {
   const btn = e.target.closest('button[data-fmt]');
   if (!btn) return;
@@ -109,6 +112,7 @@ document.getElementById('export').addEventListener('click', async (e) => {
   const doc = currentDoc(a);
   const base = slug(`${doc.title}-${a.siteName || a.orgName || ''}`);
   const fmt = btn.dataset.fmt;
+  if (['html', 'md', 'docx'].includes(fmt)) goalDownload();
   if (fmt === 'html') download(`${base}.html`, toHtml(doc), 'text/html;charset=utf-8');
   else if (fmt === 'md') download(`${base}.md`, toMarkdown(doc), 'text/markdown;charset=utf-8');
   else if (fmt === 'docx') download(`${base}.docx`, toDocx(doc), 'application/vnd.openxmlformats-officedocument.wordprocessingml.document');
@@ -117,6 +121,7 @@ document.getElementById('export').addEventListener('click', async (e) => {
     try {
       await navigator.clipboard.writeText(text);
       status.textContent = t.copied;
+      goalDownload();
     } catch {
       status.textContent = t.copyFailed;
     }

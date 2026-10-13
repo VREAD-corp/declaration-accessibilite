@@ -6,7 +6,7 @@ import { PAGES, SITE } from '../src/content/pages.js';
 import { OPEN, SALES } from '../src/content/site.js';
 import { checkoutConfigJs } from './checkout-pages.mjs';
 import { AUDIT_PAY_LABEL, AUDIT_TERMS_VERSION } from '../src/content/order.js';
-import { layout, networkBlock } from '../src/content/layout.js';
+import { layout, networkBlock, croTag } from '../src/content/layout.js';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const dist = join(root, 'dist');
@@ -39,6 +39,8 @@ copy('src/assets/favicon.svg', 'favicon.svg');
 for (const l of ['fr', 'de', 'en']) copy(`src/assets/og-${l}.png`, `assets/og-${l}.png`);
 // anonymous, cookieless audience measurement: verbatim copy of VREAD-corp/octave-checkout gas/web/mesure.js
 copy('src/mesure/mesure.js', 'mesure.js');
+// aggregate behaviour counters + A/B framework: verbatim copy of VREAD-corp/octave-checkout gas/web/cro.js
+copy('src/mesure/cro.js', 'cro.js');
 for (const f of readdirSync(join(root, 'src/assets/img'))) copy(`src/assets/img/${f}`, `assets/img/${f}`);
 // cross-site block on the sample reports (they carry their own inline styles, not site.css)
 const SAMPLE_NETWORK_CSS = 'body>footer{margin-top:2rem;border-top:1px solid #8a919e;padding-top:1rem;font-size:.9rem}.rf-network-title{margin:0 0 .3rem;font-weight:600}.rf-network ul{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:.3rem 1.1rem}.rf-network a{display:inline-block;padding:.2rem 0}@media print{body>footer{display:none}}';
@@ -50,7 +52,7 @@ for (const f of readdirSync(join(root, 'src/samples'))) {
     const lang = (src.match(/<html lang="(\w+)"/) || [])[1] || 'fr';
     write(`exemples/${f}`, src
       .replace('<meta charset="utf-8">', '<meta charset="utf-8"><meta name="robots" content="noindex">')
-      .replace('</body>', `<footer>${networkBlock(lang)}</footer>\n<style>${SAMPLE_NETWORK_CSS}</style>\n</body>`));
+      .replace('</body>', `<footer>${networkBlock(lang)}</footer>\n<style>${SAMPLE_NETWORK_CSS}</style>\n${croTag()}\n</body>`));
   }
   else copy(`src/samples/${f}`, `exemples/${f}`);
 }

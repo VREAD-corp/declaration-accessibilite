@@ -151,7 +151,7 @@ function homeBody(lang) {
 </div>
 </aside>`
     : '';
-  return `<section class="lp-hero gen-hero${showPromo ? '' : ' solo'}">
+  return `<section data-section="hero" class="lp-hero gen-hero${showPromo ? '' : ' solo'}">
 <div class="lp-hero-text">
 <p class="eyebrow">${esc(h.eyebrow)}</p>
 <h1>${esc(h.h1)}</h1>
@@ -163,7 +163,7 @@ ${promo}
 </section>
 <noscript><p class="callout">${esc(h.noscript)}</p></noscript>
 <div class="grid gen-grid">
-<section aria-labelledby="form-title">
+<section data-section="generateur" aria-labelledby="form-title">
 <h2 id="form-title">${esc(h.formTitle)}</h2>
 <p class="note">${h.warn}</p>
 <form id="gen-form" novalidate>
@@ -180,7 +180,7 @@ ${formHtml(lang)}
 </div>
 </div>
 </section>
-<section class="preview-col" aria-labelledby="preview-title">
+<section data-section="apercu" class="preview-col" aria-labelledby="preview-title">
 <h2 id="preview-title">${esc(h.previewTitle)}</h2>
 <fieldset class="choices" id="doc-choice"><legend>${esc(h.docLabel)}</legend><div class="doc-choice">
 ${docs.map((d, i) => `<div class="choice"><input type="radio" name="doc" id="doc-${d.id}" value="${d.id}"${i === 0 ? ' checked' : ''}><label for="doc-${d.id}">${esc(d.label)}</label></div>`).join('')}
@@ -192,12 +192,12 @@ ${Object.entries(h.exportBtns).map(([k, v], i) => `<button type="button" class="
 <div class="preview" id="preview" tabindex="0" aria-label="${esc(h.previewTitle)}"></div>
 </section>
 </div>
-<section aria-labelledby="tpl-title">
+<section data-section="modeles" aria-labelledby="tpl-title">
 <h2 id="tpl-title">${esc(h.tplTitle)}</h2>
 <p>${esc(h.tplText)}</p>
 ${templatesList(lang)}
 </section>
-<section aria-labelledby="next-title">
+<section data-section="suite" aria-labelledby="next-title">
 <h2 id="next-title">${esc(h.nextTitle)}</h2>
 <ul class="next-list">${h.next.map(([title, text]) => `<li><h3>${esc(title)}</h3><p>${text}</p></li>`).join('')}</ul>
 <p>${h.gpsr}</p>
@@ -323,8 +323,8 @@ export const EXAMPLE_SNIPPET = `<style>.promo{color:#aaa;background:#fff}</style
 function checkBody(lang) {
   const c = CHECK[lang];
   const tpl = TEMPLATE_FILES.find((f) => f.lang === lang && f.kind === 'checklist' && f.name.endsWith('.docx'));
-  return `<section class="hero"><h1>${esc(c.h1)}</h1><p class="lead">${esc(c.lead)}</p></section>
-<section aria-labelledby="list-title">
+  return `<section class="hero" data-section="hero"><h1>${esc(c.h1)}</h1><p class="lead">${esc(c.lead)}</p></section>
+<section data-section="auto-controle" aria-labelledby="list-title">
 <h2 id="list-title">${esc(c.listTitle)}</h2>
 <p>${esc(c.listIntro)}</p>
 ${tpl ? `<p><a class="btn secondary" href="${RELEASE_DL}${tpl.name}" data-mesure="free_download">${esc(c.dl)}</a></p>` : ''}
@@ -333,7 +333,7 @@ ${tpl ? `<p><a class="btn secondary" href="${RELEASE_DL}${tpl.name}" data-mesure
 ${CHECKS.map((k, i) => `<tr><td>${i + 1}</td><th scope="row">${esc(k[lang][0])}</th><td>${esc(k[lang][1])}</td><td>${k.wcag.join(', ')}</td><td>${rgaaFor(k.wcag).join(', ')}</td></tr>`).join('\n')}
 </tbody></table></div>
 </section>
-<section aria-labelledby="mc-title">
+<section data-section="mini-test" aria-labelledby="mc-title">
 <h2 id="mc-title">${esc(c.mcTitle)}</h2>
 <p>${esc(c.mcIntro)}</p>
 <p class="callout info">${c.mcNote}</p>
@@ -492,7 +492,7 @@ for (const lang of LANGS) {
     jsonld: sourcesJsonLd(lang),
   });
   PAGES.push({ id: 'legal', lang, path: ROUTES.legal[lang], title: META.legal[lang][0], description: META.legal[lang][1], alternates: alternates('legal', lang), body: legalBodies[lang] });
-  PAGES.push({ id: 'privacy', lang, path: ROUTES.privacy[lang], title: META.privacy[lang][0], description: OPEN ? PRIVACY_OPEN_DESC[lang] : META.privacy[lang][1], alternates: alternates('privacy', lang), body: OPEN ? privacyOpen(lang) : privacyBodies[lang] });
+  PAGES.push({ id: 'privacy', lang, path: ROUTES.privacy[lang], title: META.privacy[lang][0], description: OPEN ? PRIVACY_OPEN_DESC[lang] : META.privacy[lang][1], alternates: alternates('privacy', lang), body: OPEN ? privacyOpen(lang) : privacyBodies[lang], updated: '2026-10-13' });
 }
 PAGES.push({
   id: 'cgv',
@@ -504,7 +504,7 @@ PAGES.push({
   noindex: true,
 });
 if (OPEN) {
-  const ORDER_NOTE = 'Mesure d’audience anonyme, sans cookie ni donnée personnelle. Les données de commande sont transmises à Stripe et à notre service de commande (voir Confidentialité).';
+  const ORDER_NOTE = 'Mesure d’audience et de navigation anonyme, agrégée par jour, sans cookie ni donnée personnelle. Les données de commande sont transmises à Stripe et à notre service de commande (voir Confidentialité).';
   PAGES.push({ id: 'order', lang: 'fr', path: ROUTES.order.fr, file: 'commander.html', title: 'Commander l’audit automatisé partiel d’accessibilité – A11y Kit', description: 'Commande de l’audit automatisé partiel (axe-core, jusqu’à 20 pages, rapport PDF sous 24 h ouvrées), réservée aux professionnels.', body: orderBody, bodyScripts: orderScripts, csp: ORDER_CSP, noindex: true, noTracking: ORDER_NOTE });
   PAGES.push({ id: 'order-return', lang: 'fr', path: ROUTES.orderReturn.fr, file: 'commande.html', title: 'Votre commande – A11y Kit', description: 'Confirmation de commande de l’audit automatisé partiel.', body: orderReturnBody, bodyScripts: orderReturnScripts, csp: ORDER_RETURN_CSP, noindex: true, noTracking: ORDER_NOTE });
   PAGES.push({ id: 'cgv-pro', lang: 'fr', path: ROUTES.cgvPro.fr, file: 'cgv-pro.html', title: 'Conditions générales de vente aux professionnels – audit automatisé – A11y Kit', description: 'CGV B2B de l’audit automatisé partiel d’accessibilité (version du 12 octobre 2026).', body: cgvProBody, noindex: true });
