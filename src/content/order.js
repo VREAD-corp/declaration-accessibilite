@@ -135,6 +135,23 @@ export function auditJsonLd(lang) {
           availability: 'https://schema.org/InStock',
           url: SITE.origin + url(ROUTES.order.fr),
           seller: { '@id': ORG_REF['@id'] },
+          // PDF report e-mailed within 24 business hours, French businesses only; B2B sale, no withdrawal right (CGV art. 8).
+          shippingDetails: {
+            '@type': 'OfferShippingDetails',
+            shippingRate: { '@type': 'MonetaryAmount', value: '0', currency: 'EUR' },
+            shippingDestination: { '@type': 'DefinedRegion', addressCountry: 'FR' },
+            deliveryTime: {
+              '@type': 'ShippingDeliveryTime',
+              handlingTime: { '@type': 'QuantitativeValue', minValue: 0, maxValue: 1, unitCode: 'DAY' },
+              transitTime: { '@type': 'QuantitativeValue', minValue: 0, maxValue: 0, unitCode: 'DAY' },
+            },
+          },
+          hasMerchantReturnPolicy: {
+            '@type': 'MerchantReturnPolicy',
+            applicableCountry: 'FR',
+            returnPolicyCategory: 'https://schema.org/MerchantReturnNotPermitted',
+            merchantReturnLink: SITE.origin + url(ROUTES.cgvPro.fr),
+          },
         },
       },
     ],

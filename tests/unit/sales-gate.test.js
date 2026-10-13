@@ -164,6 +164,10 @@ test('SALES_OPEN=true: audit pages carry parseable Product JSON-LD (149.00 EUR, 
     assert.equal(product.offers.url, 'https://outils.vread.fr/declaration-accessibilite/commander.html');
     assert.equal(product.offers.seller['@id'], ORG_ID);
     assert.ok(!('valueAddedTaxIncluded' in product.offers));
+    assert.equal(product.offers.shippingDetails.shippingRate.value, '0');
+    assert.equal(product.offers.shippingDetails.shippingDestination.addressCountry, 'FR');
+    assert.equal(product.offers.hasMerchantReturnPolicy.returnPolicyCategory, 'https://schema.org/MerchantReturnNotPermitted');
+    assert.equal(product.offers.hasMerchantReturnPolicy.merchantReturnLink, 'https://outils.vread.fr/declaration-accessibilite/cgv-pro.html');
     assert.equal(product.image, `https://outils.vread.fr/declaration-accessibilite/assets/og-${lang}.png`);
     // the full Organization lives on the hub only (https://outils.vread.fr/#org): no duplicated node here
     assert.ok(!nodes.some((n) => n['@type'] === 'Organization'), `${path}: no standalone Organization`);
