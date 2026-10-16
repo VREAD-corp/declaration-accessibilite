@@ -3,7 +3,7 @@
 //  - SALES_OPEN=true (test build: fake endpoint, pk_test_): order page with the audit fields, CSP, B2B terms
 //    (cgv-pro.html), order page; a browser run with a stubbed Stripe.js and endpoint checks the form.
 //  - quotesEnabled (quote / bank-transfer form, octave-checkout gas/web/devis-form.html + devis.js): committed
-//    false → no quote block, no devis.js tag; true (temp config only) → block right after #octave-pay.
+//    true since 2026-10-16 (quotes on); false → no quote block, no devis.js tag; true → block right after #octave-pay.
 import { test, before, after } from 'node:test';
 import assert from 'node:assert/strict';
 import { execFileSync } from 'node:child_process';
@@ -99,8 +99,8 @@ const OCTAVE_WEB = [process.env.OCTAVE_CHECKOUT_WEB, join(ROOT, '..', 'octave-ch
 const ids = (html) => [...html.replace(/<!--[\s\S]*?-->/g, '').matchAll(/\sid="([^"]+)"/g)].map((m) => m[1]);
 const EXTRA_NAMES = ['siteUrl', 'pages', 'reportLang', 'scanAuthorized'];
 
-test('quotesEnabled: committed false; false → no quote block nor devis.js tag; config carries the boolean', () => {
-  assert.equal(repoConfig.quotesEnabled, false);
+test('quotesEnabled: committed true (quotes on since 2026-10-16); false → no quote block nor devis.js tag; config carries the boolean', () => {
+  assert.equal(repoConfig.quotesEnabled, true);
   const order = readFileSync(join(openDir, 'commander.html'), 'utf8');
   assert.doesNotMatch(order, /octave-devis/);
   assert.doesNotMatch(order, /devis\.js/);
