@@ -2,11 +2,13 @@
 // Every fact below comes from the audit runner (VREAD-corp/declaration-accessibilite-audit: scan.mjs,
 // report.mjs, process-audits.mjs), the B2B terms (cgv-pro.html, order.js) or the sources page.
 // The order form itself lives in order.js (commander.html) and is not touched here.
-import { PRICE, ROUTES, SAMPLE, CONTACT } from './site.js';
+import { PRICE, ROUTES, SAMPLE, CONTACT, SALES } from './site.js';
 import { url } from './layout.js';
 import { MAX_PAGES } from './order.js';
 
 const ORDER = url(ROUTES.order.fr);
+// Bank transfer on quote (CGV art. 6) is only advertised once the quote form is live (quotesEnabled).
+const QUOTES = SALES.quotesEnabled === true;
 // Founders (facts from vread.fr/presse and Vincent Cance's CV; same block on every outils.vread.fr site).
 const FOUNDERS = [
   {
@@ -78,7 +80,7 @@ const T = {
     ],
     whoNot: 'Il ne vous servira pas si vous avez besoin d’une attestation ou d’un taux de conformité, si votre site vend uniquement à des professionnels (ventes non visées par l’EAA) ou si votre entreprise n’est pas immatriculée en France : la commande demande un numéro SIREN.',
     offerTitle: `Audit automatisé partiel d’accessibilité : ${PRICE.ttc} net`,
-    offerVat: 'TVA non applicable, art. 293 B du CGI. Paiement unique par carte (Stripe). Réservé aux entreprises immatriculées en France (SIREN).',
+    offerVat: `TVA non applicable, art. 293 B du CGI. Paiement unique par carte (Stripe)${QUOTES ? ' ou par virement sur devis' : ''}. Réservé aux entreprises immatriculées en France (SIREN).`,
     offerList: [`Jusqu’à ${MAX_PAGES} pages, ordinateur et mobile`, 'Rapport PDF sous 24 h ouvrées après le paiement', 'Problèmes classés par gravité, éléments et code en cause', '20 vérifications manuelles à faire ensuite', 'Facture acquittée envoyée avec le rapport'],
     offerGuarantee: 'Rapport non livré dans les 5 jours ouvrés suivant le paiement : vous pouvez demander l’annulation et le remboursement intégral (CGV, art. 7).',
     offerNot: 'Non inclus : relecture humaine, correction du site, pages derrière une connexion. Aucun taux de conformité ni attestation.',
@@ -147,7 +149,7 @@ const T = {
     ],
     whoNot: 'Nicht für Sie, wenn Ihr Unternehmen nicht in Frankreich eingetragen ist, wenn Sie nur an Unternehmen verkaufen oder wenn Sie ein Konformitätszertifikat brauchen.',
     offerTitle: `Automatisierte Teilprüfung der Barrierefreiheit: 149 € netto`,
-    offerVat: 'Keine Umsatzsteuer ausgewiesen gemäß Art. 293 B CGI. Einmalzahlung per Karte (Stripe). Nur für in Frankreich eingetragene Unternehmen (SIREN).',
+    offerVat: `Keine Umsatzsteuer ausgewiesen gemäß Art. 293 B CGI. Einmalzahlung per Karte (Stripe)${QUOTES ? ' oder per Überweisung auf Angebot' : ''}. Nur für in Frankreich eingetragene Unternehmen (SIREN).`,
     offerList: [`Bis zu ${MAX_PAGES} Seiten, Desktop und Mobil`, 'PDF-Bericht innerhalb von 24 Arbeitsstunden', 'Probleme nach Schweregrad, betroffene Elemente', '20 manuelle Prüfungen', 'Quittierte Rechnung mit dem Bericht'],
     offerGuarantee: 'Kein Bericht innerhalb von 5 Werktagen nach Zahlung: Sie können Stornierung und volle Erstattung verlangen (AGB, Art. 7).',
     offerNot: 'Nicht enthalten: menschliche Durchsicht, Behebung, Seiten hinter einem Login. Kein Konformitätsgrad, kein Zertifikat.',
@@ -213,7 +215,7 @@ const T = {
     ],
     whoNot: 'It is not for you if your company is not registered in France, if you only sell to businesses, or if you need a certificate of conformity.',
     offerTitle: 'Partial automated accessibility audit: €149 net',
-    offerVat: 'VAT not applicable, art. 293 B of the French tax code. One-off card payment (Stripe). Companies registered in France only (SIREN).',
+    offerVat: `VAT not applicable, art. 293 B of the French tax code. One-off card payment (Stripe)${QUOTES ? ' or bank transfer on quote' : ''}. Companies registered in France only (SIREN).`,
     offerList: [`Up to ${MAX_PAGES} pages, desktop and mobile`, 'PDF report within 24 business hours', 'Issues by severity, elements and code involved', '20 manual checks to do next', 'Paid invoice sent with the report'],
     offerGuarantee: 'No report within 5 working days of payment: you can ask for cancellation and a full refund (terms, art. 7).',
     offerNot: 'Not included: human review, fixing your site, pages behind a login. No conformance rate or certificate.',

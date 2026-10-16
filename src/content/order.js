@@ -5,7 +5,7 @@
 // NOT legal advice, to be reviewed by a lawyer. The audit is automated and partial: never an RGAA conformity audit, never a rate.
 import { SITE, SALES, PRICE, ROUTES, RELEASE_DL } from './site.js';
 import { url, ogImage } from './layout.js';
-import { orderFormHtml, orderPageBody, checkoutCsp, orderCsp, payButtonText, TERMS_DATE } from '../../scripts/checkout-pages.mjs';
+import { orderFormHtml, orderPageBody, checkoutCsp, orderCsp, payButtonText } from '../../scripts/checkout-pages.mjs';
 
 // Audit CGV version: id sent with every order / quote (checkout-config.js termsVersion; the octave-pay-gas
 // CATALOG entry a11y-audit-20 must carry the same id) and date shown on the CGV, the audit page and both
@@ -216,8 +216,9 @@ export const ORDER_RETURN_CSP = SALES.SALES_OPEN ? orderCsp(SALES) : '';
 
 export const cgvProBody = `<!--
   CGV B2B rédigées par Octave (assistant IA de READ FRANCE SAS) le 12 octobre 2026, mises à jour le 13 octobre 2026
-  (paiement par virement sur devis, d'après la revue REVUE-CGV-VIREMENT.md).
-  CE N'EST PAS UN CONSEIL JURIDIQUE : texte à faire relire par un avocat ou un juriste.
+  (paiement par virement sur devis, d'après la revue REVUE-CGV-VIREMENT.md ; articles 2, 5, 6, 7, 11, 12 et 14),
+  publiées le 16 octobre 2026 avec l'accord du dirigeant. CE N'EST PAS UN CONSEIL JURIDIQUE : une relecture par un
+  avocat ou un juriste reste recommandée.
 -->
 <div class="legal-text">
 <h1>Conditions générales de vente aux professionnels – audit automatisé partiel d’accessibilité</h1>
@@ -237,7 +238,7 @@ export const cgvProBody = `<!--
 <h2>4. Autorisation d’analyse</h2>
 <p>L’Acheteur garantit qu’il est titulaire du site indiqué ou qu’il est dûment autorisé par son titulaire à en faire analyser les pages publiques, et il l’atteste en cochant la case prévue lors de la commande. Il garantit le Vendeur contre toute réclamation d’un tiers fondée sur l’absence d’une telle autorisation. Les pages sont consultées comme le ferait un visiteur, à un rythme modéré, sans tentative de contournement d’une protection. Le Vendeur peut refuser ou interrompre une analyse s’il a un doute sérieux sur l’autorisation ; il rembourse alors le prix.</p>
 <h2>5. Prix</h2>
-<p>Le prix est de <strong>${PRICE.sentence}</strong> par commande, payable en une fois. Le prix applicable est celui affiché sur la page de commande au moment de la validation ; il figure sur la facture, qui porte la mention « TVA non applicable, art. 293 B du CGI ».</p>
+<p>Le prix est de <strong>${PRICE.sentence}</strong> par commande, payable en une fois. Le prix applicable est celui affiché sur la page de commande au moment de la validation du paiement par carte ou, en cas de paiement par virement, celui indiqué sur le devis, ferme pendant sa durée de validité de trente (30) jours (article 6) ; il figure sur la facture, qui porte la mention « TVA non applicable, art. 293 B du CGI ».</p>
 <h2>6. Commande et paiement</h2>
 <p>L’Acheteur renseigne sur la page « Commander » l’adresse du site et, le cas échéant, les pages à analyser, la langue du rapport, son adresse électronique, la raison sociale et le SIREN de l’entreprise, l’adresse de facturation, puis choisit son mode de paiement.</p>
 <p>Le prix est payable comptant et d’avance, en une fois, au choix de l’Acheteur :</p>
@@ -295,7 +296,7 @@ export const privacyOrderSection = {
 
 export const cgvDraftReplaced = `<div class="legal-text">
 <h1>Conditions générales de vente</h1>
-<p>L’ancien projet de conditions publié sur cette page est remplacé par les <a href="${url(ROUTES.cgvPro.fr)}">conditions générales de vente aux professionnels de l’audit automatisé partiel</a> (version du ${TERMS_DATE}), applicables aux commandes passées depuis cette date.</p>
+<p>L’ancien projet de conditions publié sur cette page est remplacé, depuis le 12 octobre 2026, par les <a href="${url(ROUTES.cgvPro.fr)}">conditions générales de vente aux professionnels de l’audit automatisé partiel</a> (version en vigueur : ${AUDIT_TERMS_DATE}).</p>
 </div>`;
 
 export { SITE };
