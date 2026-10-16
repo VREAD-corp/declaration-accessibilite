@@ -20,6 +20,7 @@ export const legalBodies = {
 <h2>Éditeur</h2>
 <p>${PUB.name}, ${PUB.form.fr}<br>SIREN ${PUB.siren} – SIRET du siège ${PUB.siret}<br>Siège social : ${PUB.address}<br>Capital social : 1 000 €.</p>
 <p>Directeur de la publication : ${PUB.director}, président.</p>
+<p>Jalonel est une marque de READ FRANCE SAS.</p>
 <h2>Contact</h2>
 <p>Par e-mail : <a href="mailto:${CONTACT}">${CONTACT}</a>.</p>
 <!-- TODO phone -->
@@ -41,6 +42,7 @@ export const legalBodies = {
 <h2>Anbieter</h2>
 <p>${PUB.name}, ${PUB.form.de}<br>SIREN ${PUB.siren} (französisches Unternehmensregister) – SIRET ${PUB.siret}<br>Sitz: ${PUB.address}<br>Vertreten durch den Präsidenten ${PUB.director}.</p>
 <p>Inhaltlich verantwortlich: ${PUB.director}.</p>
+<p>Jalonel ist eine Marke der READ FRANCE SAS.</p>
 <h2>Kontakt</h2>
 <p>E-Mail: <a href="mailto:${CONTACT}">${CONTACT}</a>.</p>
 <!-- TODO phone -->
@@ -59,6 +61,7 @@ export const legalBodies = {
 <h1>Legal notice</h1>
 <h2>Publisher</h2>
 <p>${PUB.name}, ${PUB.form.en}<br>SIREN ${PUB.siren} – SIRET ${PUB.siret}<br>Registered office: ${PUB.address}<br>Publication director: ${PUB.director}, president.</p>
+<p>Jalonel is a brand of READ FRANCE SAS.</p>
 <h2>Contact</h2>
 <p>E-mail: <a href="mailto:${CONTACT}">${CONTACT}</a>.</p>
 <!-- TODO phone -->

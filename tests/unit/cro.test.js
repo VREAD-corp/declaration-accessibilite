@@ -27,11 +27,11 @@ test('every page loads cro.js (site id, France backend, live host, primary-CTA s
   assert.ok(PAGES.length >= 18);
   for (const page of PAGES) {
     const html = layout(page);
-    const tag = html.match(/<script src="\/declaration-accessibilite\/cro\.js" ([^>]*)><\/script>/);
+    const tag = html.match(/<script src="\/cro\.js" ([^>]*)><\/script>/);
     assert.ok(tag, `${page.id}/${page.lang}: no cro.js tag`);
     assert.match(tag[1], /data-site="declaration-accessibilite"/);
     assert.match(tag[1], /data-api="https:\/\/script\.google\.com\/macros\/s\/[\w-]+\/exec"/);
-    assert.match(tag[1], /data-hosts="outils\.vread\.fr"/);
+    assert.match(tag[1], /data-hosts="accessibilite\.jalonel\.com outils\.vread\.fr"/);
     assert.match(tag[1], /data-cta="\[data-cta\],\.btn:not\(\.secondary\)"/);
     assert.doesNotMatch(tag[1], /type="module"/);
     assert.ok(html.indexOf('/cro.js"') < html.indexOf('/mesure.js"'), `${page.id}: cro.js after mesure.js`);

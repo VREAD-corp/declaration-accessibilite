@@ -45,7 +45,7 @@ const HOME = {
       alt: 'Aperçu d’un rapport d’audit : synthèse des problèmes classés par gravité',
     },
     nextTitle: 'Après la déclaration',
-    gpsr: 'Vous vendez des produits en ligne ? Le règlement GPSR impose aussi des informations de sécurité sur chaque fiche produit : <a href="https://outils.vread.fr/kit-gpsr-vendeurs/">générateur gratuit de fiche produit GPSR</a>.',
+    gpsr: 'Vous vendez des produits en ligne ? Le règlement GPSR impose aussi des informations de sécurité sur chaque fiche produit : <a href="https://gpsr.jalonel.com/">générateur gratuit de fiche produit GPSR</a>.',
     next: [
       ['Vérifier les bases', `L’<a href="${url(ROUTES.check.fr)}">auto-contrôle en 20 points</a> se fait à la main sur vos pages clés ; le mini-test passe un extrait HTML au moteur axe-core, dans votre navigateur.`],
       ['Comprendre vos obligations', `Moins de 10 personnes et 2 M€ de chiffre d’affaires ou de bilan au plus : vous êtes probablement exempté. Les textes et les sanctions sont sur la page <a href="${url(ROUTES.sources.fr)}">obligations et sources</a>.`],
@@ -82,7 +82,7 @@ const HOME = {
       alt: 'Vorschau eines Prüfberichts: Übersicht der Probleme nach Schweregrad',
     },
     nextTitle: 'Nach der Erklärung',
-    gpsr: 'Sie verkaufen Produkte online? Die Produktsicherheitsverordnung (GPSR) verlangt außerdem Sicherheitsangaben in jedem Produktangebot: <a href="https://outils.vread.fr/kit-gpsr-vendeurs/en/" hreflang="en">kostenloser GPSR-Generator für Produktangaben (auf Englisch)</a>.',
+    gpsr: 'Sie verkaufen Produkte online? Die Produktsicherheitsverordnung (GPSR) verlangt außerdem Sicherheitsangaben in jedem Produktangebot: <a href="https://gpsr.jalonel.com/en/" hreflang="en">kostenloser GPSR-Generator für Produktangaben (auf Englisch)</a>.',
     next: [
       ['Grundlagen prüfen', `Den <a href="${url(ROUTES.check.de)}">Selbsttest in 20 Punkten</a> machen Sie von Hand auf Ihren wichtigsten Seiten; die Mini-Prüfung testet einen HTML-Auszug mit axe-core, direkt im Browser.`],
       ['Pflichten verstehen', `Weniger als 10 Beschäftigte und höchstens 2 Mio. € Umsatz oder Bilanzsumme: Dann greift wahrscheinlich die Ausnahme nach § 3 Abs. 3 BFSG. Gesetzestexte und Bußgelder stehen unter <a href="${url(ROUTES.sources.de)}">Pflichten und Quellen</a>.`],
@@ -119,7 +119,7 @@ const HOME = {
       alt: 'Preview of an audit report: summary of issues ranked by severity',
     },
     nextTitle: 'After the statement',
-    gpsr: 'Do you sell products online? The General Product Safety Regulation (GPSR) also requires safety information on every product listing: <a href="https://outils.vread.fr/kit-gpsr-vendeurs/en/">free GPSR product information generator</a>.',
+    gpsr: 'Do you sell products online? The General Product Safety Regulation (GPSR) also requires safety information on every product listing: <a href="https://gpsr.jalonel.com/en/">free GPSR product information generator</a>.',
     next: [
       ['Check the basics', `The <a href="${url(ROUTES.check.en)}">20-point self-check</a> is done by hand on your key pages; the mini-test runs an HTML snippet through axe-core, in your browser.`],
       ['Understand your obligations', `Fewer than 10 staff and at most €2 million in turnover or balance sheet total: the microenterprise exemption probably applies. The texts and fines are on the <a href="${url(ROUTES.sources.en)}">obligations and sources</a> page.`],

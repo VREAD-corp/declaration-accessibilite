@@ -110,8 +110,8 @@ export const AUDIT_META_OPEN = {
   en: ['Automated accessibility audit for companies in France', 'Partial automated audit of up to 20 pages, PDF in 24 business hours. €149 net, VAT not applicable (art. 293 B CGI). Companies registered in France only.'],
 };
 
-/** Reference to the publisher entity defined once on the hub (https://outils.vread.fr/), never duplicated here. */
-export const ORG_REF = { '@type': 'Organization', '@id': 'https://outils.vread.fr/#org', name: 'READ FRANCE SAS' };
+/** Reference to the publisher brand Jalonel (hub https://jalonel.com/, a brand of READ FRANCE SAS), never duplicated here. */
+export const ORG_REF = { '@type': 'Organization', '@id': 'https://jalonel.com/#org', name: 'Jalonel', url: 'https://jalonel.com/', parentOrganization: { '@type': 'Organization', name: 'READ FRANCE SAS', identifier: 'SIREN 988741773' } };
 
 const AUDIT_LD_TEXT = {
   fr: ['Audit automatisé partiel d’accessibilité (jusqu’à 20 pages)', 'Rapport PDF d’une analyse automatisée et partielle (moteur axe-core, règles WCAG A et AA, ordinateur et mobile) de jusqu’à 20 pages publiques, avec correspondances RGAA indicatives et liste des vérifications manuelles, envoyé sous 24 h ouvrées. Ce n’est pas un audit de conformité RGAA, WCAG ou EAA et il ne donne aucun taux de conformité.'],

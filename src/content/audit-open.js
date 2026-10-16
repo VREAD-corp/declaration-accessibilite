@@ -9,7 +9,7 @@ import { MAX_PAGES } from './order.js';
 const ORDER = url(ROUTES.order.fr);
 // Bank transfer on quote (CGV art. 6) is only advertised once the quote form is live (quotesEnabled).
 const QUOTES = SALES.quotesEnabled === true;
-// Founders (facts from vread.fr/presse and Vincent Cance's CV; same block on every outils.vread.fr site).
+// Founders (facts from vread.fr/presse and Vincent Cance's CV; same block on every Jalonel site).
 const FOUNDERS = [
   {
     name: 'Tanguy Warsmann',
@@ -98,7 +98,7 @@ const T = {
       ['Ai-je le droit de faire analyser ce site ?', `<p>Oui si votre entreprise en est titulaire ou si son titulaire vous y autorise : vous l’attestez en cochant une case à la commande. Les pages sont consultées comme le ferait un visiteur, à un rythme modéré.</p>`],
     ],
     aboutTitle: 'Qui sommes-nous',
-    about: `<strong>READ FRANCE SAS</strong>, société basée à Paris (SIREN 988 741 773), édite des outils et des kits pour aider les entreprises à respecter leurs obligations réglementaires : accessibilité numérique, Qualiopi, sécurité des produits.`,
+    about: `<strong>Jalonel</strong>, marque de READ FRANCE SAS, société basée à Paris (SIREN 988 741 773), édite des outils et des kits pour aider les entreprises à respecter leurs obligations réglementaires : accessibilité numérique, Qualiopi, sécurité des produits.`,
     contact: 'Une question avant de commander ?',
     foundersLabel: 'Fondateurs',
     portrait: 'Portrait de',
@@ -164,7 +164,7 @@ const T = {
       ['Erstattung?', `<p>Laut <a href="${url(ROUTES.cgvPro.fr)}" hreflang="fr">AGB</a>: volle Erstattung auf Wunsch, wenn der Bericht nicht innerhalb von 5 Werktagen nach Zahlung geliefert wird. Kein Widerrufsrecht (Verkauf zwischen Unternehmen).</p>`],
     ],
     aboutTitle: 'Über uns',
-    about: '<strong>READ FRANCE SAS</strong>, Paris (SIREN 988 741 773), entwickelt Werkzeuge und Kits, mit denen Unternehmen regulatorische Pflichten erfüllen: digitale Barrierefreiheit, Qualiopi, Produktsicherheit.',
+    about: '<strong>Jalonel</strong>, eine Marke der READ FRANCE SAS, Paris (SIREN 988 741 773), entwickelt Werkzeuge und Kits, mit denen Unternehmen regulatorische Pflichten erfüllen: digitale Barrierefreiheit, Qualiopi, Produktsicherheit.',
     contact: 'Fragen vor der Bestellung?',
     foundersLabel: 'Gründer',
     portrait: 'Porträt von',
@@ -230,7 +230,7 @@ const T = {
       ['Refunds?', `<p>Per the <a href="${url(ROUTES.cgvPro.fr)}" hreflang="fr">terms</a>: full refund on request if the report is not delivered within 5 working days of payment. No withdrawal right (business-to-business sale).</p>`],
     ],
     aboutTitle: 'About us',
-    about: '<strong>READ FRANCE SAS</strong>, based in Paris (SIREN 988 741 773), builds tools and kits that help businesses meet regulatory obligations: digital accessibility, Qualiopi, product safety.',
+    about: '<strong>Jalonel</strong>, a brand of READ FRANCE SAS, based in Paris (SIREN 988 741 773), builds tools and kits that help businesses meet regulatory obligations: digital accessibility, Qualiopi, product safety.',
     contact: 'A question before ordering?',
     foundersLabel: 'Founders',
     portrait: 'Portrait of',
@@ -332,7 +332,7 @@ ${t.faq.map(([q, a], i) => `<details id="faq-${i + 1}"><summary>${q}</summary><d
 <section class="lp-section about" data-section="fondateurs" aria-labelledby="about-title">
 <div class="about-intro">
 <p class="eyebrow">${t.aboutTitle}</p>
-<h2 id="about-title">READ FRANCE SAS, Paris</h2>
+<h2 id="about-title">Jalonel, Paris</h2>
 <p>${t.about}</p>
 </div>
 <ul class="founders" aria-label="${t.foundersLabel}">
@@ -342,7 +342,7 @@ ${FOUNDERS.map((f) => `<li class="founder">
 <p class="founder-bio">${f.bio[lang]}</p>
 </li>`).join('\n')}
 </ul>
-<p class="about-foot">${t.contact} <a href="mailto:${CONTACT}">${CONTACT}</a> · <a href="https://outils.vread.fr/">${t.more}</a></p>
+<p class="about-foot">${t.contact} <a href="mailto:${CONTACT}">${CONTACT}</a> · <a href="${lang === 'fr' ? 'https://jalonel.com/' : 'https://jalonel.com/en/'}">${t.more}</a></p>
 </section>
 
 <p class="fine sources-line">${t.legal}</p>

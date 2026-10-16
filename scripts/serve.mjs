@@ -2,7 +2,7 @@
 import { createServer } from 'node:http';
 import { readFile, stat } from 'node:fs/promises';
 import { join, extname, normalize } from 'node:path';
-const base = process.env.SITE_BASE || '/declaration-accessibilite/';
+const base = process.env.SITE_BASE || '/';
 const root = new URL('../dist/', import.meta.url).pathname;
 const port = Number(process.env.PORT || 4173);
 const types = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript', '.css': 'text/css', '.json': 'application/json', '.svg': 'image/svg+xml', '.xml': 'application/xml', '.txt': 'text/plain', '.webp': 'image/webp', '.pdf': 'application/pdf' };

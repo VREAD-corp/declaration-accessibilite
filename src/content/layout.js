@@ -10,28 +10,28 @@ export const croTag = () =>
   `<script src="${url('cro.js')}" data-site="${CRO.site}" data-api="${CRO.api}" data-hosts="${CRO.hosts}" data-cta="${esc(CRO.cta)}" defer></script>`;
 export const abs = (path) => SITE.origin + url(path);
 
-/** Cross-site block « Autres outils READ FRANCE » (same markup on every outils.vread.fr site; absolute URLs). */
+/** Cross-site block « Autres outils Jalonel » (same markup on every Jalonel site; absolute URLs). */
 const NETWORK = {
-  fr: ['Autres outils READ FRANCE', [
-    ['https://outils.vread.fr/', 'Tous les outils'],
-    ['https://outils.vread.fr/kit-qualiopi-v10/', 'Kit Qualiopi V10'],
-    ['https://outils.vread.fr/kit-gpsr-vendeurs/pack.html', 'Pack documentation GPSR'],
-    ['https://outils.vread.fr/veille-ao-formation/alertes/', 'Alertes appels d’offres formation'],
-    ['https://outils.vread.fr/declaration-accessibilite/audit/', 'Audit d’accessibilité'],
+  fr: ['Autres outils Jalonel', [
+    ['https://jalonel.com/', 'Tous les outils'],
+    ['https://qualiopi.jalonel.com/', 'Kit Qualiopi V10'],
+    ['https://gpsr.jalonel.com/pack.html', 'Pack documentation GPSR'],
+    ['https://ao-formation.jalonel.com/alertes/', 'Alertes appels d’offres formation'],
+    ['https://accessibilite.jalonel.com/audit/', 'Audit d’accessibilité'],
   ]],
-  en: ['Other READ FRANCE tools', [
-    ['https://outils.vread.fr/', 'All tools'],
-    ['https://outils.vread.fr/kit-qualiopi-v10/', 'Qualiopi V10 kit (in French)', 'fr'],
-    ['https://outils.vread.fr/kit-gpsr-vendeurs/en/pack.html', 'GPSR documentation pack'],
-    ['https://outils.vread.fr/veille-ao-formation/alertes/', 'Public training tender alerts (in French)', 'fr'],
-    ['https://outils.vread.fr/declaration-accessibilite/en/audit/', 'Accessibility audit'],
+  en: ['Other Jalonel tools', [
+    ['https://jalonel.com/en/', 'All tools'],
+    ['https://qualiopi.jalonel.com/', 'Qualiopi V10 kit (in French)', 'fr'],
+    ['https://gpsr.jalonel.com/en/pack.html', 'GPSR documentation pack'],
+    ['https://ao-formation.jalonel.com/alertes/', 'Public training tender alerts (in French)', 'fr'],
+    ['https://accessibilite.jalonel.com/en/audit/', 'Accessibility audit'],
   ]],
-  de: ['Weitere Tools von READ FRANCE', [
-    ['https://outils.vread.fr/', 'Alle Tools'],
-    ['https://outils.vread.fr/kit-qualiopi-v10/', 'Qualiopi-V10-Kit (auf Französisch)', 'fr'],
-    ['https://outils.vread.fr/kit-gpsr-vendeurs/en/pack.html', 'GPSR-Dokumentationspaket (auf Englisch)', 'en'],
-    ['https://outils.vread.fr/veille-ao-formation/alertes/', 'Ausschreibungs-Alerts Weiterbildung (auf Französisch)', 'fr'],
-    ['https://outils.vread.fr/declaration-accessibilite/de/audit/', 'Barrierefreiheits-Audit'],
+  de: ['Weitere Tools von Jalonel', [
+    ['https://jalonel.com/en/', 'Alle Tools'],
+    ['https://qualiopi.jalonel.com/', 'Qualiopi-V10-Kit (auf Französisch)', 'fr'],
+    ['https://gpsr.jalonel.com/en/pack.html', 'GPSR-Dokumentationspaket (auf Englisch)', 'en'],
+    ['https://ao-formation.jalonel.com/alertes/', 'Ausschreibungs-Alerts Weiterbildung (auf Französisch)', 'fr'],
+    ['https://accessibilite.jalonel.com/de/audit/', 'Barrierefreiheits-Audit'],
   ]],
 };
 export function networkBlock(lang) {
@@ -46,9 +46,9 @@ ${links.map(([href, text, hl]) => `<li><a href="${href}"${hl ? ` hreflang="${hl}
 
 /** Sharing image per language (1200x630, rendered by scripts/make-og.mjs). */
 const OG_ALT = {
-  fr: 'A11y Kit : générateur gratuit de déclaration d’accessibilité (RGAA, EAA) et audit automatisé, par READ FRANCE',
-  de: 'A11y Kit: kostenloser Generator für Barrierefreiheitserklärungen (BFSG, EAA) und automatisierte Prüfung, von READ FRANCE',
-  en: 'A11y Kit: free accessibility statement generator (EAA) and automated audit, by READ FRANCE',
+  fr: 'A11y Kit : générateur gratuit de déclaration d’accessibilité (RGAA, EAA) et audit automatisé, par Jalonel',
+  de: 'A11y Kit: kostenloser Generator für Barrierefreiheitserklärungen (BFSG, EAA) und automatisierte Prüfung, von Jalonel',
+  en: 'A11y Kit: free accessibility statement generator (EAA) and automated audit, by Jalonel',
 };
 export const ogImage = (lang) => abs(`assets/og-${OG_ALT[lang] ? lang : 'fr'}.png`);
 
@@ -101,7 +101,7 @@ ${jsonld}
 <a class="skip" href="#main">${esc(c.skip)}</a>
 <header class="site-header">
 <div class="wrap header-row">
-<a class="brand" href="${url(NAV[page.lang][0].path)}"><span class="brand-mark" aria-hidden="true">A11y</span><span class="brand-text">${esc(SITE.brand)}<span class="brand-by">READ FRANCE</span></span></a>
+<a class="brand" href="${url(NAV[page.lang][0].path)}"><span class="brand-mark" aria-hidden="true">A11y</span><span class="brand-text">${esc(SITE.brand)}<span class="brand-by">Jalonel</span></span></a>
 <div class="header-desktop">
 <nav class="site-nav" aria-label="${esc(c.navLabel)}"><ul>${nav}</ul></nav>
 <nav class="lang-switch" aria-label="${esc(c.langLabel)}"><ul>${langLinks}</ul></nav>
@@ -127,7 +127,7 @@ ${networkBlock(page.lang)}
 <ul>
 ${c.footerLinks.map((l) => `<li><a href="${l.external ? l.path : url(l.path)}"${l.lang ? ` hreflang="${l.lang}"` : ''}>${esc(l.label)}</a></li>`).join('\n')}
 </ul>
-<p>${esc(c.product)} (SIREN 988 741 773, Paris) · ${esc(page.noTracking || c.noTracking)}</p>
+<p><a href="${c.brandUrl}">${esc(c.product)}</a> · ${esc(page.noTracking || c.noTracking)}</p>
 </div>
 </footer>
 ${croTag()}

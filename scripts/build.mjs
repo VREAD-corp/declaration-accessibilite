@@ -102,5 +102,8 @@ ${urls
 );
 write('robots.txt', `User-agent: *\nAllow: /\nSitemap: ${SITE.origin}${SITE.base}sitemap.xml\n`);
 write('.nojekyll', '');
+// GitHub Pages custom domain (workflow build: set via the API; kept in the artifact anyway) and IndexNow key at the root.
+write('CNAME', `${new URL(SITE.origin).host}\n`);
+write('5be19f56d46ca3d2553bee28ebfa8edd.txt', '5be19f56d46ca3d2553bee28ebfa8edd');
 if (!existsSync(join(dist, 'index.html'))) throw new Error('no index');
 console.log(`built ${PAGES.length} pages into dist/`);

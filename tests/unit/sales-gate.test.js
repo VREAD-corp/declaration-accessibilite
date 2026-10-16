@@ -81,7 +81,7 @@ test('SALES_OPEN=true: offer page, order page (audit fields, attestation, CSP), 
   assert.match(order, /name="reportLang" data-octave-extra/);
   assert.match(text(order), /pas un audit de conformité RGAA/);
   assert.match(text(order), /149,00 € net \(TVA non applicable, art\. 293 B du CGI\)/);
-  assert.match(order, /href="\/declaration-accessibilite\/cgv-pro\.html"/);
+  assert.match(order, /href="\/cgv-pro\.html"/);
   assert.match(text(order), /Les données de commande sont transmises à Stripe/);
   assert.doesNotMatch(text(readFileSync(join(openDir, 'audit/index.html'), 'utf8')), /aucune donnée envoyée/);
   const ret = readFileSync(join(openDir, 'commande.html'), 'utf8');
@@ -129,7 +129,7 @@ test('quotesEnabled=true: quote block once right after #octave-pay, devis.js aft
   assert.deepEqual(extras(quote).map((e) => e.split('=')[0]).sort(), [...EXTRA_NAMES].sort());
   assert.match(quote, /name="scanAuthorized" data-octave-extra="bool" required/);
   assert.match(quote, /<div class="hp" aria-hidden="true">.*name="website" tabindex="-1"/);
-  assert.match(quote, /class="terms-link" href="\/declaration-accessibilite\/cgv-pro\.html"/);
+  assert.match(quote, /class="terms-link" href="\/cgv-pro\.html"/);
   assert.match(quote, /\(version du 13 octobre 2026\)/);
   assert.match(card, /\(version du 13 octobre 2026\)/);
   assert.doesNotMatch(quote, /\{\{|\}\}/);
@@ -146,7 +146,7 @@ const jsonLd = (html) => [...html.matchAll(/<script type="application\/ld\+json"
   const d = JSON.parse(m[1]);
   return d['@graph'] ?? [d];
 });
-const ORG_ID = 'https://outils.vread.fr/#org';
+const ORG_ID = 'https://jalonel.com/#org';
 
 test('SALES_OPEN=true: audit pages carry parseable Product JSON-LD (149.00 EUR, InStock) referencing the hub Organization by @id', () => {
   for (const [path, lang] of [['audit/index.html', 'fr'], ['en/audit/index.html', 'en'], ['de/audit/index.html', 'de']]) {
@@ -156,29 +156,29 @@ test('SALES_OPEN=true: audit pages carry parseable Product JSON-LD (149.00 EUR, 
     assert.ok(product, `${path}: Product`);
     assert.equal(product.sku, 'a11y-audit-auto');
     assert.equal(product.brand.name, 'A11y Kit');
-    assert.equal(product.url, `https://outils.vread.fr/declaration-accessibilite/${path.replace('index.html', '')}`);
+    assert.equal(product.url, `https://accessibilite.jalonel.com/${path.replace('index.html', '')}`);
     assert.match(product.description, lang === 'de' ? /Keine Konformitätsprüfung/ : lang === 'en' ? /Not a conformance audit/ : /pas un audit de conformité/);
     assert.equal(product.offers['@type'], 'Offer');
     assert.equal(product.offers.price, (repoConfig.amount / 100).toFixed(2));
     assert.equal(product.offers.price, '149.00');
     assert.equal(product.offers.priceCurrency, 'EUR');
     assert.equal(product.offers.availability, 'https://schema.org/InStock');
-    assert.equal(product.offers.url, 'https://outils.vread.fr/declaration-accessibilite/commander.html');
+    assert.equal(product.offers.url, 'https://accessibilite.jalonel.com/commander.html');
     assert.equal(product.offers.seller['@id'], ORG_ID);
     assert.ok(!('valueAddedTaxIncluded' in product.offers));
     assert.equal(product.offers.shippingDetails.shippingRate.value, '0');
     assert.equal(product.offers.shippingDetails.shippingDestination.addressCountry, 'FR');
     assert.equal(product.offers.hasMerchantReturnPolicy.returnPolicyCategory, 'https://schema.org/MerchantReturnNotPermitted');
-    assert.equal(product.offers.hasMerchantReturnPolicy.merchantReturnLink, 'https://outils.vread.fr/declaration-accessibilite/cgv-pro.html');
-    assert.equal(product.image, `https://outils.vread.fr/declaration-accessibilite/assets/og-${lang}.png`);
-    // the full Organization lives on the hub only (https://outils.vread.fr/#org): no duplicated node here
+    assert.equal(product.offers.hasMerchantReturnPolicy.merchantReturnLink, 'https://accessibilite.jalonel.com/cgv-pro.html');
+    assert.equal(product.image, `https://accessibilite.jalonel.com/assets/og-${lang}.png`);
+    // the full Organization lives on the Jalonel hub only (https://jalonel.com/#org): no duplicated node here
     assert.ok(!nodes.some((n) => n['@type'] === 'Organization'), `${path}: no standalone Organization`);
-    assert.ok(!html.includes('"legalName"') && !html.includes('"identifier"'), `${path}: no duplicated Organization data`);
+    assert.ok(!html.includes('"legalName"') && !html.includes('"PostalAddress"'), `${path}: no duplicated Organization data`);
     assert.match(html, /<meta name="description" content="[^"]*net[^"]*293 B/);
   }
   for (const path of ['index.html', 'en/index.html', 'de/index.html']) {
     const nodes = jsonLd(readFileSync(join(openDir, path), 'utf8'));
-    assert.ok(nodes.some((n) => n['@type'] === 'WebApplication' && n.publisher['@id'] === ORG_ID && n.publisher.name === 'READ FRANCE SAS'), path);
+    assert.ok(nodes.some((n) => n['@type'] === 'WebApplication' && n.publisher['@id'] === ORG_ID && n.publisher.name === 'Jalonel' && n.publisher.parentOrganization?.name === 'READ FRANCE SAS'), path);
     assert.ok(!nodes.some((n) => n['@type'] === 'Organization'), `${path}: no standalone Organization`);
   }
   for (const path of ['audit/index.html', 'en/audit/index.html', 'de/audit/index.html']) {
@@ -245,7 +245,7 @@ before(async () => {
     }
   });
   await new Promise((r) => server.listen(0, '127.0.0.1', r));
-  base = `http://127.0.0.1:${server.address().port}/declaration-accessibilite/`;
+  base = `http://127.0.0.1:${server.address().port}/`;
 });
 after(async () => {
   await browser?.close();

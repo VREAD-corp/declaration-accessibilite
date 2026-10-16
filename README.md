@@ -1,6 +1,8 @@
 # A11y Kit – générateur de déclaration d’accessibilité
 
-**Site : https://outils.vread.fr/declaration-accessibilite/** (FR · [DE](https://outils.vread.fr/declaration-accessibilite/de/) · [EN](https://outils.vread.fr/declaration-accessibilite/en/))
+**Site : https://accessibilite.jalonel.com/** (FR · [DE](https://accessibilite.jalonel.com/de/) · [EN](https://accessibilite.jalonel.com/en/))
+
+2026-10-16: moved to https://accessibilite.jalonel.com/ (brand Jalonel, a brand of READ FRANCE SAS). L’ancienne adresse https://outils.vread.fr/declaration-accessibilite/ redirige (301) vers la nouvelle. Domaine personnalisé GitHub Pages `accessibilite.jalonel.com` (build par workflow ; le build écrit aussi `dist/CNAME` et la clé IndexNow ; `SITE_ORIGIN`/`SITE_BASE` par défaut : `https://accessibilite.jalonel.com` et `/`).
 
 Outil gratuit, entièrement côté navigateur, pour rédiger :
 
@@ -22,8 +24,8 @@ Les **modèles vierges** sont publiés dans les [Releases](https://github.com/VR
 npm ci
 npm test            # tests unitaires (node:test)
 npm run build       # génère dist/
-npm run serve       # http://localhost:4173/declaration-accessibilite/
-BASE_URL=http://localhost:4173/declaration-accessibilite/ npm run e2e   # Playwright (local)
+npm run serve       # http://localhost:4173/
+BASE_URL=http://localhost:4173/ npm run e2e   # Playwright (local)
 npm run e2e         # Playwright sur le site en ligne
 npm run templates   # génère les modèles de la Release dans release/
 ```
@@ -36,4 +38,4 @@ Le déploiement GitHub Pages se fait par GitHub Actions à chaque push sur `main
 - [axe-core](https://github.com/dequelabs/axe-core) 4.13.0 : Mozilla Public License 2.0, distribué sans modification dans `dist/assets/vendor/axe/` avec sa licence.
 - Correspondances WCAG → RGAA : générées depuis le référentiel officiel [RGAA 4.1](https://github.com/DISIC/RGAA) (DINUM/DISIC), Licence Ouverte 2.0 (`scripts/rgaa-4.1-criteres.json`).
 
-Un produit de READ FRANCE SAS.
+Une marque Jalonel (https://jalonel.com/). Jalonel est une marque de READ FRANCE SAS.
