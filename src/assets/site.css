@@ -301,3 +301,33 @@ label.check input { margin-top: .3rem; width: 1.2rem; height: 1.2rem; flex: none
 .rf-network-title { margin: 0 0 .3rem; font-weight: 600; color: var(--text); }
 .site-footer .rf-network ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: .3rem 1.1rem; }
 .rf-network a { display: inline-block; padding: .2rem 0; }
+
+/* Guide pages (modèle, Muster, prix, boutique; 2026-10-17) */
+.crumbs { margin: 1.1rem 0 0; font-size: .9rem; color: var(--muted); }
+.crumbs ol { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: .2rem; }
+.crumbs li + li::before { content: "›"; margin: 0 .4rem 0 .2rem; color: var(--muted); }
+.crumbs a { display: inline-block; padding: .3rem 0; }
+.guide-hero { padding-top: .8rem; }
+.guide-hero .lead { max-width: 52rem; }
+.byline { font-size: .9rem; color: var(--muted); margin: .8rem 0 0; }
+.doc-sample { max-width: 52rem; margin: 1.2rem 0; padding: 1.2rem 1.25rem; background: var(--card); border: 1px solid var(--line); border-left: 5px solid var(--accent); border-radius: 0 var(--radius) var(--radius) 0; box-shadow: var(--shadow); font-size: .98rem; }
+.doc-sample h3 { font-size: 1.2rem; margin: 1.4rem 0 .4rem; }
+.doc-sample h4 { font-size: 1.05rem; margin: 1.1rem 0 .3rem; }
+.doc-sample h5 { font-size: 1rem; margin: 1rem 0 .3rem; }
+.doc-sample > :first-child { margin-top: 0; }
+.doc-sample > :last-child { margin-bottom: 0; }
+.doc-sample ul, .doc-sample ol { padding-left: 1.3rem; }
+.ph { background: var(--warn-bg); border-bottom: 1px dashed var(--warn-line); padding: 0 .15em; border-radius: 3px; }
+.decision { padding-left: 1.4rem; }
+.decision > li { margin: 0 0 1.1rem; padding-left: .3rem; }
+.decision > li::marker { font-weight: 800; color: var(--accent); }
+.decision h3 { font-size: 1.08rem; margin: 0 0 .25rem; }
+.decision p { margin: .3rem 0; }
+.err-list { padding-left: 1.4rem; }
+.err-list li { margin: .5rem 0; }
+table.cmp th[scope="row"] { width: 22%; }
+table.cmp td, table.cmp th { min-width: 9rem; }
+.sources-cited li { margin: .3rem 0; }
+.guide-about { margin-top: 2.5rem; max-width: 52rem; }
+.guide-about p { margin: 0; }
+.lp-section .prose + .table-scroll, .lp-section .table-scroll + .prose { margin-top: 1rem; }

@@ -67,7 +67,8 @@ export function layout(page) {
       return `<li><a href="${url(a.path)}" hreflang="${l}" lang="${l}"${l === page.lang ? ' aria-current="true"' : ''}>${l.toUpperCase()}<span class="sr-only"> – ${LANG_NAMES[l]}</span></a></li>`;
     })
     .join('');
-  const hreflang = page.id === '404' ? '' : [{ lang: page.lang, path: page.path }, ...alts]
+  // a page without a translation (the guide pages) carries no hreflang at all
+  const hreflang = page.id === '404' || !alts.length ? '' : [{ lang: page.lang, path: page.path }, ...alts]
     .map((a) => `<link rel="alternate" hreflang="${a.lang}" href="${abs(a.path)}">`)
     .join('\n') + (alts.length ? `\n<link rel="alternate" hreflang="x-default" href="${abs(page.lang === 'en' ? page.path : (alts.find((a) => a.lang === 'en') || page).path)}">` : '');
   const jsonld = page.jsonld ? `<script type="application/ld+json">${JSON.stringify(page.jsonld).replace(/</g, '\\u003c')}</script>` : '';
@@ -81,7 +82,7 @@ ${page.csp ? `<meta http-equiv="Content-Security-Policy" content="${esc(page.csp
 <meta name="description" content="${esc(page.description)}">
 ${page.noindex || page.id === '404' ? '<meta name="robots" content="noindex">' : `<link rel="canonical" href="${abs(page.path)}">`}
 ${hreflang}
-<meta property="og:type" content="website">
+<meta property="og:type" content="${page.ogType || 'website'}">
 <meta property="og:site_name" content="${esc(SITE.brand)}">
 <meta property="og:title" content="${esc(page.title)}">
 <meta property="og:description" content="${esc(page.description)}">

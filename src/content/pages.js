@@ -6,6 +6,7 @@ import { legalBodies, privacyBodies, cgvBody } from './legal.js';
 import { auditBodies } from './audit.js';
 import { auditSalesBodies } from './audit-open.js';
 import { sourcesBodies } from './sources.js';
+import { guidePages, frTypo } from './guides.js';
 import { DOCS } from '../lib/statement.js';
 import { CHECKS, rgaaFor } from '../lib/checklist.js';
 import { TEMPLATE_FILES } from '../lib/templates-list.js';
@@ -44,6 +45,13 @@ const HOME = {
       fine: '149 € net, TVA non applicable (art. 293 B du CGI). Analyse automatisée : ce n’est pas un audit RGAA complet.',
       alt: 'Aperçu d’un rapport d’audit : synthèse des problèmes classés par gravité',
     },
+    knowTitle: 'Déclaration RGAA ou informations de l’Acte européen ?',
+    know: [
+      'Le questionnaire produit deux documents différents. La <strong>déclaration d’accessibilité au format RGAA</strong> est exigée par l’article 47 de la loi n° 2005-102 des organismes publics et des entreprises dont le chiffre d’affaires moyen en France dépasse 250 millions d’euros. Elle indique un état de conformité (« totalement », « partiellement » ou « non conforme ») tiré d’un audit ; sans audit en cours de validité, l’état à indiquer est « non conforme », et le générateur l’écrit pour vous.',
+      'Les <strong>informations d’accessibilité du service</strong> sont exigées par le code de la consommation (art. D. 412-57) de toute entreprise qui vend en ligne à des particuliers, sauf les microentreprises. Elles décrivent le service, son fonctionnement et la manière dont il respecte les exigences, sans pourcentage. Elles figurent dans les CGV ou un document équivalent, sous forme écrite et orale.',
+      'Dans les deux cas, publiez le document sur une page « Accessibilité » liée depuis toutes les pages du site, en pied de page par exemple, et dans un format accessible : une page HTML plutôt qu’un PDF scanné.',
+      `Pour aller plus loin : le <a href="${url(ROUTES.modele.fr)}">modèle de déclaration commenté, avec un exemple rempli</a>, le guide <a href="${url(ROUTES.boutique.fr)}">Accessibilité : ce qu’une boutique en ligne doit faire</a> (exemption, délais, sanctions) et la comparaison des <a href="${url(ROUTES.prix.fr)}">prix d’un audit d’accessibilité</a>.`,
+    ],
     nextTitle: 'Après la déclaration',
     gpsr: 'Vous vendez des produits en ligne ? Le règlement GPSR impose aussi des informations de sécurité sur chaque fiche produit : <a href="https://gpsr.jalonel.com/">générateur gratuit de fiche produit GPSR</a>.',
     next: [
@@ -81,6 +89,11 @@ const HOME = {
       fine: '149 € netto, keine Umsatzsteuer ausgewiesen gemäß Art. 293 B CGI. Automatisierte Prüfung, keine Konformitätsprüfung.',
       alt: 'Vorschau eines Prüfberichts: Übersicht der Probleme nach Schweregrad',
     },
+    knowTitle: 'Barrierefreiheitserklärung oder Informationen zur Barrierefreiheit?',
+    know: [
+      'Das BFSG verlangt von Online-Shops keine „Erklärung zur Barrierefreiheit“ wie von Behörden, sondern „Informationen über Dienstleistungen, die den Barrierefreiheitsanforderungen entsprechen“ (§ 14 und Anlage 3). Nicht barrierefreie Inhalte müssen darin nicht aufgezählt werden, die zuständige Marktüberwachungsbehörde dagegen schon. Dieser Generator erstellt die Informationen nach Anlage 3, auch wenn die Seite im Shop meist „Barrierefreiheitserklärung“ heißt.',
+      `Den vollständigen Text mit ausgefülltem Beispiel finden Sie im <a href="${url(ROUTES.muster.de)}">Muster Barrierefreiheitserklärung für Online-Shops</a>.`,
+    ],
     nextTitle: 'Nach der Erklärung',
     gpsr: 'Sie verkaufen Produkte online? Die Produktsicherheitsverordnung (GPSR) verlangt außerdem Sicherheitsangaben in jedem Produktangebot: <a href="https://gpsr.jalonel.com/en/" hreflang="en">kostenloser GPSR-Generator für Produktangaben (auf Englisch)</a>.',
     next: [
@@ -192,7 +205,11 @@ ${Object.entries(h.exportBtns).map(([k, v], i) => `<button type="button" class="
 <div class="preview" id="preview" tabindex="0" aria-label="${esc(h.previewTitle)}"></div>
 </section>
 </div>
-<section data-section="modeles" aria-labelledby="tpl-title">
+${h.know ? `<section data-section="a-savoir" aria-labelledby="know-title" class="prose">
+<h2 id="know-title">${esc(h.knowTitle)}</h2>
+${h.know.map((p) => `<p>${lang === 'fr' ? frTypo(p) : p}</p>`).join('\n')}
+</section>
+` : ''}<section data-section="modeles" aria-labelledby="tpl-title">
 <h2 id="tpl-title">${esc(h.tplTitle)}</h2>
 <p>${esc(h.tplText)}</p>
 ${templatesList(lang)}
@@ -206,9 +223,9 @@ ${templatesList(lang)}
 
 const CHECK = {
   fr: {
-    title: 'Auto-contrôle d’accessibilité en 20 points et mini-test axe-core',
-    description: '20 vérifications manuelles avec correspondances WCAG 2.1 et RGAA 4.1, et un test automatique gratuit d’un extrait HTML avec axe-core, exécuté dans votre navigateur.',
-    h1: 'Auto-contrôle et mini-test',
+    title: 'Test d’accessibilité gratuit : 20 points et mini-test axe',
+    description: '20 vérifications manuelles (WCAG 2.1, RGAA 4.1) et un test automatique gratuit d’un extrait HTML avec axe-core, exécuté dans votre navigateur.',
+    h1: 'Test d’accessibilité gratuit : grille de 20 points et mini-test',
     lead: 'Deux outils rapides pour repérer des problèmes fréquents. Ni l’un ni l’autre ne mesure la conformité.',
     listTitle: 'Auto-contrôle en 20 points',
     listIntro: 'À faire sur vos pages clés (accueil, fiche produit, panier, commande). Correspondances RGAA issues du référentiel officiel RGAA 4.1 (DISIC, Licence Ouverte 2.0).',
@@ -239,12 +256,12 @@ const CHECK = {
     },
   },
   de: {
-    title: 'Barrierefreiheits-Selbsttest in 20 Punkten und axe-core-Mini-Prüfung',
+    title: 'BFSG-Checkliste: 20 Prüfpunkte und kostenloser Mini-Test',
     description: '20 manuelle Prüfpunkte mit WCAG-2.1-Zuordnung und eine kostenlose automatische Prüfung eines HTML-Auszugs mit axe-core, direkt im Browser.',
-    h1: 'Selbsttest und Mini-Prüfung',
+    h1: 'BFSG-Checkliste: 20 Prüfpunkte und kostenloser Mini-Test',
     lead: 'Zwei schnelle Werkzeuge, um häufige Probleme zu finden. Keines davon misst Konformität.',
     listTitle: 'Selbsttest in 20 Punkten',
-    listIntro: 'Auf Ihren wichtigsten Seiten durchführen (Startseite, Produktseite, Warenkorb, Bestellung).',
+    listIntro: 'Auf Ihren wichtigsten Seiten durchführen (Startseite, Produktseite, Warenkorb, Bestellung). Die Prüfpunkte folgen WCAG 2.1, auf deren Grundsätze (wahrnehmbar, bedienbar, verständlich, robust) auch § 12 BFSGV für Websites abstellt. Wer alle 20 Punkte besteht, ist damit noch nicht BFSG-konform.',
     dl: 'Checkliste herunterladen (Word)',
     head: ['#', 'Prüfpunkt', 'So testen', 'WCAG 2.1', 'RGAA 4.1'],
     mcTitle: 'Automatische Mini-Prüfung eines HTML-Auszugs',
@@ -274,7 +291,7 @@ const CHECK = {
   en: {
     title: '20-point accessibility self-check and axe-core mini-test',
     description: '20 manual checks mapped to WCAG 2.1, plus a free automated test of an HTML snippet with axe-core, run in your browser.',
-    h1: 'Self-check and mini-test',
+    h1: 'Free accessibility test: 20-point checklist and mini-test',
     lead: 'Two quick tools to spot common problems. Neither measures conformance.',
     listTitle: '20-point self-check',
     listIntro: 'Do it on your key pages (home, product page, cart, checkout).',
@@ -397,9 +414,12 @@ function privacyOpen(lang) {
 }
 
 const BREADCRUMB_HOME = { fr: 'Générateur', de: 'Generator', en: 'Generator' };
+const AUDIT_CRUMB = { fr: 'Audit d’accessibilité automatisé', de: 'Barrierefreiheits-Audit', en: 'Accessibility audit' };
 const abs = (path) => SITE.origin + SITE.base + path.replace(/^\//, '');
 
-/** Sources pages: Article (legal summary, dated) + BreadcrumbList. Facts checked 2026-10-11, page edited 2026-10-13. */
+/** Sources pages: Article (legal summary, dated) + BreadcrumbList. Facts checked 2026-10-11 (FR and DE texts
+ * re-read 2026-10-17), FR and DE pages edited 2026-10-17. */
+const SOURCES_UPDATED = { fr: '2026-10-17', de: '2026-10-17', en: '2026-10-13' };
 function sourcesJsonLd(lang) {
   const src = sourcesBodies[lang];
   return {
@@ -413,7 +433,7 @@ function sourcesJsonLd(lang) {
         url: abs(ROUTES.sources[lang]),
         mainEntityOfPage: abs(ROUTES.sources[lang]),
         datePublished: '2026-10-11',
-        dateModified: '2026-10-13',
+        dateModified: SOURCES_UPDATED[lang],
         author: ORG_REF,
         publisher: ORG_REF,
       },
@@ -426,6 +446,19 @@ function sourcesJsonLd(lang) {
       },
     ],
   };
+}
+
+/** BreadcrumbList (generator > page), appended to a page's JSON-LD graph. */
+function withCrumb(jsonld, lang, name) {
+  const crumb = {
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: BREADCRUMB_HOME[lang], item: abs(ROUTES.home[lang]) },
+      { '@type': 'ListItem', position: 2, name },
+    ],
+  };
+  if (!jsonld) return { '@context': 'https://schema.org', '@graph': [crumb] };
+  return { ...jsonld, '@graph': [...(jsonld['@graph'] || []), crumb] };
 }
 
 const LANGS = ['fr', 'de', 'en'];
@@ -441,7 +474,7 @@ for (const lang of LANGS) {
     alternates: alternates('home', lang),
     body: homeBody(lang),
     scripts: ['assets/js/app.js'],
-    updated: '2026-10-13',
+    updated: lang === 'en' ? '2026-10-13' : '2026-10-17',
     jsonld: {
       '@context': 'https://schema.org',
       '@graph': [
@@ -468,6 +501,8 @@ for (const lang of LANGS) {
     alternates: alternates('check', lang),
     body: checkBody(lang),
     scripts: ['assets/js/minicheck.js', 'assets/js/example.js'],
+    updated: '2026-10-17',
+    jsonld: withCrumb(null, lang, CHECK[lang].h1),
   });
   PAGES.push({
     id: 'audit',
@@ -477,7 +512,7 @@ for (const lang of LANGS) {
     description: (OPEN ? AUDIT_META_OPEN : META.audit)[lang][1],
     alternates: alternates('audit', lang),
     body: OPEN ? auditSalesBodies[lang] : auditBodies[lang],
-    jsonld: OPEN ? auditJsonLd(lang) : undefined,
+    jsonld: withCrumb(OPEN ? auditJsonLd(lang) : undefined, lang, AUDIT_CRUMB[lang]),
     updated: '2026-10-13',
   });
   PAGES.push({
@@ -488,12 +523,14 @@ for (const lang of LANGS) {
     description: sourcesBodies[lang].description,
     alternates: alternates('sources', lang),
     body: sourcesBodies[lang].body,
-    updated: '2026-10-13',
+    updated: SOURCES_UPDATED[lang],
     jsonld: sourcesJsonLd(lang),
   });
   PAGES.push({ id: 'legal', lang, path: ROUTES.legal[lang], title: META.legal[lang][0], description: META.legal[lang][1], alternates: alternates('legal', lang), body: legalBodies[lang] });
   PAGES.push({ id: 'privacy', lang, path: ROUTES.privacy[lang], title: META.privacy[lang][0], description: OPEN ? PRIVACY_OPEN_DESC[lang] : META.privacy[lang][1], alternates: alternates('privacy', lang), body: OPEN ? privacyOpen(lang) : privacyBodies[lang], updated: '2026-10-13' });
 }
+// Guide pages (2026-10-17): C1 modèle, C3 boutique, C4 prix (FR), C2 Muster (DE).
+PAGES.push(...guidePages());
 PAGES.push({
   id: 'cgv',
   lang: 'fr',

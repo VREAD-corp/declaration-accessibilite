@@ -1,4 +1,7 @@
-// Sources and scope pages. Facts verified on official sites on 2026-10-11.
+// Sources and scope pages. Facts verified on official sites on 2026-10-11; the French and German texts were
+// re-read on 2026-10-17 (Légifrance, gesetze-im-internet.de, Bundesfachstelle FAQ, MLBF, Commission list).
+import { ROUTES } from './site.js';
+import { url } from './layout.js';
 const a = (href, text) => `<a href="${href}">${text}</a>`;
 
 const U = {
@@ -37,9 +40,10 @@ const U = {
   faq: 'https://www.bundesfachstelle-barrierefreiheit.de/DE/Barrierefreiheitsstaerkungsgesetz/FAQ-Dienstleistungen/faq-dienstleistungen_node.html',
   mlbf: 'https://www.mlbf-barrierefrei.de/',
   bitv7: 'https://www.gesetze-im-internet.de/bitv_2_0/__7.html',
+  bfsgv12: 'https://www.gesetze-im-internet.de/bfsgv/__12.html',
 };
 
-const VERIFIED = { fr: 'Textes consultés le 11 octobre 2026', de: 'Stand der Quellen: 11. Oktober 2026', en: 'Sources checked on 11 October 2026' };
+const VERIFIED = { fr: 'Textes consultés le 11 octobre 2026, textes français relus le 17 octobre 2026', de: 'Stand der Quellen: 17. Oktober 2026', en: 'Sources checked on 11 October 2026' };
 
 export const sourcesBodies = {
   fr: {
@@ -82,7 +86,7 @@ export const sourcesBodies = {
 <li>L’article vise aussi les entreprises dont le chiffre d’affaires moyen réalisé en France sur les trois derniers exercices dépasse <strong>250 millions d’euros</strong> (${a(U.d2019, 'décret n° 2019-768, art. 2')}).</li>
 <li>Obligations (${a(U.art47, 'art. 47, III et IV')}) : publier une <strong>déclaration d’accessibilité</strong> au ${a(U.rgaaDecl, 'format obligatoire')}, un <strong>schéma pluriannuel</strong> d’au plus trois ans décliné en ${a(U.rgaaSchema, 'plans d’actions annuels')}, et une ${a(U.rgaaMentions, 'mention en page d’accueil')} « Accessibilité : totalement / partiellement / non conforme ».</li>
 <li>État de conformité : <em>totalement</em> si tous les critères du RGAA sont respectés ; <em>partiellement</em> si au moins 50 % ; <em>non conforme</em> s’il n’existe aucun résultat d’audit en cours de validité ou si moins de 50 % sont respectés (${a(U.rgaaDecl, 'accessibilite.numerique.gouv.fr')}).</li>
-<li>Sanctions : l’Arcom peut prononcer une sanction pouvant atteindre 25 000 € pour les obligations des III et IV et 50 000 € pour l’obligation d’accessibilité (${a(U.art471, 'art. 47-1')}). Les anciennes amendes de l’article 8 du décret n° 2019-768 ont été abrogées par le ${a(U.d2026_816, 'décret n° 2026-816 du 24 août 2026')}.</li>
+<li>Sanctions : après une mise en demeure rendue publique, l’Arcom peut prononcer une sanction pouvant atteindre 25 000 € pour les obligations des III et IV et 50 000 € pour l’obligation d’accessibilité (${a(U.art471, 'art. 47-1')}). Pour les entreprises de plus de 250 M€, l’Arcom contrôle les seules obligations des III et IV ; le plafond de 50 000 € concerne les organismes publics et assimilés. Les anciennes amendes de l’article 8 du décret n° 2019-768 ont été abrogées par le ${a(U.d2026_816, 'décret n° 2026-816 du 24 août 2026')}.</li>
 <li>Référentiel : <strong>RGAA 4.1.2</strong> en vigueur. Le ${a(U.rgaa5, 'RGAA 5')} est annoncé pour fin 2026 ; les déclarations antérieures resteront valables 18 mois (dans la limite de trois ans).</li>
 </ul>
 
@@ -92,6 +96,9 @@ export const sourcesBodies = {
 <li>Amende jusqu’à 100 000 € (${a(U.bfsg37, '§ 37')}) ; période transitoire jusqu’au 27 juin 2030 (${a(U.bfsg38, '§ 38')}).</li>
 <li>Selon la ${a(U.faq, 'Bundesfachstelle Barrierefreiheit')}, ces informations se distinguent de la déclaration des organismes publics et n’ont pas à lister les non-conformités.</li>
 </ul>
+
+<h2 id="guides">Guides pratiques</h2>
+<p>Ce que ces textes demandent concrètement à une boutique, avec un arbre de décision : ${a(url(ROUTES.boutique.fr), 'Accessibilité : ce qu’une boutique en ligne doit faire')}. Le format RGAA, partie par partie, avec un exemple rempli : ${a(url(ROUTES.modele.fr), 'Modèle de déclaration d’accessibilité')}. Les trois niveaux d’audit et ce que chacun prouve : ${a(url(ROUTES.prix.fr), 'Prix d’un audit d’accessibilité')}.</p>
 
 <h2 id="limits">Limites des tests automatiques</h2>
 <p>Les outils automatiques, dont axe-core utilisé ici, ne vérifient qu’une partie des critères. Ni le mini-test ni l’audit automatisé partiel ne permettent d’affirmer qu’un site est conforme. Aucun outil ou « widget » ne rend un site conforme à lui seul.</p>
@@ -113,10 +120,18 @@ export const sourcesBodies = {
 <li>Die Informationspflicht (${a(U.bfsg14, '§ 14 Abs. 1 Nr. 2')}, ${a(U.anl3, 'Anlage 3')}) verlangt, in den AGB oder auf andere deutlich wahrnehmbare Weise angeben, wie die Dienstleistung die Barrierefreiheitsanforderungen erfüllt, mit a) allgemeiner Beschreibung in barrierefreiem Format, b) Erläuterungen zur Durchführung, c) Beschreibung der Erfüllung der Anforderungen, d) Angabe der zuständigen Marktüberwachungsbehörde. Die Informationen sind aufzubewahren, solange die Dienstleistung angeboten wird (§ 14 Abs. 2).</li>
 <li>Für Online-Shops gelten ${a(U.bfsgv19, '§ 19 BFSGV')} (Informationen zur Barrierefreiheit der angebotenen Produkte, barrierefreie Identifizierung, Authentifizierung, Sicherheits- und Zahlungsfunktionen) und § 12 ${a(U.bfsgv, 'BFSGV')} (wahrnehmbar, bedienbar, verständlich, robust).</li>
 <li>Wer sich auf eine unverhältnismäßige Belastung beruft (${a(U.bfsg17, '§ 17')} und Anlage 4), muss die Beurteilung dokumentieren, fünf Jahre aufbewahren, mindestens alle fünf Jahre erneuern; die Mitteilung an die Behörde gilt nicht für Kleinstunternehmen.</li>
-<li>Das Bußgeld beträgt <strong>bis 100.000 €</strong>, u. a. für das Anbieten einer Dienstleistung entgegen § 14 Abs. 1 (${a(U.bfsg37, '§ 37')}).</li>
+<li>Stellt der Anbieter fest, dass die Dienstleistung die Anforderungen nicht erfüllt, ergreift er Korrekturmaßnahmen und informiert unverzüglich die Marktüberwachungsbehörden der Mitgliedstaaten, in denen er sie anbietet (§ 14 Abs. 4). Auf begründetes Verlangen der Behörde erteilt er alle Auskünfte zum Nachweis der Konformität (§ 14 Abs. 5).</li>
+<li>Das Bußgeld beträgt <strong>bis 100.000 €</strong> für das Anbieten oder Erbringen einer Dienstleistung entgegen § 14 Abs. 1, also auch ohne die Informationen nach Anlage 3 (${a(U.bfsg37, '§ 37 Abs. 1 Nr. 8, Abs. 2')}). Für eine nicht oder nicht richtig erteilte Information oder Auskunft, etwa nach § 14 Abs. 4 Satz 2 oder Abs. 5, liegt die Obergrenze bei 10.000 € (§ 37 Abs. 1 Nr. 2 und 6, Abs. 2).</li>
 <li>Zuständig für die Marktüberwachung ist die ${a(U.mlbf, 'Marktüberwachungsstelle der Länder für die Barrierefreiheit von Produkten und Dienstleistungen (MLBF AöR)')}, Carl-Miller-Straße 6, 39112 Magdeburg.</li>
 <li>Laut ${a(U.faq, 'FAQ der Bundesfachstelle Barrierefreiheit')} (Stand August 2025) sind die „Informationen nach Anlage 3 BFSG“ von der „Erklärung zur Barrierefreiheit“ nach dem BGG zu unterscheiden; Nichtkonformitäten müssen nicht angegeben werden. Empfohlen wird ein Link „Barrierefreiheit“ im Kopf- oder Fußbereich der Website. Ein amtliches Muster für private Unternehmen gibt es nicht; das Muster nach ${a(U.dec2018, 'Durchführungsbeschluss (EU) 2018/1523')} gilt für öffentliche Stellen (${a(U.bitv7, 'BITV 2.0 § 7')}).</li>
 </ul>
+
+<h2 id="form">Wie die Informationen bereitgestellt werden</h2>
+<p>§ 12 Nr. 2 der ${a(U.bfsgv12, 'BFSGV')} legt fest, wie Informationen über die Dienstleistung aussehen müssen. Sie werden über mehr als einen sensorischen Kanal bereitgestellt, sind auffindbar und verständlich dargestellt. Der Inhalt steht in Textformaten zur Verfügung, aus denen Verbraucher andere assistive Formate erzeugen können; Schriftgröße, Kontrast und Abstände sind angemessen. Für nicht-textliche Inhalte gibt es eine alternative Darstellung. Die Bundesfachstelle empfiehlt dazu Einfache Sprache und einen Link „Barrierefreiheit“ im Kopf- oder Fußbereich (${a(U.faq, 'FAQ')}).</p>
+<p>Ein vollständiges Muster mit den vier Angaben a bis d und einem ausgefüllten Beispiel steht unter ${a(url(ROUTES.muster.de), 'Muster Barrierefreiheitserklärung für Online-Shops')}.</p>
+
+<h2 id="fristen">Fristen</h2>
+<p>Das BFSG gilt für Dienstleistungen, die seit dem 28. Juni 2025 angeboten oder erbracht werden. § 38 Abs. 1 sieht zwei Übergänge vor: Produkte, die ein Anbieter schon vor dem 28. Juni 2025 rechtmäßig für die Dienstleistung eingesetzt hat, darf er bis zum 27. Juni 2030 weiter einsetzen. Vor dem 28. Juni 2025 geschlossene Verträge über Dienstleistungen bestehen bis zu ihrem Ablauf unverändert fort, längstens bis zum 27. Juni 2030 (${a(U.bfsg38, '§ 38')}). Für neue Bestellungen in einem Online-Shop gilt das Gesetz ohne Übergangsfrist.</p>
 
 <h2 id="klein">Ausnahme für Kleinstunternehmen</h2>
 <p>Ein Kleinstunternehmen beschäftigt <strong>weniger als zehn Personen</strong> <em>und</em> erzielt entweder einen Jahresumsatz von <strong>höchstens 2 Mio. €</strong> <em>oder</em> hat eine Jahresbilanzsumme von höchstens 2 Mio. € (${a(U.bfsg2, '§ 2 Nr. 17 BFSG')}). Für Kleinstunternehmen, die Dienstleistungen anbieten oder erbringen, gilt die Pflicht nach § 3 Abs. 1 nicht (${a(U.bfsg3, '§ 3 Abs. 3 BFSG')}; Art. 4 Abs. 5 der ${a(U.dirDe, 'Richtlinie (EU) 2019/882')}). Die Ausnahme gilt nur für Dienstleistungen, nicht für Produkte.</p>
