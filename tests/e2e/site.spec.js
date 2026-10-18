@@ -31,8 +31,9 @@ function trackForeignRequests(page, baseURL) {
 
 test('every page renders, has one h1, no console errors, no horizontal scroll, no axe violations', async ({ page, request, baseURL }) => {
   const paths = await sitemapPaths(request, baseURL);
-  expect(paths.length).toBeGreaterThanOrEqual(18);
-  paths.push(new URL('cgv/', baseURL).pathname); // noindex draft, still must be accessible
+  expect(paths.length).toBeGreaterThanOrEqual(12);
+  // noindex pages (CGV draft, legal notices, privacy): out of the sitemap, still linked and must render
+  for (const p of ['cgv/', 'mentions-legales/', 'confidentialite/', 'de/impressum/', 'de/datenschutz/', 'en/legal-notice/', 'en/privacy/']) paths.push(new URL(p, baseURL).pathname);
   const titles = new Set();
   for (const p of paths) {
     const errors = [];

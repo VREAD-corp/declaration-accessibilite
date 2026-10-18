@@ -72,7 +72,7 @@ test('SALES_OPEN=true: offer page, order page (audit fields, attestation, CSP), 
   assert.match(audit, /Aucun taux de conformité/);
   assert.doesNotMatch(audit, /bientôt|\bHT\b|TTC/i);
   const order = readFileSync(join(openDir, 'commander.html'), 'utf8');
-  assert.match(order, /<meta name="robots" content="noindex">/);
+  assert.match(order, /<meta name="robots" content="noindex, follow">/);
   assert.match(order, /<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https:\/\/js\.stripe\.com/);
   assert.match(order, /connect-src 'self' https:\/\/script\.google\.com https:\/\/script\.googleusercontent\.com https:\/\/octave-test\.invalid/);
   for (const n of ['email', 'company', 'siren', 'addressLine1', 'postalCode', 'city', 'terms', 'siteUrl', 'scanAuthorized']) assert.match(order, new RegExp(`name="${n}"[^>]*required|required[^>]*name="${n}"`), n);

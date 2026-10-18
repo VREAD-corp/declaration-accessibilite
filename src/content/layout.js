@@ -46,7 +46,7 @@ export function layout(page) {
 ${page.csp ? `<meta http-equiv="Content-Security-Policy" content="${esc(page.csp)}">\n` : ''}<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>${esc(page.title)}</title>
 <meta name="description" content="${esc(page.description)}">
-${page.noindex || page.id === '404' ? '<meta name="robots" content="noindex">' : `<link rel="canonical" href="${abs(page.path)}">`}
+${page.noindex || page.id === '404' ? '<meta name="robots" content="noindex, follow">' : `<link rel="canonical" href="${abs(page.path)}">`}
 ${hreflang}
 <meta property="og:type" content="${page.ogType || 'website'}">
 <meta property="og:site_name" content="${esc(SITE.brand)}">

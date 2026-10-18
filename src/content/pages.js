@@ -538,8 +538,10 @@ for (const lang of LANGS) {
     updated: SOURCES_UPDATED[lang],
     jsonld: sourcesJsonLd(lang),
   });
-  PAGES.push({ id: 'legal', lang, path: ROUTES.legal[lang], title: META.legal[lang][0], description: META.legal[lang][1], alternates: alternates('legal', lang), body: legalBodies[lang] });
-  PAGES.push({ id: 'privacy', lang, path: ROUTES.privacy[lang], title: META.privacy[lang][0], description: OPEN ? PRIVACY_OPEN_DESC[lang] : META.privacy[lang][1], alternates: alternates('privacy', lang), body: OPEN ? privacyOpen(lang) : privacyBodies[lang], updated: '2026-10-13' });
+  // Legal notice and privacy: near-identical boilerplate across the Jalonel subdomains (2026-10-18), so noindex,
+  // follow and out of the sitemap; still linked from every footer.
+  PAGES.push({ id: 'legal', lang, path: ROUTES.legal[lang], title: META.legal[lang][0], description: META.legal[lang][1], alternates: alternates('legal', lang), body: legalBodies[lang], noindex: true });
+  PAGES.push({ id: 'privacy', lang, path: ROUTES.privacy[lang], title: META.privacy[lang][0], description: OPEN ? PRIVACY_OPEN_DESC[lang] : META.privacy[lang][1], alternates: alternates('privacy', lang), body: OPEN ? privacyOpen(lang) : privacyBodies[lang], updated: '2026-10-13', noindex: true });
 }
 // Guide pages (2026-10-17): C1 modèle, C3 boutique, C4 prix (FR), C2 Muster (DE).
 PAGES.push(...guidePages());
