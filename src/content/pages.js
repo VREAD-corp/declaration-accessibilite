@@ -23,6 +23,10 @@ const HOME = {
     lead: 'Pour les sites et boutiques en ligne visés par l’Acte européen sur l’accessibilité (directive (UE) 2019/882, applicable depuis le 28 juin 2025) ou par l’article 47 de la loi n° 2005-102. Le questionnaire compte 7 parties ; l’aperçu se met à jour à chaque réponse et s’exporte en Word, HTML ou Markdown.',
     badges: ['Gratuit', 'Saisies jamais envoyées', 'Modèle RGAA + informations EAA', 'HTML · Markdown · Word'],
     warn: '<strong>Cet outil met en forme vos réponses ; il ne vérifie pas votre site et ne garantit aucune conformité.</strong> Une déclaration doit refléter un audit réel. Sans audit, l’état indiqué est « non conforme ».',
+    // 2026-10-19 (tool in the first screen): short hero line and the jump to the preview/export column.
+    short: 'Questionnaire en 7 parties : l’aperçu suit chaque réponse et s’exporte en Word, HTML ou Markdown. L’outil met en forme vos réponses, il ne teste pas votre site.',
+    jump: 'Voir l’aperçu et exporter',
+    promoLink: 'Audit automatisé de 20 pages : 149 € net',
     formTitle: 'Questionnaire',
     previewTitle: 'Aperçu du document',
     docLabel: 'Document à générer',
@@ -72,6 +76,8 @@ const HOME = {
     lead: 'Für Websites und Online-Shops, die unter den European Accessibility Act (Richtlinie (EU) 2019/882) und das Barrierefreiheitsstärkungsgesetz (BFSG, seit 28. Juni 2025 anwendbar) fallen. Der Fragebogen hat 7 Teile; die Vorschau folgt Anlage 3, ändert sich mit jeder Antwort und lässt sich als Word, HTML oder Markdown exportieren.',
     badges: ['Kostenlos', 'Eingaben bleiben lokal', 'Nach BFSG Anlage 3', 'HTML · Markdown · Word'],
     warn: '<strong>Dieses Werkzeug formatiert Ihre Angaben; es prüft Ihre Website nicht und garantiert keine Konformität.</strong> Die Angaben müssen dem tatsächlichen Stand entsprechen.',
+    short: 'Fragebogen in 7 Teilen: Die Vorschau folgt jeder Antwort und lässt sich als Word, HTML oder Markdown exportieren. Das Werkzeug formatiert Ihre Angaben, es prüft Ihre Website nicht.',
+    jump: 'Vorschau ansehen und exportieren',
     formTitle: 'Fragebogen',
     previewTitle: 'Vorschau',
     docLabel: 'Zu erstellendes Dokument',
@@ -113,6 +119,8 @@ const HOME = {
     lead: 'For websites and online shops covered by the European Accessibility Act (Directive (EU) 2019/882, applicable since 28 June 2025). The questionnaire has 7 parts; the preview follows Annex V, updates with each answer and exports to Word, HTML or Markdown. The French (RGAA) and German (BFSG) versions are on the FR and DE pages.',
     badges: ['Free', 'Your input stays local', 'EAA Annex V structure', 'HTML · Markdown · Word'],
     warn: '<strong>This tool formats your answers; it does not test your website and guarantees no conformity.</strong> What you publish must reflect your real situation.',
+    short: 'Seven-part questionnaire: the preview updates with each answer and exports to Word, HTML or Markdown. The tool formats your answers; it does not test your website.',
+    jump: 'See the preview and export',
     formTitle: 'Questionnaire',
     previewTitle: 'Document preview',
     docLabel: 'Document to generate',
@@ -176,24 +184,23 @@ function homeBody(lang) {
 </div>
 </aside>`
     : '';
-  return `<section data-section="hero" class="lp-hero gen-hero${showPromo ? '' : ' solo'}">
+  // 2026-10-19 (JALONEL-HUB-02): the questionnaire starts in the first screen, mobile included. Hero = H1 + one
+  // line (+ a discreet audit link in FR); the long lead, the badges and the audit promo moved under the generator.
+  return `<section data-section="hero" class="lp-hero gen-hero solo tool-first">
 <div class="lp-hero-text">
-<p class="eyebrow">${esc(h.eyebrow)}</p>
 <h1>${esc(h.h1)}</h1>
-<p class="lead">${esc(h.lead)}</p>
-<ul class="badges">${h.badges.map((b) => `<li>${esc(b)}</li>`).join('')}</ul>
-<p><a class="text-link" href="#form-title">${esc(h.start)} ↓</a></p>
+<p class="lead short">${esc(h.short)}</p>
+${showPromo ? `<p class="hero-link"><a class="text-link" href="${url(ROUTES.audit[lang])}">${esc(h.promoLink)}</a></p>` : ''}
 </div>
-${promo}
 </section>
 <noscript><p class="callout">${esc(h.noscript)}</p></noscript>
 <div class="grid gen-grid">
 <section data-section="generateur" aria-labelledby="form-title">
-<h2 id="form-title">${esc(h.formTitle)}</h2>
-<p class="note">${h.warn}</p>
+<div class="form-head"><h2 id="form-title">${esc(h.formTitle)}</h2><a class="btn secondary jump" href="#preview-title" data-mesure="tool_use">${esc(h.jump)} ↓</a></div>
 <form id="gen-form" novalidate>
 ${formHtml(lang)}
 </form>
+<p class="note">${h.warn}</p>
 <div class="save-box">
 <h3 class="save-title">${esc(h.saveTitle)}</h3>
 <p class="hint">${esc(h.saveText)}</p>
@@ -217,6 +224,11 @@ ${Object.entries(h.exportBtns).map(([k, v], i) => `<button type="button" class="
 <div class="preview" id="preview" tabindex="0" aria-label="${esc(h.previewTitle)}"></div>
 </section>
 </div>
+<section data-section="presentation" aria-label="${esc(h.h1)}" class="prose gen-about">
+<p class="lead">${esc(h.lead)}</p>
+<ul class="badges">${h.badges.map((b) => `<li>${esc(b)}</li>`).join('')}</ul>
+</section>
+${promo}
 ${h.know ? `<section data-section="a-savoir" aria-labelledby="know-title" class="prose">
 <h2 id="know-title">${esc(h.knowTitle)}</h2>
 ${h.know.map((p) => `<p>${lang === 'fr' ? frTypo(p) : p}</p>`).join('\n')}

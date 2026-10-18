@@ -173,6 +173,8 @@ const saved = load();
 if (saved) writeAnswers(saved);
 else form.elements.country.value = { fr: 'FR', de: 'DE', en: 'EU' }[lang];
 setDefaults();
+// cro.js goal 'tool' (2026-10-19): the visitor changed a first answer; counted once per tab, name only.
+form.addEventListener('change', () => window.octaveCro && window.octaveCro.goal('tool'), { once: true });
 form.addEventListener('input', update);
 form.addEventListener('change', update);
 docChoice.addEventListener('change', update);

@@ -325,3 +325,13 @@ table.cmp td, table.cmp th { min-width: 9rem; }
 .guide-about { margin-top: 2.5rem; max-width: 52rem; }
 .guide-about p { margin: 0; }
 .lp-section .prose + .table-scroll, .lp-section .table-scroll + .prose { margin-top: 1rem; }
+
+/* Tool-first home (2026-10-19): the questionnaire starts in the first screen. */
+.lp-hero.tool-first { padding: 1rem 0 .25rem; gap: .5rem; }
+.lp-hero.tool-first .lead.short { margin-bottom: .4rem; }
+.lp-hero.tool-first .hero-link { margin: 0 0 .9rem; font-size: .95rem; }
+.form-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .5rem 1rem; margin-bottom: .75rem; }
+.form-head h2 { margin: 0; }
+.form-head .jump { padding-top: .45rem; padding-bottom: .45rem; }
+.gen-about { margin-top: 2rem; }
+#audit-offer { margin: 1.5rem 0; }
