@@ -9,7 +9,7 @@ import { MAX_PAGES } from './order.js';
 const ORDER = url(ROUTES.order.fr);
 // Bank transfer on quote (CGV art. 6) is only advertised once the quote form is live (quotesEnabled).
 const QUOTES = SALES.quotesEnabled === true;
-// Founders (facts from vread.fr/presse and Vincent Cance's CV; same block on every Jalonel site).
+// Founders (facts from the founders’ press page and Vincent Cance's CV; same block on every Jalonel site).
 const FOUNDERS = [
   {
     name: 'Tanguy Warsmann',

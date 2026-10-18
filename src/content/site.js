@@ -16,19 +16,19 @@ export const SITE = {
   updated: '2026-10-11',
 };
 
-/** Behaviour counters + A/B framework (cro.js, verbatim copy of VREAD-corp/octave-checkout gas/web/cro.js): same
+/** Behaviour counters + A/B framework (cro.js, verbatim copy of VREAD-corp/octave-checkout gas/web/jalonel/cro.js): same
  * France backend as mesure.js (octave-checkout Apps Script). Primary CTAs = the non-secondary .btn buttons/links. */
 export const CRO = {
   site: 'declaration-accessibilite',
   api: 'https://script.google.com/macros/s/AKfycbzD1IRL8QALluKGZxgGiORFP6-DkC_qFJYR9aOxZiimxa06nbCqpzUI-9iLblp6V2VY/exec',
-  hosts: 'accessibilite.jalonel.com outils.vread.fr',
+  hosts: 'accessibilite.jalonel.com',
   cta: '[data-cta],.btn:not(.secondary)',
 };
 
 export const RELEASE_DL = `${SITE.repo}/releases/latest/download/`;
 export const ISSUES = `${SITE.repo}/issues`;
 /** Public contact (replaces GitHub issues as the contact channel). */
-export const CONTACT = 'octave@vread.fr';
+export const CONTACT = 'contact@jalonel.com';
 /** Sample report of the paid audit, served as real pages (HTML opens in the browser) + the delivered PDF format. */
 export const SAMPLE = {
   fr: { html: 'exemples/exemple-rapport-audit-fr.html', pdf: 'exemples/exemple-rapport-audit-fr.pdf' },

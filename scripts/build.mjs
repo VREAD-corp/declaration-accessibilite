@@ -37,9 +37,9 @@ copy('src/data/rgaa-map.js', 'assets/js/data/rgaa-map.js');
 copy('src/data/axe-rgaa.js', 'assets/js/data/axe-rgaa.js');
 copy('src/assets/favicon.svg', 'favicon.svg');
 for (const l of ['fr', 'de', 'en']) copy(`src/assets/og-${l}.png`, `assets/og-${l}.png`);
-// anonymous, cookieless audience measurement: verbatim copy of VREAD-corp/octave-checkout gas/web/mesure.js
+// anonymous, cookieless audience measurement: verbatim copy of VREAD-corp/octave-checkout gas/web/jalonel/mesure.js
 copy('src/mesure/mesure.js', 'mesure.js');
-// aggregate behaviour counters + A/B framework: verbatim copy of VREAD-corp/octave-checkout gas/web/cro.js
+// aggregate behaviour counters + A/B framework: verbatim copy of VREAD-corp/octave-checkout gas/web/jalonel/cro.js
 copy('src/mesure/cro.js', 'cro.js');
 for (const f of readdirSync(join(root, 'src/assets/img'))) copy(`src/assets/img/${f}`, `assets/img/${f}`);
 // footer of the sample reports (they carry their own inline styles, not site.css): back to the offer + the brand hub

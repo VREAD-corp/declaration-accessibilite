@@ -1,4 +1,4 @@
-// cro.js (aggregate behaviour counters + A/B framework, VREAD-corp/octave-checkout gas/web/cro.js):
+// cro.js (aggregate behaviour counters + A/B framework, VREAD-corp/octave-checkout gas/web/jalonel/cro.js):
 // the vendored portable check passes on our copy, the build ships it, and every page loads it before mesure.js.
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
@@ -11,7 +11,7 @@ import { CRO } from '../../src/content/site.js';
 
 const ROOT = resolve(import.meta.dirname, '..', '..');
 
-test('cro.check.mjs (vendored byte-identical) passes on src/mesure/cro.js', () => {
+test('cro.check.mjs (vendored, Jalonel host) passes on src/mesure/cro.js', () => {
   const out = execFileSync(process.execPath, [join(ROOT, 'tests/cro/cro.check.mjs'), join(ROOT, 'src/mesure/cro.js')], { encoding: 'utf8' });
   assert.match(out, /cro\.js: ok/);
 });
@@ -31,7 +31,7 @@ test('every page loads cro.js (site id, France backend, live host, primary-CTA s
     assert.ok(tag, `${page.id}/${page.lang}: no cro.js tag`);
     assert.match(tag[1], /data-site="declaration-accessibilite"/);
     assert.match(tag[1], /data-api="https:\/\/script\.google\.com\/macros\/s\/[\w-]+\/exec"/);
-    assert.match(tag[1], /data-hosts="accessibilite\.jalonel\.com outils\.vread\.fr"/);
+    assert.match(tag[1], /data-hosts="accessibilite\.jalonel\.com"/);
     assert.match(tag[1], /data-cta="\[data-cta\],\.btn:not\(\.secondary\)"/);
     assert.doesNotMatch(tag[1], /type="module"/);
     assert.ok(html.indexOf('/cro.js"') < html.indexOf('/mesure.js"'), `${page.id}: cro.js after mesure.js`);

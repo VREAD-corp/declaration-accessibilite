@@ -180,7 +180,7 @@ test('cro.js (behaviour counters) loads on the pages, no A/B test, nothing sent 
     const tag = page.locator('script[src$="/cro.js"]');
     await expect(tag, p).toHaveCount(1);
     await expect(tag, p).toHaveAttribute('data-site', 'declaration-accessibilite');
-    await expect(tag, p).toHaveAttribute('data-hosts', 'accessibilite.jalonel.com outils.vread.fr');
+    await expect(tag, p).toHaveAttribute('data-hosts', 'accessibilite.jalonel.com');
     await page.waitForFunction(() => window.octaveCro && typeof window.octaveCro.goal === 'function');
     expect(await page.evaluate(() => [window.OCTAVE_XP, window.octaveCro.v('price'), [...document.documentElement.attributes].some((a) => a.name.startsWith('data-xp-'))])).toEqual([undefined, undefined, false]);
     await page.evaluate(() => { window.octaveCro.goal('download'); dispatchEvent(new Event('pagehide')); });

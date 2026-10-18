@@ -90,7 +90,7 @@ export function cgvProBody(p) {
   l'ouverture des ventes (notamment : clauses de responsabilité et de licence). Statut TVA (franchise en base,
   art. 293 B du CGI) et capital social (1 000 €) renseignés le 12 octobre 2026 sur décision du dirigeant.
   Version du 13 octobre 2026 : paiement par virement sur devis (articles 2, 4, 5, 6, 12, 13 et 15), rédigée d'après la
-  revue IA « REVUE-CGV-VIREMENT » (vread-revenue-lab) ; publiée le 16 octobre 2026 avec l'accord du dirigeant. Une
+  revue IA interne « REVUE-CGV-VIREMENT » ; publiée le 16 octobre 2026 avec l'accord du dirigeant. Une
   relecture par un avocat ou un juriste reste recommandée.
 -->
 <h1>Conditions générales de vente aux professionnels</h1>
