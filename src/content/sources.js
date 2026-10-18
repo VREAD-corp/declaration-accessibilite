@@ -143,9 +143,9 @@ export const sourcesBodies = {
 <p>Automatische Werkzeuge wie axe-core prüfen nur einen Teil der Kriterien. Weder die Mini-Prüfung noch die teilautomatisierte Prüfung belegen Konformität. Kein Werkzeug und kein „Overlay“ macht eine Website allein barrierefrei.</p>`,
   },
   en: {
-    title: 'European Accessibility Act: scope and official sources',
+    title: 'European Accessibility Act (Directive 2019/882) scope, microenterprise exemption, official texts',
     h1: 'European Accessibility Act: official texts and scope',
-    description: 'Directive (EU) 2019/882 Annex V, the microenterprise exemption, French and German transpositions (Code de la consommation, BFSG), linked to official texts.',
+    description: 'Who the European Accessibility Act covers, the microenterprise exemption, Annex V and the dates (from 28 June 2025), with the French and German transpositions (Code de la consommation, BFSG) linked to EUR-Lex and national texts.',
     body: `<section class="hero" data-section="hero"><h1>European Accessibility Act: official texts and scope</h1>
 <p class="lead">${VERIFIED.en}. Informative summary only: the linked official texts prevail. Not legal advice.</p></section>
 
