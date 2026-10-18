@@ -75,18 +75,7 @@ test('all links on all pages resolve', async ({ page, request, baseURL }, testIn
   const PROTECTED = /(^|\.)(legifrance\.gouv\.fr|eur-lex\.europa\.eu|economie\.gouv\.fr)$/;
   const bad = [];
   const blocked = [];
-  // Release assets: check names against the GitHub API instead of downloading them,
-  // so tests never inflate the download-count KPI.
-  const DL = /^https:\/\/github\.com\/VREAD-corp\/declaration-accessibilite\/releases\/latest\/download\/(.+)$/;
-  const rel = await request.get('https://api.github.com/repos/VREAD-corp/declaration-accessibilite/releases/latest');
-  expect(rel.status()).toBe(200);
-  const assets = new Set((await rel.json()).assets.map((x) => x.name));
-  for (const l of [...links]) {
-    const m = l.match(DL);
-    if (!m) continue;
-    links.delete(l);
-    if (!assets.has(decodeURIComponent(m[1]))) bad.push(`missing release asset ${m[1]}`);
-  }
+  // The free templates are served by the site itself (/telechargements/): checked like any other link.
   for (const l of links) {
     const r = await request.get(l, { maxRedirects: 5, timeout: 30000 }).catch((e) => ({ status: () => String(e.message).slice(0, 80) }));
     let s = r.status();

@@ -12,7 +12,6 @@ export const SITE = {
   // Since 2026-10-16 the site is served at the root of accessibilite.jalonel.com (brand Jalonel, READ FRANCE SAS).
   origin: process.env.SITE_ORIGIN || 'https://accessibilite.jalonel.com',
   base: process.env.SITE_BASE || '/',
-  repo: 'https://github.com/VREAD-corp/declaration-accessibilite',
   updated: '2026-10-11',
 };
 
@@ -25,9 +24,9 @@ export const CRO = {
   cta: '[data-cta],.btn:not(.secondary)',
 };
 
-export const RELEASE_DL = `${SITE.repo}/releases/latest/download/`;
-export const ISSUES = `${SITE.repo}/issues`;
-/** Public contact (replaces GitHub issues as the contact channel). */
+/** Free blank templates (scripts/templates.mjs), served by the site itself under /telechargements/ (built by scripts/build.mjs). */
+export const RELEASE_DL = `${SITE.base.replace(/\/?$/, '/')}telechargements/`;
+/** Public contact. */
 export const CONTACT = 'contact@jalonel.com';
 /** Sample report of the paid audit, served as real pages (HTML opens in the browser) + the delivered PDF format. */
 export const SAMPLE = {
@@ -96,8 +95,7 @@ export const CHROME = {
       { path: ROUTES.boutique.fr, label: 'Obligations d’une boutique en ligne' },
       { path: ROUTES.prix.fr, label: 'Prix d’un audit' },
       { path: `mailto:${CONTACT}`, label: `Contact : ${CONTACT}`, external: true },
-      { path: `${SITE.repo}/releases`, label: 'Modèles vierges', external: true },
-      { path: SITE.repo, label: 'Code source', external: true },
+      { path: `${ROUTES.home.fr}#tpl-title`, label: 'Modèles vierges' },
     ],
   },
   de: {
@@ -116,8 +114,7 @@ export const CHROME = {
       { path: ROUTES.sources.de, label: 'Amtliche Quellen' },
       { path: ROUTES.muster.de, label: 'Muster Barrierefreiheitserklärung' },
       { path: `mailto:${CONTACT}`, label: `Kontakt: ${CONTACT}`, external: true },
-      { path: `${SITE.repo}/releases`, label: 'Leere Vorlagen', external: true },
-      { path: SITE.repo, label: 'Quellcode', external: true },
+      { path: `${ROUTES.home.de}#tpl-title`, label: 'Leere Vorlagen' },
     ],
   },
   en: {
@@ -135,8 +132,7 @@ export const CHROME = {
       { path: ROUTES.privacy.en, label: 'Privacy' },
       { path: ROUTES.sources.en, label: 'Official sources' },
       { path: `mailto:${CONTACT}`, label: `Contact: ${CONTACT}`, external: true },
-      { path: `${SITE.repo}/releases`, label: 'Blank templates', external: true },
-      { path: SITE.repo, label: 'Source code', external: true },
+      { path: `${ROUTES.home.en}#tpl-title`, label: 'Blank templates' },
     ],
   },
 };

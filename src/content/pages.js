@@ -244,7 +244,7 @@ const CHECK = {
     dl: 'Télécharger la grille (Word)',
     head: ['#', 'Vérification', 'Comment tester', 'WCAG 2.1', 'RGAA 4.1'],
     mcTitle: 'Mini-test automatique d’un extrait HTML',
-    mcIntro: 'Collez le code HTML d’une page ou d’un composant (clic droit › « Afficher le code source », ou l’inspecteur du navigateur). Le test s’exécute dans votre navigateur avec axe-core 4.13 ; le code n’est envoyé nulle part.',
+    mcIntro: 'Collez le code HTML d’une page ou d’un composant (raccourci Ctrl+U pour afficher la source de la page, ou l’inspecteur du navigateur). Le test s’exécute dans votre navigateur avec axe-core 4.13 ; le code n’est envoyé nulle part.',
     mcNote: 'Les scripts du code collé sont retirés et aucune ressource externe n’est chargée (images, CSS, polices). Pour tester les contrastes, collez aussi le CSS dans une balise &lt;style&gt;.',
     label: 'Code HTML à tester',
     run: 'Lancer le mini-test',

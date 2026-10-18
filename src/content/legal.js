@@ -28,7 +28,7 @@ export const legalBodies = {
 <p>${HOST}.</p>
 <h2>Propriété intellectuelle et licences</h2>
 <ul>
-<li>Code source du site : licence MIT, <a href="${SITE.repo}">${SITE.repo}</a>.</li>
+<li>Logiciel du site et du générateur : licence MIT.</li>
 <li>Correspondances WCAG/RGAA : référentiel RGAA 4.1, DISIC (direction interministérielle du numérique), <a href="https://github.com/DISIC/RGAA">github.com/DISIC/RGAA</a>, Licence Ouverte 2.0.</li>
 <li>Moteur de test axe-core 4.13.0 : Deque Systems, Inc., Mozilla Public License 2.0, fourni sans modification (<a href="${url('assets/vendor/axe/LICENSE.txt')}">licence</a>).</li>
 <li>Textes législatifs et réglementaires cités : documents publics, liens vers les sources officielles sur la page <a href="${url(ROUTES.sources.fr)}">Sources</a>.</li>
@@ -50,7 +50,7 @@ export const legalBodies = {
 <p>${HOST}.</p>
 <h2>Lizenzen</h2>
 <ul>
-<li>Quellcode: MIT-Lizenz, <a href="${SITE.repo}">${SITE.repo}</a>.</li>
+<li>Software der Website und des Generators: MIT-Lizenz.</li>
 <li>WCAG/RGAA-Zuordnung: RGAA 4.1, DISIC, Licence Ouverte 2.0.</li>
 <li>axe-core 4.13.0: Deque Systems, Inc., Mozilla Public License 2.0, unverändert (<a href="${url('assets/vendor/axe/LICENSE.txt')}">Lizenz</a>).</li>
 </ul>
@@ -69,7 +69,7 @@ export const legalBodies = {
 <p>${HOST}.</p>
 <h2>Licences</h2>
 <ul>
-<li>Source code: MIT licence, <a href="${SITE.repo}">${SITE.repo}</a>.</li>
+<li>Site and generator software: MIT licence.</li>
 <li>WCAG/RGAA mapping: RGAA 4.1, DISIC, Licence Ouverte 2.0.</li>
 <li>axe-core 4.13.0: Deque Systems, Inc., Mozilla Public License 2.0, unmodified (<a href="${url('assets/vendor/axe/LICENSE.txt')}">licence</a>).</li>
 </ul>
@@ -88,7 +88,7 @@ export const privacyBodies = {
 <li>Pour vous éviter de tout ressaisir, vos réponses sont enregistrées dans le stockage local de votre navigateur (localStorage), sur votre appareil uniquement. Le bouton « Effacer mes réponses » les supprime.</li>
 <li>Le mini-test exécute le code collé dans un cadre isolé qui bloque tout chargement externe (images, feuilles de style, scripts distants).</li>
 <li>L’hébergeur GitHub peut enregistrer des données techniques de connexion (adresse IP, par exemple) pour la sécurité du service : voir la <a href="https://docs.github.com/fr/site-policy/privacy-policies/github-general-privacy-statement">déclaration de confidentialité de GitHub</a>.</li>
-<li>Le téléchargement des modèles se fait depuis GitHub (page « Releases ») ; GitHub compte le nombre de téléchargements, sans nous transmettre d’information sur vous.</li>
+<li>Les modèles vierges sont téléchargés depuis ce site ; le clic est compté dans la mesure d’audience anonyme décrite ci-dessous, sans aucune information sur vous.</li>
 </ul>
 <p><strong>Mesure d’audience et de comportement.</strong> Nous mesurons la fréquentation et l’usage de ce site de façon anonyme et agrégée, uniquement pour ses propres statistiques et pour l’améliorer : pages vues, clics vers la page de commande et étapes de la commande, domaine du site d’origine et paramètres de campagne (utm) éventuels, et aussi profondeur de défilement, sections de la page atteintes, temps écoulé avant le premier clic sur un bouton, formulaires commencés ou envoyés et le <em>nom</em> du dernier champ touché (jamais son contenu : rien de ce que vous saisissez n’est lu ni envoyé), questions de la FAQ ouvertes, liens sortants (seulement le nom de domaine), erreurs techniques (une empreinte anonyme du message d’erreur), vitesse d’affichage (indicateurs Core Web Vitals) et clics répétés sur un même élément. Seuls des totaux journaliers sont conservés, dans un tableur de READ FRANCE hébergé par Google.</p>
 <ul>
@@ -109,7 +109,7 @@ export const privacyBodies = {
 <li>Damit Sie nicht alles neu eingeben müssen, werden Ihre Angaben im lokalen Speicher Ihres Browsers (localStorage) nur auf Ihrem Gerät gespeichert. Die Schaltfläche „Angaben löschen“ entfernt sie.</li>
 <li>Die Mini-Prüfung führt den eingefügten Code in einem isolierten Rahmen aus, der jedes externe Nachladen blockiert.</li>
 <li>Der Hoster GitHub kann technische Verbindungsdaten (z. B. IP-Adresse) zur Sicherheit verarbeiten: siehe <a href="https://docs.github.com/de/site-policy/privacy-policies/github-general-privacy-statement">GitHub-Datenschutzerklärung</a>.</li>
-<li>Vorlagen werden über GitHub (Releases) heruntergeladen; GitHub zählt die Downloads, ohne uns Daten über Sie zu übermitteln.</li>
+<li>Die leeren Vorlagen werden von dieser Website heruntergeladen; der Klick wird in der unten beschriebenen anonymen Reichweitenmessung gezählt, ohne Daten über Sie.</li>
 </ul>
 <p><strong>Reichweiten- und Nutzungsmessung.</strong> Wir messen die Nutzung dieser Website anonym und zusammengefasst, nur für ihre eigene Statistik und um sie zu verbessern: Seitenaufrufe, Klicks zur Bestellseite und Bestellschritte, Domain der verweisenden Website und gegebenenfalls Kampagnenparameter (utm), außerdem Scrolltiefe, erreichte Seitenabschnitte, Zeit bis zum ersten Klick auf eine Schaltfläche, begonnene oder abgeschickte Formulare und den <em>Namen</em> des zuletzt berührten Feldes (nie dessen Inhalt: nichts von Ihren Eingaben wird gelesen oder gesendet), geöffnete FAQ-Fragen, ausgehende Links (nur die Domain), technische Fehler (ein anonymer Fingerabdruck der Fehlermeldung), Ladegeschwindigkeit (Core Web Vitals) und wiederholte Klicks auf dasselbe Element. Aufbewahrt werden nur Tagessummen, in einer Tabelle von READ FRANCE, gehostet bei Google.</p>
 <ul>
@@ -129,7 +129,7 @@ export const privacyBodies = {
 <li>To save you retyping, your answers are kept in your browser’s local storage (localStorage), on your device only. The “Erase my answers” button deletes them.</li>
 <li>The mini-test runs pasted code in an isolated frame that blocks every external load.</li>
 <li>The host, GitHub, may process technical connection data (such as IP addresses) for security: see the <a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement">GitHub privacy statement</a>.</li>
-<li>Templates are downloaded from GitHub Releases; GitHub counts downloads without sending us anything about you.</li>
+<li>Blank templates are downloaded from this site; the click is counted in the anonymous audience measurement described below, with nothing about you.</li>
 </ul>
 <p><strong>Audience and behaviour measurement.</strong> We measure visits to and use of this website anonymously and in aggregate, only for its own statistics and to improve it: page views, clicks to the order page and order steps, the referring site’s domain and any campaign (utm) parameters, and also scroll depth, page sections reached, time before the first click on a button, forms started or submitted and the <em>name</em> of the last field touched (never its content: nothing you type is read or sent), FAQ questions opened, outbound links (domain only), technical errors (an anonymous fingerprint of the error message), page speed (Core Web Vitals) and repeated clicks on the same element. Only daily totals are kept, in a READ FRANCE spreadsheet hosted by Google.</p>
 <ul>

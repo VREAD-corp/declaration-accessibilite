@@ -352,3 +352,20 @@ test('browser (quotesEnabled=true): devis.js shows the box and posts action quot
   await page.close();
   serveDir = undefined;
 });
+
+// Jalonel brand separation: nothing served mentions Vread, the GitHub repository, its issues or a « code source » link
+// (third-party axe-core and the official RGAA criteria texts aside); contact@jalonel.com; the free templates are
+// served by the site itself (/telechargements/), with the same free_download tracking.
+test('brand: no Vread / GitHub repository link, templates served locally (sales open and closed)', async () => {
+  const { TEMPLATE_FILES } = await import('../../src/lib/templates-list.js');
+  for (const dir of [join(ROOT, 'dist'), closedDir]) {
+    for (const f of files(dir).filter((f) => /\.(html|js|css|json|xml|txt)$/.test(f) && !f.startsWith('assets/vendor/') && !f.endsWith('rgaa-map.js'))) {
+      assert.doesNotMatch(readFileSync(join(dir, f), 'utf8'), /vread|octave@|github\.com\/VREAD|\/issues|code source|source code|quellcode|\/releases/i, f);
+    }
+    for (const t of TEMPLATE_FILES) assert.ok(existsSync(join(dir, 'telechargements', t.name)), t.name);
+    const home = readFileSync(join(dir, 'index.html'), 'utf8');
+    assert.match(home, /href="mailto:contact@jalonel\.com"/);
+    assert.match(home, /href="\/telechargements\/kit-accessibilite-fr\.zip"/);
+    assert.match(readFileSync(join(dir, 'verification/index.html'), 'utf8'), /href="\/telechargements\/grille-autocontrole-accessibilite-fr\.docx" data-mesure="free_download"/);
+  }
+});

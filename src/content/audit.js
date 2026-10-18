@@ -1,7 +1,7 @@
-import { ISSUES, RELEASE_DL, ROUTES } from './site.js';
+import { CONTACT, ROUTES, SAMPLE } from './site.js';
 import { url } from './layout.js';
 
-export const INTEREST_ISSUE = `${ISSUES}/1`;
+const MAIL = `<a href="mailto:${CONTACT}">${CONTACT}</a>`;
 
 export const auditBodies = {
   fr: `<section class="hero" data-section="hero">
@@ -29,9 +29,9 @@ export const auditBodies = {
 <li>Pas de pages nécessitant une connexion, ni de paiement réel.</li>
 </ul>
 <h2>Voir un exemple</h2>
-<p>Un <a href="${RELEASE_DL}exemple-rapport-audit-automatise-fr.html">exemple de rapport</a> (page de démonstration volontairement défectueuse) est téléchargeable gratuitement.</p>
+<p>Un <a href="${url(SAMPLE.fr.html)}">exemple de rapport</a> (page de démonstration volontairement défectueuse) est téléchargeable gratuitement.</p>
 <h2>Être prévenu de l’ouverture</h2>
-<p>Nous ne prenons pas de commande et n’encaissons aucun paiement aujourd’hui. Si ce service vous intéresse, ajoutez une réaction 👍 ou abonnez-vous au <a href="${INTEREST_ISSUE}">ticket public « Liste d’intérêt »</a> sur GitHub (compte GitHub nécessaire, n’y publiez pas d’informations confidentielles).</p>
+<p>Nous ne prenons pas de commande et n’encaissons aucun paiement aujourd’hui. Si ce service vous intéresse, écrivez-nous à ${MAIL} : nous vous préviendrons à son ouverture.</p>
 <p>En attendant, le <a href="${url(ROUTES.home.fr)}">générateur</a>, l’<a href="${url(ROUTES.check.fr)}">auto-contrôle et le mini-test</a> sont gratuits. Projet de conditions de vente : <a href="${url(ROUTES.cgv.fr)}">CGV (projet, non applicable)</a>.</p>`,
   de: `<section class="hero" data-section="hero">
 <p><span class="status-pill">Bald verfügbar – noch keine Bestellung möglich</span></p>
@@ -58,9 +58,9 @@ export const auditBodies = {
 <li>Keine Seiten hinter einem Login, keine echte Zahlung.</li>
 </ul>
 <h2>Beispiel ansehen</h2>
-<p>Ein <a href="${RELEASE_DL}beispiel-bericht-automatisierte-pruefung-de.html">Beispielbericht</a> (absichtlich fehlerhafte Demo-Seite) steht kostenlos zum Download bereit.</p>
+<p>Ein <a href="${url(SAMPLE.de.html)}">Beispielbericht</a> (absichtlich fehlerhafte Demo-Seite) steht kostenlos zum Download bereit.</p>
 <h2>Benachrichtigt werden</h2>
-<p>Wir nehmen derzeit keine Bestellungen an und kassieren nichts. Bei Interesse reagieren Sie mit 👍 oder abonnieren Sie das <a href="${INTEREST_ISSUE}">öffentliche Issue „Interessentenliste“</a> auf GitHub (GitHub-Konto nötig; keine vertraulichen Angaben posten).</p>`,
+<p>Wir nehmen derzeit keine Bestellungen an und kassieren nichts. Bei Interesse schreiben Sie uns an ${MAIL}: Wir benachrichtigen Sie, sobald der Dienst startet.</p>`,
   en: `<section class="hero" data-section="hero">
 <p><span class="status-pill">Coming soon – no orders accepted yet</span></p>
 <h1>Partial automated accessibility audit: €149 net</h1>
@@ -86,7 +86,7 @@ export const auditBodies = {
 <li>No pages behind a login, no real payment.</li>
 </ul>
 <h2>See an example</h2>
-<p>A <a href="${RELEASE_DL}sample-report-automated-audit-en.html">sample report</a> (deliberately flawed demo page) is free to download.</p>
+<p>A <a href="${url(SAMPLE.en.html)}">sample report</a> (deliberately flawed demo page) is free to download.</p>
 <h2>Get notified</h2>
-<p>We take no orders and no payments today. If you are interested, add a 👍 reaction to or subscribe to the <a href="${INTEREST_ISSUE}">public “interest list” issue</a> on GitHub (GitHub account needed; do not post confidential information).</p>`,
+<p>We take no orders and no payments today. If you are interested, write to ${MAIL}: we will let you know when it opens.</p>`,
 };

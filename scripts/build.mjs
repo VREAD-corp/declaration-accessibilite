@@ -7,6 +7,7 @@ import { OPEN, SALES } from '../src/content/site.js';
 import { checkoutConfigJs } from './checkout-pages.mjs';
 import { AUDIT_PAY_LABEL, AUDIT_TERMS_VERSION } from '../src/content/order.js';
 import { layout, croTag, url } from '../src/content/layout.js';
+import { templateFiles } from './templates.mjs';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const dist = join(root, 'dist');
@@ -25,6 +26,8 @@ function copy(from, rel) {
 
 // pages (a page with `file` is written at that path, e.g. commander.html)
 for (const page of PAGES) write(page.file || join(page.path, 'index.html').replace(/^\//, ''), layout(page));
+// free blank templates (data-mesure="free_download" links), served by the site itself (no GitHub Releases link)
+for (const f of templateFiles()) write(`telechargements/${f.name}`, f.data);
 // 404
 const notFound = PAGES.find((p) => p.id === '404');
 if (notFound) write('404.html', layout(notFound));

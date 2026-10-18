@@ -14,7 +14,7 @@ Outil gratuit, entièrement côté navigateur, pour rédiger :
 
 Exports Word (.docx), HTML et Markdown. Rien de ce que vous saisissez n’est envoyé : pas de serveur pour le générateur ni le mini-test, pas de cookie. Une mesure d’audience anonyme (`mesure.js`, sans cookie ni donnée personnelle) compte les pages vues et quelques clics.
 
-Les **modèles vierges** sont publiés dans les [Releases](https://github.com/VREAD-corp/declaration-accessibilite/releases).
+Les **modèles vierges** (`scripts/templates.mjs`) sont servis par le site lui-même sous `/telechargements/` (écrits dans `dist/telechargements/` par `npm run build` ; `npm run templates` les écrit aussi dans `release/`).
 
 > Information uniquement. Ni conseil juridique, ni audit, ni attestation de conformité. Les tests automatiques ne détectent qu’une partie des problèmes d’accessibilité.
 

@@ -3,7 +3,7 @@
 // CGV drafted by Octave (assistant IA de READ FRANCE SAS) on 12 October 2026, updated on 13 October 2026 for
 // « paiement par virement sur devis » (vread-revenue-lab legal/REVUE-CGV-VIREMENT.md §3, Audit variants):
 // NOT legal advice, to be reviewed by a lawyer. The audit is automated and partial: never an RGAA conformity audit, never a rate.
-import { SITE, SALES, PRICE, ROUTES, RELEASE_DL } from './site.js';
+import { SITE, SALES, PRICE, ROUTES, SAMPLE } from './site.js';
 import { url, ogImage } from './layout.js';
 import { orderFormHtml, orderPageBody, checkoutCsp, orderCsp, payButtonText } from '../../scripts/checkout-pages.mjs';
 
@@ -27,8 +27,7 @@ const SELLER = {
   president: 'Tanguy Warsmann',
 };
 
-const sample = (lang) =>
-  ({ fr: 'exemple-rapport-audit-automatise-fr.html', de: 'beispiel-bericht-automatisierte-pruefung-de.html', en: 'sample-report-automated-audit-en.html' })[lang];
+const sample = (lang) => url(SAMPLE[lang].html);
 
 export const auditOpenBodies = {
   fr: `<section class="hero" data-section="hero">
@@ -60,7 +59,7 @@ export const auditOpenBodies = {
 <li>Vente réservée aux professionnels (entreprises immatriculées en France, SIREN obligatoire). <a href="${url(ROUTES.cgvPro.fr)}">Conditions générales de vente</a> (version du ${AUDIT_TERMS_DATE}).</li>
 </ul>
 <h2>Voir un exemple</h2>
-<p>Un <a href="${RELEASE_DL}${sample('fr')}">exemple de rapport</a> (page de démonstration volontairement défectueuse) est téléchargeable gratuitement.</p>
+<p>Un <a href="${sample('fr')}">exemple de rapport</a> (page de démonstration volontairement défectueuse) est téléchargeable gratuitement.</p>
 <p>Pour rédiger votre déclaration d’accessibilité, le <a href="${url(ROUTES.home.fr)}">générateur</a> reste gratuit, comme l’<a href="${url(ROUTES.check.fr)}">auto-contrôle et le mini-test</a>.</p>`,
   de: `<section class="hero" data-section="hero">
 <p><span class="status-pill">Verfügbar für Unternehmen mit Sitz in Frankreich</span></p>
@@ -81,7 +80,7 @@ export const auditOpenBodies = {
 <li>Keine menschliche Durchsicht vor Versand, keine Rechtsberatung, keine Behebung, kein Overlay-Widget, keine Seiten hinter einem Login.</li>
 </ul>
 <h2>Beispiel ansehen</h2>
-<p>Ein <a href="${RELEASE_DL}${sample('de')}">Beispielbericht</a> (absichtlich fehlerhafte Demo-Seite) steht kostenlos zum Download bereit.</p>`,
+<p>Ein <a href="${sample('de')}">Beispielbericht</a> (absichtlich fehlerhafte Demo-Seite) steht kostenlos zum Download bereit.</p>`,
   en: `<section class="hero" data-section="hero">
 <p><span class="status-pill">Available to companies registered in France</span></p>
 <h1>Partial automated accessibility audit: €149 net</h1>
@@ -101,7 +100,7 @@ export const auditOpenBodies = {
 <li>No human review before delivery, no legal advice, no fixing, no overlay widget, no pages behind a login.</li>
 </ul>
 <h2>See an example</h2>
-<p>A <a href="${RELEASE_DL}${sample('en')}">sample report</a> (deliberately flawed demo page) is free to download.</p>`,
+<p>A <a href="${sample('en')}">sample report</a> (deliberately flawed demo page) is free to download.</p>`,
 };
 
 export const AUDIT_META_OPEN = {
