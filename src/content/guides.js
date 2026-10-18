@@ -696,7 +696,8 @@ function c3Body() {
 <ol class="decision prose">
 <li><p>Vérifiez si vous êtes concerné avec les quatre questions ci-dessus, ou avec le questionnaire du ${a(url(ROUTES.home.fr), 'générateur')}.</p></li>
 <li><p>Repérez les défauts de vos pages clés, parcours d’achat en premier : accueil, liste et fiche produit, panier, livraison, paiement, compte client. Gratuitement avec la ${a(url(ROUTES.check.fr), 'grille en 20 points et le mini-test')}, ou en faisant analyser ${MAX_PAGES} pages par notre audit automatisé (${PRICE_NET}, ${VAT_NOTE}, entreprises immatriculées en France).</p>
-<p><a class="btn" href="${AUDIT}">Faire analyser ${MAX_PAGES} pages – 149 € net</a></p></li>
+<p><a class="btn" href="${AUDIT}">Faire analyser ${MAX_PAGES} pages – 149 € net</a></p>
+<p class="small muted">Rapport PDF sous 24 h ouvrées. S’il n’est pas livré dans les 5 jours ouvrés suivant le paiement, vous pouvez demander l’annulation et le remboursement intégral (${a(url(ROUTES.cgvPro.fr), 'CGV')}, art. 7).</p></li>
 <li><p>Corrigez d’abord ce qui bloque un achat : un bouton sans nom, un champ sans étiquette, un paiement impossible au clavier.</p></li>
 <li><p>Rédigez les informations d’accessibilité avec le générateur, publiez-les dans vos CGV ou sur une page « Accessibilité » liée depuis le pied de page, et mettez-les à jour à chaque évolution du site.</p></li>
 <li><p>Si l’article 47 vous concerne, faites réaliser un audit RGAA complet pour la déclaration. Les trois niveaux d’audit et leurs limites sont comparés sur la page ${a(url(ROUTES.prix.fr), 'Prix d’un audit d’accessibilité')}.</p></li>
