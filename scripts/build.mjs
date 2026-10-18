@@ -6,7 +6,7 @@ import { PAGES, SITE } from '../src/content/pages.js';
 import { OPEN, SALES } from '../src/content/site.js';
 import { checkoutConfigJs } from './checkout-pages.mjs';
 import { AUDIT_PAY_LABEL, AUDIT_TERMS_VERSION } from '../src/content/order.js';
-import { layout, networkBlock, croTag } from '../src/content/layout.js';
+import { layout, croTag, url } from '../src/content/layout.js';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const dist = join(root, 'dist');
@@ -42,8 +42,17 @@ copy('src/mesure/mesure.js', 'mesure.js');
 // aggregate behaviour counters + A/B framework: verbatim copy of VREAD-corp/octave-checkout gas/web/cro.js
 copy('src/mesure/cro.js', 'cro.js');
 for (const f of readdirSync(join(root, 'src/assets/img'))) copy(`src/assets/img/${f}`, `assets/img/${f}`);
-// cross-site block on the sample reports (they carry their own inline styles, not site.css)
-const SAMPLE_NETWORK_CSS = 'body>footer{margin-top:2rem;border-top:1px solid #8a919e;padding-top:1rem;font-size:.9rem}.rf-network-title{margin:0 0 .3rem;font-weight:600}.rf-network ul{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:.3rem 1.1rem}.rf-network a{display:inline-block;padding:.2rem 0}@media print{body>footer{display:none}}';
+// footer of the sample reports (they carry their own inline styles, not site.css): back to the offer + the brand hub
+const SAMPLE_FOOTER_CSS = 'body>footer{margin-top:2rem;border-top:1px solid #8a919e;padding-top:1rem;font-size:.9rem}body>footer a{display:inline-block;padding:.2rem 0}@media print{body>footer{display:none}}';
+const SAMPLE_FOOTER = {
+  fr: ['audit/', 'Faire analyser votre site : audit 20 pages, 149 € net', 'https://jalonel.com/', 'Une marque Jalonel'],
+  de: ['de/audit/', 'Zur automatisierten Prüfung (nur Unternehmen in Frankreich)', 'https://jalonel.com/en/', 'Eine Marke von Jalonel'],
+  en: ['en/audit/', 'Back to the automated audit (companies in France only)', 'https://jalonel.com/en/', 'A Jalonel brand'],
+};
+const sampleFooter = (lang) => {
+  const [audit, label, hub, brand] = SAMPLE_FOOTER[lang] || SAMPLE_FOOTER.fr;
+  return `<footer><p><a href="${url(audit)}">${label}</a> · <a href="${hub}">${brand}</a></p></footer>\n<style>${SAMPLE_FOOTER_CSS}</style>`;
+};
 // sample reports of the paid audit, produced by the real audit runner on the demo page: served as .html
 // (opens in the browser, unlike a GitHub release asset) and as the PDF format actually delivered
 for (const f of readdirSync(join(root, 'src/samples'))) {
@@ -52,7 +61,7 @@ for (const f of readdirSync(join(root, 'src/samples'))) {
     const lang = (src.match(/<html lang="(\w+)"/) || [])[1] || 'fr';
     write(`exemples/${f}`, src
       .replace('<meta charset="utf-8">', '<meta charset="utf-8"><meta name="robots" content="noindex">')
-      .replace('</body>', `<footer>${networkBlock(lang)}</footer>\n<style>${SAMPLE_NETWORK_CSS}</style>\n${croTag()}\n</body>`));
+      .replace('</body>', `${sampleFooter(lang)}\n${croTag()}\n</body>`));
   }
   else copy(`src/samples/${f}`, `exemples/${f}`);
 }

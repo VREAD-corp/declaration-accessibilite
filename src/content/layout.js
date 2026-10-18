@@ -10,40 +10,6 @@ export const croTag = () =>
   `<script src="${url('cro.js')}" data-site="${CRO.site}" data-api="${CRO.api}" data-hosts="${CRO.hosts}" data-cta="${esc(CRO.cta)}" defer></script>`;
 export const abs = (path) => SITE.origin + url(path);
 
-/** Cross-site block « Autres outils Jalonel » (same markup on every Jalonel site; absolute URLs). */
-const NETWORK = {
-  fr: ['Autres outils Jalonel', [
-    ['https://jalonel.com/', 'Tous les outils'],
-    ['https://qualiopi.jalonel.com/', 'Kit Qualiopi V10'],
-    ['https://gpsr.jalonel.com/pack.html', 'Pack documentation GPSR'],
-    ['https://ao-formation.jalonel.com/alertes/', 'Alertes appels d’offres formation'],
-    ['https://accessibilite.jalonel.com/audit/', 'Audit d’accessibilité'],
-  ]],
-  en: ['Other Jalonel tools', [
-    ['https://jalonel.com/en/', 'All tools'],
-    ['https://qualiopi.jalonel.com/', 'Qualiopi V10 kit (in French)', 'fr'],
-    ['https://gpsr.jalonel.com/en/pack.html', 'GPSR documentation pack'],
-    ['https://ao-formation.jalonel.com/alertes/', 'Public training tender alerts (in French)', 'fr'],
-    ['https://accessibilite.jalonel.com/en/audit/', 'Accessibility audit'],
-  ]],
-  de: ['Weitere Tools von Jalonel', [
-    ['https://jalonel.com/en/', 'Alle Tools'],
-    ['https://qualiopi.jalonel.com/', 'Qualiopi-V10-Kit (auf Französisch)', 'fr'],
-    ['https://gpsr.jalonel.com/en/pack.html', 'GPSR-Dokumentationspaket (auf Englisch)', 'en'],
-    ['https://ao-formation.jalonel.com/alertes/', 'Ausschreibungs-Alerts Weiterbildung (auf Französisch)', 'fr'],
-    ['https://accessibilite.jalonel.com/de/audit/', 'Barrierefreiheits-Audit'],
-  ]],
-};
-export function networkBlock(lang) {
-  const [label, links] = NETWORK[lang] || NETWORK.fr;
-  return `<nav class="rf-network" aria-label="${esc(label)}">
-<p class="rf-network-title">${esc(label)}</p>
-<ul>
-${links.map(([href, text, hl]) => `<li><a href="${href}"${hl ? ` hreflang="${hl}"` : ''}>${esc(text)}</a></li>`).join('\n')}
-</ul>
-</nav>`;
-}
-
 /** Sharing image per language (1200x630, rendered by scripts/make-og.mjs). */
 const OG_ALT = {
   fr: 'A11y Kit : générateur gratuit de déclaration d’accessibilité (RGAA, EAA) et audit automatisé, par Jalonel',
@@ -123,7 +89,6 @@ ${page.body}
 </main>
 <footer class="site-footer">
 <div class="wrap">
-${networkBlock(page.lang)}
 <p>${c.disclaimer}</p>
 <ul>
 ${c.footerLinks.map((l) => `<li><a href="${l.external ? l.path : url(l.path)}"${l.lang ? ` hreflang="${l.lang}"` : ''}>${esc(l.label)}</a></li>`).join('\n')}

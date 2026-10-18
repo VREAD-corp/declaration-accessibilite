@@ -42,7 +42,7 @@ const HOME = {
       title: 'Les défauts de vos 20 pages clés, en 24 h',
       text: 'Vos 20 pages clés testées sur ordinateur et mobile : rapport PDF sous 24 h ouvrées, problèmes classés par gravité, éléments à corriger.',
       cta: 'Voir l’audit – 149 €',
-      fine: '149 € net, TVA non applicable (art. 293 B du CGI). Analyse automatisée : ce n’est pas un audit RGAA complet.',
+      fine: '149 € net, TVA non applicable (art. 293 B du CGI). Analyse automatisée : ce n’est pas un audit RGAA complet. Rapport non livré dans les 5 jours ouvrés : remboursement intégral sur demande (CGV, art. 7).',
       alt: 'Aperçu d’un rapport d’audit : synthèse des problèmes classés par gravité',
     },
     knowTitle: 'Déclaration RGAA ou informations de l’Acte européen ?',
@@ -52,8 +52,13 @@ const HOME = {
       'Dans les deux cas, publiez le document sur une page « Accessibilité » liée depuis toutes les pages du site, en pied de page par exemple, et dans un format accessible : une page HTML plutôt qu’un PDF scanné.',
       `Pour aller plus loin : le <a href="${url(ROUTES.modele.fr)}">modèle de déclaration commenté, avec un exemple rempli</a>, le guide <a href="${url(ROUTES.boutique.fr)}">Accessibilité : ce qu’une boutique en ligne doit faire</a> (exemption, délais, sanctions) et la comparaison des <a href="${url(ROUTES.prix.fr)}">prix d’un audit d’accessibilité</a>.`,
     ],
+    faqTitle: 'Questions fréquentes',
+    faq: [
+      ['Puis-je réutiliser les documents produits ?', `<p>Oui. Le document généré reprend vos réponses : il vous appartient, et vous le publiez où vous voulez. Les modèles vierges à télécharger sont sous licence MIT : vous pouvez les modifier et les diffuser, y compris pour vos clients si vous êtes une agence.</p>`],
+      ['Les modèles sont-ils à jour ?', `<p>Le modèle RGAA suit le texte publié par la DINUM, relevé le 17 octobre 2026, et la version 4.1.2 du référentiel. Les textes cités (code de la consommation, loi n° 2005-102, directive (UE) 2019/882) ont été relus le 17 octobre 2026 ; les liens vers les versions officielles sont sur la page <a href="${url(ROUTES.sources.fr)}">obligations et sources</a>.</p>`],
+      ['L’audit payant peut-il être réglé sur devis, avec facture ?', `<p>Oui. L’audit à 149,00 € net (TVA non applicable, art. 293 B du CGI) se paie par carte ou par virement : le formulaire de commande envoie aussitôt un devis PDF valable 30 jours, et vous pouvez y reporter votre numéro de bon de commande. La facture acquittée part avec le rapport. Le générateur, lui, reste gratuit et sans inscription.</p>`],
+    ],
     nextTitle: 'Après la déclaration',
-    gpsr: 'Vous vendez des produits en ligne ? Le règlement GPSR impose aussi des informations de sécurité sur chaque fiche produit : <a href="https://gpsr.jalonel.com/">générateur gratuit de fiche produit GPSR</a>.',
     next: [
       ['Vérifier les bases', `L’<a href="${url(ROUTES.check.fr)}">auto-contrôle en 20 points</a> se fait à la main sur vos pages clés ; le mini-test passe un extrait HTML au moteur axe-core, dans votre navigateur.`],
       ['Comprendre vos obligations', `Moins de 10 personnes et 2 M€ de chiffre d’affaires ou de bilan au plus : vous êtes probablement exempté. Les textes et les sanctions sont sur la page <a href="${url(ROUTES.sources.fr)}">obligations et sources</a>.`],
@@ -95,7 +100,6 @@ const HOME = {
       `Den vollständigen Text mit ausgefülltem Beispiel finden Sie im <a href="${url(ROUTES.muster.de)}">Muster Barrierefreiheitserklärung für Online-Shops</a>.`,
     ],
     nextTitle: 'Nach der Erklärung',
-    gpsr: 'Sie verkaufen Produkte online? Die Produktsicherheitsverordnung (GPSR) verlangt außerdem Sicherheitsangaben in jedem Produktangebot: <a href="https://gpsr.jalonel.com/en/" hreflang="en">kostenloser GPSR-Generator für Produktangaben (auf Englisch)</a>.',
     next: [
       ['Grundlagen prüfen', `Den <a href="${url(ROUTES.check.de)}">Selbsttest in 20 Punkten</a> machen Sie von Hand auf Ihren wichtigsten Seiten; die Mini-Prüfung testet einen HTML-Auszug mit axe-core, direkt im Browser.`],
       ['Pflichten verstehen', `Weniger als 10 Beschäftigte und höchstens 2 Mio. € Umsatz oder Bilanzsumme: Dann greift wahrscheinlich die Ausnahme nach § 3 Abs. 3 BFSG. Gesetzestexte und Bußgelder stehen unter <a href="${url(ROUTES.sources.de)}">Pflichten und Quellen</a>.`],
@@ -132,7 +136,6 @@ const HOME = {
       alt: 'Preview of an audit report: summary of issues ranked by severity',
     },
     nextTitle: 'After the statement',
-    gpsr: 'Do you sell products online? The General Product Safety Regulation (GPSR) also requires safety information on every product listing: <a href="https://gpsr.jalonel.com/en/">free GPSR product information generator</a>.',
     next: [
       ['Check the basics', `The <a href="${url(ROUTES.check.en)}">20-point self-check</a> is done by hand on your key pages; the mini-test runs an HTML snippet through axe-core, in your browser.`],
       ['Understand your obligations', `Fewer than 10 staff and at most €2 million in turnover or balance sheet total: the microenterprise exemption probably applies. The texts and fines are on the <a href="${url(ROUTES.sources.en)}">obligations and sources</a> page.`],
@@ -145,6 +148,15 @@ function templatesList(lang) {
   return `<ul>${TEMPLATE_FILES.filter((f) => f.lang === lang)
     .map((f) => `<li><a href="${RELEASE_DL}${f.name}">${esc(f.label)}</a> <span class="hint">(${f.name.split('.').pop().toUpperCase()})</span></li>`)
     .join('')}</ul>`;
+}
+
+function homeFaq(h) {
+  return `<section data-section="faq" aria-labelledby="home-faq-title">
+<h2 id="home-faq-title">${esc(h.faqTitle)}</h2>
+<div class="faq">
+${h.faq.map(([q, a], i) => `<details id="faq-${i + 1}"><summary>${esc(q)}</summary><div class="faq-a">${a}</div></details>`).join('\n')}
+</div>
+</section>`;
 }
 
 function homeBody(lang) {
@@ -217,8 +229,8 @@ ${templatesList(lang)}
 <section data-section="suite" aria-labelledby="next-title">
 <h2 id="next-title">${esc(h.nextTitle)}</h2>
 <ul class="next-list">${h.next.map(([title, text]) => `<li><h3>${esc(title)}</h3><p>${text}</p></li>`).join('')}</ul>
-<p>${h.gpsr}</p>
-</section>`;
+</section>
+${h.faq ? homeFaq(h) : ''}`;
 }
 
 const CHECK = {

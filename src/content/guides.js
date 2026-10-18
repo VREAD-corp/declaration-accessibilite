@@ -666,6 +666,8 @@ function c3Body() {
 <p>L’${a(S.d41257, 'article D. 412-57')} ajoute des procédures pour que le service reste conforme quand il évolue (3°). En cas de non-conformité, il faut prendre les mesures correctives et en informer immédiatement les autorités de contrôle des États où le service est fourni (4°). Sur demande motivée de ces autorités, vous leur communiquez les informations qui démontrent la conformité et coopérez avec elles (5°).</p>
 <h3>La charge disproportionnée</h3>
 <p>Une exigence peut être écartée si elle impose une charge disproportionnée ou une modification fondamentale du service (${a(S.l41213, 'art. L. 412-13, II')}). Il faut alors une évaluation fondée sur les critères de l’annexe de l’article D. 412-60 : coûts nets de la mise en conformité rapportés aux coûts totaux et au chiffre d’affaires, avantage estimé pour les personnes handicapées. Les éléments sont conservés cinq ans. Une entreprise qui reçoit un financement extérieur pour améliorer l’accessibilité d’un service ne peut pas invoquer la charge disproportionnée pour ce service.</p>
+<h3>Si vous vendez des produits : leur sécurité</h3>
+<p>Cette règle ne relève pas de l’accessibilité, mais elle touche les mêmes fiches produit. Depuis le 13 décembre 2024, le règlement (UE) 2023/988 sur la sécurité générale des produits (GPSR) impose d’indiquer dans chaque offre en ligne le nom et les coordonnées du fabricant, de quoi identifier le produit et ses avertissements de sécurité (art. 19). Pour rédiger ces mentions : ${a('https://gpsr.jalonel.com/', 'générateur gratuit de fiche produit GPSR')}.</p>
 </div>
 </section>
 
